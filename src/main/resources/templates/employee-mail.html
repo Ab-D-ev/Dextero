@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title></title>
+	<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    
+<style>
+table, th, td {
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+</style>
+</head>
+
+ <body>
+    <p th:text="${'Dear ' + ename}"></p>
+      Your TimeSheet Report : -
+		<table border="1" style="width:50%">
+			<tbody>
+				<tr th:each="MailReport:${ReportList}" >
+					<td class="text-center" th:text="${MailReport.sdate}"></td>
+					<td class="text-center" th:text="${MailReport.completionstatus}"></td>
+				</tr>
+			</tbody>
+		</table><br><br>
+			<a th:href="@{http://104.211.94.254:8080/HRportal/}" >Click Me</a>
+	</body>
+</html>

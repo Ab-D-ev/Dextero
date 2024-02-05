@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+	<title>Work Planner</title>
+		<link rel="icon" th:href="@{/dist/images/Dextero_Icon.ico}" type="image/x-icon" />
+        <link th:href="@{https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700}" rel="stylesheet" />
+        <link rel="stylesheet" th:href="@{/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css}"/>
+        <link rel="stylesheet" th:href="@{/plugins/datatables-responsive/css/responsive.bootstrap4.min.css}" />
+        <link rel="stylesheet" th:href="@{/dist/css/dextero.css}">
+        <link rel="stylesheet" th:href="@{/dist/css/all.css}">
+
+        <script th:src="@{/plugins/jquery/jquery.min.js}"></script>
+        <script th:src="@{/plugins/bootstrap/js/bootstrap.bundle.min.js}"></script>
+        <script th:src="@{/plugins/datatables/jquery.dataTables.min.js}"></script>
+        <script th:src="@{/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js}"></script>
+        <script th:src="@{/plugins/datatables-responsive/js/dataTables.responsive.min.js}"></script>
+        <script th:src="@{/plugins/datatables-responsive/js/responsive.bootstrap4.min.js}"></script>
+        <script th:src="@{/dist/js/dextero.js}"></script>
+        <script th:src="@{/dist/js/all.js}"></script>
+        
+        <link rel="stylesheet" href="//code.jquery.com/ui/1.13.1/themes/base/jquery-ui.css">
+  		<script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
+  		<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.14.1/moment.min.js"></script>
+  		
+  		<!--Export table button CSS-->
+		<script src="https://cdn.datatables.net/buttons/1.6.1/js/dataTables.buttons.min.js"></script>
+		<script src="https://cdn.datatables.net/buttons/1.6.1/js/buttons.flash.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+		<script src="https://cdn.datatables.net/buttons/1.6.1/js/buttons.html5.min.js"></script>
+		<script src="https://cdn.datatables.net/buttons/1.6.1/js/buttons.print.min.js"></script>
+		
+</head>
+
+	<body class="hold-transition sidebar-mini layout-fixed">
+		<!-- <header th:include="header::header1"></header> -->
+		<!-- <div class="content-wrapper">
+			<section class="content-header">
+				<div class="container-fluid"> -->
+					<div class="row">
+						<div class="col-lg-12">
+							<div class="card-header text-center pb-2 d-bg-h2 ">
+								<lable id="label" class="h2 font-weight-bold">Work Planner</lable>
+							</div>
+							<div class="card card-box-new tech-x-card-2 mt-5">
+								<div class="card-body">
+	                                <form action="#" th:action="@{/saveAssignTask}" th:object="${assigntask}" method="POST" autocomplete="off">
+	                                     <div class="row">
+                                           <div class="col-sm-6">
+                                                <div class="row mt-4">
+                                                    <div class="col-sm-5">
+			                                            	<label class="d-label required-field">Client Name :</label>
+			                                        	</div>
+			                                        	<div class="col-sm-6">
+			                                        		<select class="form-control input-anime" th:field="*{company_name_id}" id="cname" required>
+			                                        			<option value=" ">Select</option>
+			                                            		<option th:each="c:${Customerlist}" 
+			                                                			th:value="${c.id}"
+			                                                			th:text="${c.CompanyName}" th:if="${c.company_id}==${CompanyID} AND ${c.status}==true"></option>
+			                                        		</select>
+			                                        	</div>
+                                                </div>   
+                                           </div>
+                                           <div class="col-sm-6">
+                                                <div class="row mt-4">
+                                                    <div class="col-sm-5 ">
+			                                            	<label class="d-label required-field">Category :</label>
+			                                        	</div>
+			                                        	<div class="col-sm-6">
+			                                            	<select  class="form-control input-anime" id="category" required>
+				                                                <option value="">Select</option>
+																<option th:each="c1:${Categorylist}"
+																		th:value="${c1.category}"
+																		th:text="${c1.category}" th:if="${c1.company_id}==${CompanyID}"></option>
+				                                            </select>
+			                                        	</div> 
+                                                </div> 
+                                           </div>
+                                       </div>
+
+                                       <div class="row">
+                                            <div class="col-sm-6">
+                                                <div class="row mt-4">
+                                                    <div class="col-sm-5">
+			                                            	<label class="d-label required-field">Project Name :</label>
+			                                        	</div>
+			                                        	<div class="col-sm-6">
+			                                        		<select class="form-control input-anime" th:field="*{project_id}" id="pname" required> 
+																<option value="">Select</option>
+				        									</select>
+			                                        	</div>
+                                                  </div> 
+                                            </div>
+                                            <div class="col-sm-6">
+                                            	<div class="row mt-4">
+                                                    <div class="col-sm-5 ">
+                                                    	<label class="d-label required-field">Project Code :</label>
+			                                        </div>
+			                                        <div class="col-sm-6">
+			                                        	<select class="form-control input-anime" id="projectCode" required> 
+			        										<option value="">Select</option>
+															<!-- <option th:each="task:${Projectlist}"
+																	th:value="${task.projectcode}"
+																	th:text="${task.projectcode}"></option> -->
+			        									</select>
+					                                </div>
+			                               		</div>
+			                               	</div>                                            
+                                        </div>    
+
+										<div class="row">
+                                            <div class="col-sm-6">
+                                                <div class="row mt-4">
+                                                    <div class="col-sm-5">
+			                                         	<label class="d-label required-field">Milestone :</label>
+			                                         </div>
+			                                         <div class="col-sm-6">
+			                                         	<select class="form-control input-anime"  th:field="*{milestone_id}" id="milestone" required> 
+			        										
+															<!-- <option th:each="task:${list}"
+																	th:value="${task.id}"
+																	th:text="${task.add_milestone}" th:if="${task.company_id}==${CompanyID}"></option> -->
+			        									</select>
+			                                         </div>  
+                                                </div>
+                                            </div> 
+                                            <div class="col-sm-6">
+                                                <div class="row mt-4">
+                                                    <div class="col-sm-5">
+			                                        	<label class="d-label required-field">Task :</label>
+			                                      	</div>
+			                                     	<div class="col-sm-6">
+			                                     		<select  class="form-control input-anime" th:field="*{task_id}" id="task" required>
+				                                        	<!-- <option value="">Select</option> -->
+				                                    	</select> 
+			                                       	</div>   
+                                                </div> 
+                                        	</div>
+                                        </div>
+										<div class="row">
+                                            <div class="col-sm-6">
+                                                <div class="row mt-4">
+                                                    <div class="col-sm-5">
+			                                         	<label class="d-label required-field">Task Status :</label>
+			                                         </div>
+			                                         <div class="col-sm-6">
+			                                         	<select class="form-control input-anime" th:field="*{status}" required> 
+			                                                	<option value="Open">Open</option>
+			                                                	<option value="WIP">WIP</option>
+			                                                	<option value="Hold">Hold</option>
+			                                                	<option value="Closed">Closed</option>
+			                                            </select>
+			                                         </div>  
+                                                </div>
+                                            </div> 
+                                            <div class="col-sm-6">
+                                                <div class="row mt-4">
+                                                    <div class="col-sm-5 ">
+			                                            <label class="d-label required-field">Assign To :</label>
+			                                        </div>
+			                                        <div class="col-sm-6">
+			                                        	<select class="form-control input-anime" th:field="*{employee_id}" required>
+					                                   		<option value="">Select</option>
+					                                   		<option th:each="e1:${employeeList}" 
+					                                       			th:value="${e1.id}"
+					                                     			th:text="${e1.firstname} + ' ' + ${e1.lastname}" th:if="${e1.authority_id}==5 AND ${e1.company_id}==${CompanyID} OR ${e1.authority_id}==6  AND ${e1.company_id}==${CompanyID}">
+					                                        </option>
+					                                    </select>
+			                                        </div> 
+                                                </div> 
+                                           </div>
+                                        </div>
+										
+                                        <div class="row">
+                                            <div class="col-sm-6">
+                                                <div class="row mt-4">
+                                                    <div class="col-sm-5">
+			                                         	<label class="d-label required-field">Start Date :</label>
+			                                         </div>
+			                                         <div class="col-sm-6">
+			                                         	<input type="text" class="form-control input-anime" th:field="*{StartDate}" id="startdate" placeholder="DD-MM-YYYY" required>
+			                                         </div>  
+                                                </div>
+                                            </div> 
+                                            <div class="col-sm-6">
+                                                <div class="row mt-4">
+                                                    <div class="col-sm-5">
+			                                        	<label class="d-label required-field">End Date :</label>
+			                                      	</div>
+			                                     	<div class="col-sm-6">
+			                                        	<input type="text" class="form-control input-anime" th:field="*{EndDate}" id="enddate" placeholder="DD-MM-YYYY" required>
+			                                       	</div>   
+                                                </div> 
+                                        	</div>
+                                        </div>
+                                        <div class="row">
+                                        	<div class="col-sm-6">
+                                                <div class="row mt-4">
+                                                    <div class="col-sm-5 ">
+			                                            <label class="d-label required-field">Priority :</label>
+			                                        </div>
+			                                        <div class="col-sm-6">
+			                                            <select class="form-control input-anime" th:field="*{Priority}" required> 
+			                                                <option value="Low">Low</option>
+			                                                <option value="Medium">Medium</option>
+			                                                <option value="High">High</option>
+			                                            </select>
+			                                        </div> 
+                                                </div> 
+                                           </div>
+                                        	<div class="col-sm-6">
+                                        		<div class="row mt-4">
+                                          			<div class="col-sm-5">
+			                                   			<label class="d-label required-field">Task Description :</label>
+			                                     	</div>
+			                                       	<div class="col-sm-6">
+			                                       		<textarea class="form-control input-anime"  th:field="*{TaskDescription}" required></textarea>
+			                                       	</div>  
+                                                </div>
+                                            </div>
+                                        </div> 
+                                        <div class="col-sm-4">
+                                            	<button type="submit" class="btn btn-info mt-4">Submit</button>
+                                            </div> 
+	                                   </form> 
+	                                  <div class="table-responsive mt-4">
+	                                    <table id="data-table"  data-order='[[ 0, "desc" ]]' border="1" class="table table-bordered table-striped">
+	                                        <thead>
+	                                            <tr th:if="${status}=='false'">
+	                                            	<th class="text-center">Task Id</th>
+	                                                <th class="text-center">Client Name</th>
+	                                                <!-- <th class="text-center">Category</th> -->
+	                                                <th class="text-center">Project Name</th>
+	                                                <th class="text-center">Milestone</th>
+	                                                <th class="text-center">Task</th>
+	                                                <th class="text-center">Project Code</th>
+	                                                <th class="text-center">Assign To</th>
+	                                                <th class="text-center">Task Description</th>
+	                                                <th class="text-center">Priority</th>
+	                                                <th class="text-center">No.Of Days</th>
+	                                                <th class="text-center">Status</th>
+	                                                <!-- <th class="text-center">Created By</th> -->
+	                                                <th class="text-center">Edit</th>
+	                                            </tr>
+	                                            
+	                                            <tr th:if="${status}=='true'">
+	                                            	<th class="text-center">Task Id</th>
+	                                                <th class="text-center">Client Name</th>
+	                                                <!-- <th class="text-center">Category</th> -->
+	                                                <th class="text-center">Project Name</th>
+	                                                <th class="text-center">Milestone</th>
+	                                                <th class="text-center">Task</th>
+	                                                <th class="text-center">Project Code</th>
+	                                                <th class="text-center">Assign To</th>
+	                                                <th class="text-center">Task Description</th>
+	                                                <th class="text-center">Priority</th>
+	                                                <th class="text-center">No.Of Days</th>
+	                                                <th class="text-center">Status</th>
+	                                                <!-- <th class="text-center">Created By</th> -->
+	                                                <th class="text-center">Edit</th>
+	                                            </tr>
+	                                        </thead>
+	                                        <tbody>
+	                                           <tr th:each="assigntask:${AssignTaskList}" th:if="${status}=='false' AND ${assigntask.employee_id}!=${UserName} AND ${assigntask.company_id}==${CompanyID}">
+	                                           		<td class="text-center"><span th:text="${assigntask.id}"></span></td>
+	                                           		<td class="text-center">
+	                                           			<span th:each="e:${Customerlist}" th:if="${e.id}==${assigntask.company_name_id}" th:text="${e.CompanyName}"></span>
+	                                           		</td>
+		                                            <!-- <td class="text-center">
+		                                            	<span th:each="c:${Projectlist}" th:if="${c.id}==${assigntask.project_id}" th:text="${c.categoryName}"></span>
+		                                            </td> -->
+		                                            <td class="text-center">
+		                                            	<span th:each="p:${Projectlist}" th:if="${p.id}==${assigntask.project_id}" th:text="${p.projectName}"></span>
+		                                            </td>
+		                                            <td class="text-center">
+		                                            	<span th:each="m1:${Milestonelist}" th:if="${m1.id}==${assigntask.milestone_id}" th:text="${m1.add_milestone}"></span>
+		                                            </td>
+		                                            <td class="text-center">
+													    <span th:each="t:${Tasklist}" th:if="${t.id == assigntask.task_id}" th:text="${t.addTask}"></span>
+													</td>
+													<td class="text-center">
+		                                            	<span th:each="p:${Projectlist}" th:if="${p.id}==${assigntask.project_id}" th:text="${p.projectcode}"></span>
+		                                            </td>
+		                                            <td class="text-center">
+		                                            	<span th:each="e:${employeeList}" th:if="${e.id}==${assigntask.employee_id}" th:text="${e.firstname} + ' ' + ${e.lastname}"></span>
+		                                            </td>
+		                                            <td class="text-center"><span th:text="${assigntask.TaskDescription}"></span></td>
+		                                            <td class="text-center"><span th:text="${assigntask.Priority}"></span></td>
+		                                            <td class="text-center"><span th:text="${assigntask.number_of_days}"></span></td>
+		                                            <td class="text-center"><span th:text="${assigntask.status}"></span></td>
+		                                           <!--  <td class="text-center">
+		                                            	<span th:each="e:${employeeList}" th:if="${e.id}==${assigntask.createdby}" th:text="${e.firstname} + ' ' + ${e.lastname}"></span>
+		                                            </td> -->
+		                                            <td class="text-center"><a th:href="@{/EditAssignForm/{id}(id=${assigntask.id})}"><i class="fa-solid fa-pencil text-success"></i></a></td> 
+	                                        	</tr>
+	                                        	
+	                                        	
+	                                        	<tr th:each="assigntask:${AssignTaskList}" th:if="${status}=='true' AND ${assigntask.company_id}==${CompanyID}">
+	                                           		<td class="text-center"><span th:text="${assigntask.id}"></span></td>
+	                                           		<td class="text-center">
+	                                           			<span th:each="e:${Customerlist}" th:if="${e.id}==${assigntask.company_name_id}" th:text="${e.CompanyName}"></span>
+	                                           		</td>
+		                                            <!-- <td class="text-center">
+		                                            	<span th:each="c:${Projectlist}" th:if="${c.id}==${assigntask.project_id}" th:text="${c.categoryName}"></span>
+		                                            </td> -->
+		                                            <td class="text-center">
+		                                            	<span th:each="p:${Projectlist}" th:if="${p.id}==${assigntask.project_id}" th:text="${p.projectName}"></span>
+		                                            </td>
+		                                            <td class="text-center">
+		                                            	<span th:each="m1:${Milestonelist}" th:if="${m1.id}==${assigntask.milestone_id}" th:text="${m1.add_milestone}"></span>
+		                                            </td>
+		                                            <td class="text-center">
+													    <span th:each="t:${Tasklist}" th:if="${t.id == assigntask.task_id}" th:text="${t.addTask}"></span>
+													</td>
+													<td class="text-center">
+		                                            	<span th:each="p:${Projectlist}" th:if="${p.id}==${assigntask.project_id}" th:text="${p.projectcode}"></span>
+		                                            </td>
+		                                            <td class="text-center">
+		                                            	<span th:each="e:${employeeList}" th:if="${e.id}==${assigntask.employee_id}" th:text="${e.firstname} + ' ' + ${e.lastname}"></span>
+		                                            </td>
+		                                            <td class="text-center"><span th:text="${assigntask.TaskDescription}"></span></td>
+		                                            <td class="text-center"><span th:text="${assigntask.Priority}"></span></td>
+		                                            <td class="text-center"><span th:text="${assigntask.number_of_days}"></span></td>
+		                                            <td class="text-center"><span th:text="${assigntask.status}"></span></td>
+		                                            <!-- <td class="text-center">
+		                                            	<span th:each="e:${employeeList}" th:if="${e.id}==${assigntask.createdby}" th:text="${e.firstname} + ' ' + ${e.lastname}"></span>
+		                                            </td> -->
+		                                            <td class="text-center"><a th:href="@{/EditAssignForm/{id}(id=${assigntask.id})}"><i class="fa-solid fa-pencil text-success"></i></a></td>
+		                                        </tr>
+	                                        </tbody>
+	                                    </table> 
+	                                 </div> 
+	                             </div>    
+	                         </div>
+	                      </div>    
+	                  </div>    
+	              <!-- </div>
+	          </section>   
+	     </div> -->
+		<script type="text/javascript">
+			$(document).ready(function() {
+				  $('#data-table').DataTable( {
+				  	
+				     stateSave: true,
+	      stateDuration: 120,
+	      dom: "<'row'<'col-sm-0'l><'col-sm-2 text-right'B><'col-sm-1 text-right'><'col-sm-4'<'toolbar'>><'col-sm-3'f>>" +
+	           "<'row'<'col-sm-12'tr>>" +
+	           "<'row'<'col-sm-5'i><'col-sm-7'p>>",
+	      buttons: [
+	        {
+	          extend: 'excel',
+	          text: '<i class="fa fa-file-excel"></i> Excel',
+	          className: 'btn btn-primary btn-md',
+	          exportOptions: {
+	            columns: [0, 1,2,3,4,5,6] // Specify the columns to be included (column indexes)
+	          }
+	        },
+	        {
+	          extend: 'pdf',
+	          text: '<i class="fa fa-file-pdf"></i> PDF',
+	          className: 'btn btn-primary btn-md',
+	          exportOptions: {
+	            columns: [0, 1,2,3,4,5,6] // Specify the columns to be included (column indexes)
+	          },
+	          
+	        }
+	      ]
+		          });
+		      });
+			var dateToday = new Date(); 
+			$(document).ready(function () {
+				$( "#startdate" ).datepicker({
+			  		dateFormat:'dd-mm-yy',
+			    	//minDate: dateToday,
+			    	onClose: function (selected) {
+			     		$("#enddate").datepicker("option", "minDate", selected);
+			   		}
+			  	});
+			    $("#enddate").datepicker({
+			   		dateFormat: "dd-mm-yy"
+			    });   
+				 // DataTables initialisation
+				  var table = $('#data-table').DataTable();
+			});
+			
+			$("input").on("keypress", function(e) {
+					if (e.which === 32 && !this.value.length)
+						e.preventDefault();
+				});
+				$("textarea").on("keypress", function(e) {
+					if (e.which === 32 && !this.value.length)
+						e.preventDefault();
+				});
+		</script>
+		<script type="text/javascript">
+				
+			$(function(){
+				$("#cname, #category").change(function(){
+					$('#pname').find('option').remove().end();
+					
+					var Pname = $('#cname').val();
+					var category = $('#category').val();
+					$.ajax({
+						url:"[[@{/getprojectNamedropdown}]]",
+						data:{
+							name: Pname,
+							name1: category
+						},
+						success:function(data){
+						$('#pname').append($('<option>',{
+									value:"",
+									text:"Select"
+								}));
+							$.each(data,function(i,item){
+								$('#pname').append($('<option>',{
+									value:item.id,
+									text:item.projectName
+								}));
+							});
+						}
+					});
+				});	
+				$("#category, #pname").change(function(){
+					$('#projectCode').find('option').remove().end();
+					var Pcode =  $('#category').val();
+					var category = $('#pname').val();
+					$.ajax({
+						url:"[[@{/getdropdown}]]",
+						data:{
+							name: Pcode,
+							name1: category
+						},
+						success:function(data){
+							
+							$.each(data,function(i,item){
+								$('#projectCode').append($('<option>',{
+									value:item.projectcode,
+									text:item.projectcode
+								}));
+							});
+						}
+					});
+				});
+				
+				$("#cname, #pname").change(function(){
+					$('#milestone').find('option').remove().end();
+					
+					var milestone = $('#cname').val();
+					var pname = $('#pname').val();
+					
+					$.ajax({
+						url:"[[@{/getMileStonedropdown}]]",
+						data:{
+							name: milestone,
+							name1: pname
+						},
+						success:function(data){
+							$('#milestone').append($('<option>',{
+									value:"",
+									text:"Select"
+								}));
+							$.each(data,function(i,item){
+								$('#milestone').append($('<option>',{
+									value:item.id,
+									text:item.add_milestone
+								}));
+							});
+						}
+					});
+				});	
+				
+				$("#cname, #pname, #milestone").change(function(){
+					$('#task').find('option').remove().end();
+					
+					var company_name1 = $('#cname').val();
+					var pname1 = $('#pname').val();
+					var milestone1 = $('#milestone').val();
+					
+					$.ajax({
+						url:"[[@{/getTaskDropDown}]]",
+						data:{
+							name: company_name1,
+							name1: pname1,
+							name2: milestone1
+						},
+						success:function(data){
+						
+							$.each(data,function(i,item){
+								$('#task').append($('<option>',{
+									value:item.id,
+									text:item.addTask
+								}));
+							});
+						}
+					});
+				});
+			});
+			
+		</script>
+	</body>
+</html>

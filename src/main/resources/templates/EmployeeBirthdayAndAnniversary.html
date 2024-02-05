@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+	<title>BirthDays | Anniversary</title>
+		<link rel="icon" th:href="@{/dist/images/Dextero_Icon.ico}" type="image/x-icon" />
+        <link th:href="@{https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700}" rel="stylesheet" />
+        <link rel="stylesheet" th:href="@{/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css}"/>
+        <link rel="stylesheet" th:href="@{/plugins/datatables-responsive/css/responsive.bootstrap4.min.css}" />
+        <link rel="stylesheet" th:href="@{/dist/css/dextero.css}">
+        <link rel="stylesheet" th:href="@{/dist/css/all.css}">
+
+        <script th:src="@{/plugins/jquery/jquery.min.js}"></script>
+        <script th:src="@{/plugins/bootstrap/js/bootstrap.bundle.min.js}"></script>
+        <script th:src="@{/plugins/datatables/jquery.dataTables.min.js}"></script>
+        <script th:src="@{/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js}"></script>
+        <script th:src="@{/plugins/datatables-responsive/js/dataTables.responsive.min.js}"></script>
+        <script th:src="@{/plugins/datatables-responsive/js/responsive.bootstrap4.min.js}"></script>
+        <script th:src="@{/dist/js/dextero.js}"></script>
+        <script th:src="@{/dist/js/all.js}"></script>
+        <script type="text/javascript">
+	         $(document).ready(function() {
+	            $('#data-table').DataTable();
+	         });
+       </script>
+</head>
+
+	<body class="hold-transition sidebar-mini layout-fixed">
+		<header th:include="header::header1"></header> 
+		<div class="content-wrapper">
+	        <section class="content-header">
+	            <div class="container-fluid">
+	                <div class="row">
+	                    <div class="col-lg-12">
+	                        <div class="card-header text-center pb-2 d-bg-h2 ">
+	                            <lable id="label" class="h2 font-weight-bold">Birthdays & Joining Anniversary</lable>
+	                        </div> 
+	                        <div class="card card-box-new tech-x-card-2 mt-5">
+	                            <div class="card-body">    
+	                                <table id="data-table" class="table table-bordered">
+										<thead>
+											<tr> 
+												<th class="text-center">Employee Name</th>
+												<th class="text-center">Date</th>
+												<th class="text-center">Occasion</th>
+												<th class="text-center"></th>
+																		
+											</tr>
+											</thead>
+											<tbody>
+												<tr th:each="employee:${listEmployees}" th:if="${employee.company_id}==${CompanyID}">
+													<td class="text-center" th:text="${employee.firstname}  + ' ' + ${employee.lastname}"></td>
+													<td class="text-center" th:text="${employee.joiningdate}"></td> 
+													<td class="text-center">Anniversary</td> 
+													<td><button class="btn btn-info "> Send Wishes</button></td>
+												</tr>
+												<tr th:each="e:${EmployeesList}" th:if="${e.company_id}==${CompanyID}">
+													<td class="text-center" th:text="${e.firstname}  + ' ' + ${e.lastname}"></td>
+													<td class="text-center" th:text="${e.DateofBirth}"></td> 
+													<td class="text-center">Birthday</td> 
+													<td><button class="btn btn-info "> Send Wishes</button></td>
+												</tr>	
+											</tbody>
+										</table>      
+	                            	</div>
+	                        	</div>
+	                    	</div>
+	                	</div>
+	            	</div>            
+	        </section>
+	    </div>
+	</body> 
+</html>

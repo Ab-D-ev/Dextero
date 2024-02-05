@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+	<title>Project Status</title>
+		<link rel="icon" th:href="@{/dist/images/Dextero_Icon.ico}" type="image/x-icon" />
+        <link th:href="@{https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700}" rel="stylesheet" />
+        <link rel="stylesheet" th:href="@{/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css}"/>
+        <link rel="stylesheet" th:href="@{/plugins/datatables-responsive/css/responsive.bootstrap4.min.css}" />
+        <link rel="stylesheet" th:href="@{/dist/css/dextero.css}">
+        <link rel="stylesheet" th:href="@{/dist/css/all.css}">
+
+        <script th:src="@{/plugins/jquery/jquery.min.js}"></script>
+        <script th:src="@{/plugins/bootstrap/js/bootstrap.bundle.min.js}"></script>
+        <script th:src="@{/plugins/datatables/jquery.dataTables.min.js}"></script>
+        <script th:src="@{/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js}"></script>
+        <script th:src="@{/plugins/datatables-responsive/js/dataTables.responsive.min.js}"></script>
+        <script th:src="@{/plugins/datatables-responsive/js/responsive.bootstrap4.min.js}"></script>
+        <script th:src="@{/dist/js/dextero.js}"></script>
+        <script th:src="@{/dist/js/all.js}"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.13/css/bootstrap-multiselect.css" />
+		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.13/js/bootstrap-multiselect.min.js"></script>
+      
+</head>
+
+	<body class="hold-transition sidebar-mini layout-fixed">
+		<header th:include="header::header1"></header> 
+		<div class="content-wrapper">
+	        <section class="content-header">
+	            <div class="container-fluid">
+	                <div class="row">
+	                    <div class="col-lg-12">
+	                        <div class="card-header text-center pb-2 d-bg-h2 ">
+	                            <lable id="label" class="h2 font-weight-bold">Project Status</lable>
+	                        </div>
+	                        <div class="card card-box-new tech-x-card-2 mt-5">
+	                            <div class="card-body">
+	                                <form action="#" th:action="@{/SaveProjectStatus}" th:object="${project}" method="POST" autocomplete="off">
+	                                    <input type="hidden" th:field="*{id}">
+	                                    
+	                                    <div class="row mt-4 required-field">
+	                                        <div class="col-sm-4 col-md-4 col-lg-2">
+	                                            <label  class="d-label">Client Name :</label>
+	                                        </div>
+	                                        <div class="col-sm-6 col-md-4 col-lg-3">
+	                                           <input type="text" list="company1" class="form-control input-anime" th:field="*{companyname}" id="cname" required>
+		                                            <datalist id="company1">
+		                                           	<option value="">Select</option>
+		                                           	<option th:each="project:${Customerlist}" 
+		                                                	th:value="${project.CompanyName}"
+		                                                    th:text="${project.CompanyName}" th:if="${project.company_id}==${CompanyID} AND ${project.status}==true">
+		                                          	</option> 
+		                                       </datalist>
+	                                        </div>
+	                                     </div>
+	                                    <div class="row mt-4 required-field">
+	                                        <div class="col-sm-4 col-md-4 col-lg-2">
+	                                            <label class="d-label">Project Name :</label>
+	                                        </div>
+	                                        <div class="col-sm-6 col-md-4 col-lg-3">
+	                                            <select class="form-control input-anime" th:field="*{pname}" id="pname" required>
+		                                           	<option th:each="project:${ProjectList}" 
+		                                                	th:value="${project.projectName}"
+		                                                    th:text="${project.projectName}">
+		                                          	</option> 
+		                                        </select>
+	                                        </div>
+	                                    </div>
+	                                    <div class="row mt-4 required-field">
+	                                        <div class="col-sm-4 col-md-4 col-lg-2">
+	                                            <label  class="d-label">Project Code :</label>
+	                                        </div>
+	                                        <div class="col-sm-6 col-md-4 col-lg-3">
+		                                           	<select class="form-control input-anime" th:field="*{pcode}" id="projectCode" required>
+		                                           	<option th:value="*{pcode}" th:text="*{pcode}" selected>
+		                                           	<!-- <option th:each="project:${ProjectList}" 
+		                                           			th:value="${project.projectcode}"
+		                                            		th:text="${project.projectcode}">
+		                                          	</option> -->
+		                                        </select>
+	                                        </div>
+	                                    </div>
+										<div class="row mt-4 required-field">
+	                                        <div class="col-sm-4 col-md-4 col-lg-2">
+	                                            <label class="d-label">Employee Name:</label>
+	                                        </div>
+	                                        <div class="col-sm-6 col-md-4 col-lg-3">
+	                                            <select class="form-control input-anime" name="empname" required>
+		                                        	<!-- <option th:value="*{ename}" th:text="*{ename}" selected> -->
+		                                            <option th:each="e1:${EmployeeList}" 
+		                                            		th:value="${e1.id}"
+		                                            		th:text="${e1.firstname} + ' ' + ${e1.lastname}" 
+		                                            		th:if="${e1.authority_id}==5 OR ${e1.authority_id}==6  AND ${e1.company_id}==${CompanyID}" selected>
+		                                      	</select>
+	                                        </div>
+	                                    </div>
+	                                    <div class="row mt-4 required-field">
+	                                        <div class="col-sm-4 col-md-4 col-lg-2">
+	                                            <label  class="d-label">Project Status:</label>
+	                                        </div>
+	                                        <div class="col-sm-6 col-md-4 col-lg-3">
+	                                            <select class="form-control input-anime" th:field="*{status}" required> 
+	                                            	<option th:value="*{status}" th:text="*{status}" selected>
+		                                            <option value="Completed">Completed</option>
+		                                            <option value="Inprogress">Inprogress</option>
+	                                            </select>
+	                                        </div>
+	                                     </div>
+	                                     <div class="row mt-4">
+	                                        <div class="col-sm-4 col-md-4 col-lg-2">
+	                                            <button type="submit" class="btn btn-info ">Save</button>
+	                                        </div>  
+	                                   </div>                                           
+	                                </form>
+	                                <div class="row mt-4"> 
+	                                	<a th:href="@{/ProjectStatus}">Back to List</a>
+	                                </div>
+		                   		</div>
+		                	</div>
+		            	</div>
+		         	</div>
+		      	</div>            
+	   		</section>
+		</div>
+		<script type="text/javascript">
+			$(function(){
+				$("#cname").change(function(){
+					$('#pname').find('option').remove().end();
+					
+					var Pname = $(this).val();
+					$.ajax({
+						url:"[[@{/getprojectNamedropdown}]]",
+						data:{
+							name: Pname
+						},
+						success:function(data){
+						$('#pname').append($('<option>',{
+									value:"",
+									text:"Select"
+								}));
+							$.each(data,function(i,item){
+								$('#pname').append($('<option>',{
+									value:item,
+									text:item
+								}));
+							});
+						}
+					});
+				});	
+				$("#pname").change(function(){
+					$('#projectCode').find('option').remove().end();
+					
+					var Pcode = $(this).val();
+					$.ajax({
+						url:"[[@{/getdropdown}]]",
+						data:{
+							name: Pcode
+						},
+						success:function(data){
+							
+							$.each(data,function(i,item){
+								$('#projectCode').append($('<option>',{
+									value:item,
+									text:item
+								}));
+							});
+						}
+					});
+				});
+			});
+	         $("input").on("keypress", function(e) {
+				if (e.which === 32 && !this.value.length)
+					e.preventDefault();
+			});
+		</script>
+	</body> 
+</html>

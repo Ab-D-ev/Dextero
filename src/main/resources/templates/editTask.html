@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+	<title>Edit Task</title>
+		<link rel="icon" th:href="@{/dist/images/Dextero_Icon.ico}" type="image/x-icon" />
+        <link th:href="@{https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700}" rel="stylesheet" />
+        <link rel="stylesheet" th:href="@{/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css}"/>
+        <link rel="stylesheet" th:href="@{/plugins/datatables-responsive/css/responsive.bootstrap4.min.css}" />
+        <link rel="stylesheet" th:href="@{/dist/css/dextero.css}">
+        <link rel="stylesheet" th:href="@{/dist/css/all.css}">
+
+        <script th:src="@{/plugins/jquery/jquery.min.js}"></script>
+        <script th:src="@{/plugins/bootstrap/js/bootstrap.bundle.min.js}"></script>
+        <script th:src="@{/plugins/datatables/jquery.dataTables.min.js}"></script>
+        <script th:src="@{/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js}"></script>
+        <script th:src="@{/plugins/datatables-responsive/js/dataTables.responsive.min.js}"></script>
+        <script th:src="@{/plugins/datatables-responsive/js/responsive.bootstrap4.min.js}"></script>
+        <script th:src="@{/dist/js/dextero.js}"></script>
+        <script th:src="@{/dist/js/all.js}"></script>
+     	<link rel="stylesheet" href="//code.jquery.com/ui/1.13.1/themes/base/jquery-ui.css">
+  		<script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
+		<script type="text/javascript">
+			$(document).ready(function () {
+		 		$("#startdate").datepicker({
+		     		dateFormat: "dd-mm-yy"
+		    	}).datepicker('setDate','0');
+		    	$("#enddate").datepicker({
+		       		dateFormat: "dd-mm-yy"
+		      	}).datepicker('setDate','0');    
+			});
+			function myFunction() {
+			  document.getElementById("task").defaultValue = "Yet to Start";
+			}
+		</script>
+</head>
+
+	<body class="hold-transition sidebar-mini layout-fixed">
+	    <header th:include="header::header1"></header> 
+		<div class="content-wrapper">
+	        <section class="content-header">
+	            <div class="container-fluid">
+	                <div class="row">
+	                    <div class="col-lg-12">
+	                        <div class="card-header text-center pb-2 d-bg-h2 ">
+	                            <lable id="label" class="h2 font-weight-bold">Edit Task</lable>
+	                        </div>
+	                        <div class="card card-box-new tech-x-card-2 mt-5">
+	                            <div class="card-body">
+	
+	                                <form action="#" th:action="@{/saveTask}" th:object="${task}" method="POST" autocomplete="off">
+										<input type="hidden" th:field="*{id}" />
+										<div class="row mt-4">
+	                                        <div class="col-sm-4 col-md-4 col-lg-3 required-field">
+	                                            <label class="d-label">Client Name :</label>
+	                                        </div>
+	                                        <div class="col-sm-6 col-md-4 col-lg-3">
+	        									<select class="form-control input-anime"  th:field="*{company_name_id}" id="cname" required>
+													<option th:each="task:${Customerlist}"
+															th:value="${task.id}"
+															th:text="${task.CompanyName}" th:if="${task.company_id}==${CompanyID} AND ${task.status}==true"></option>
+	        									</select>
+	                                        </div>             
+	                                    </div>
+	                                    <div class="row mt-4">
+	                                        <div class="col-sm-4 col-md-4 col-lg-3 required-field">
+	                                            <label  for="CompanyName" class="d-label">Category :</label>
+	                                        </div>
+	                                        <div class="col-sm-6 col-md-4 col-lg-3">
+	                                        	<select  class="form-control input-anime" id="category" required>
+													<option th:each="task:${Categorylist}"
+															th:value="${task.category}"
+															th:text="${task.category}" th:if="${task.company_id}==${CompanyID}"></option>
+	                                            </select>
+	                                        </div>
+	                                    </div>
+	                                    <div class="row mt-4">
+	                                        <div class="col-sm-4 col-md-4 col-lg-3 required-field">
+	                                            <label class="d-label">Project Name :</label>
+	                                        </div>
+	                                        <div class="col-sm-6 col-md-4 col-lg-4">
+	        									<select class="form-control input-anime" th:field="*{project_id}" id="pname" required> 
+	        										<option th:each="p:${Projectlist}" th:if="${p.id}==${task.project_id}" 
+	        												th:value="*{project_id}"
+	        												th:text="${p.projectName}"></option>
+	        									</select>
+	                                        </div>             
+	                                    </div>
+	                                	<div class="row mt-4">
+	                                        <div class="col-sm-4 col-md-4 col-lg-3 required-field">
+	                                            <label class="d-label">Project Code :</label>
+	                                        </div>
+	                                        <div class="col-sm-6 col-md-4 col-lg-4">
+	        									<select class="form-control input-anime" id="projectCode" > 
+													<option th:each="p:${Projectlist}" th:if="${p.id}==${task.project_id}" 
+	        												th:text="${p.projectcode}"></option>
+	        									</select>
+	                                        </div>             
+	                                    </div>
+	                                    <div class="row mt-4">
+	                                        <div class="col-sm-4 col-md-4 col-lg-3 required-field">
+	                                            <label class="d-label">MileStone :</label>
+	                                        </div>
+	                                        <div class="col-sm-6 col-md-4 col-lg-4">
+	        									<select class="form-control input-anime"  th:field="*{milestone_id}" id="milestone" required> 
+	        										<option value="">Select</option>
+													<option th:each="task:${list}"
+															th:value="${task.id}"
+															th:text="${task.add_milestone}" th:if="${task.company_id}==${CompanyID}"></option>
+	        									</select>
+	                                        </div>             
+	                                    </div>
+	                                    <div class="row mt-4">
+	                                        <div class="col-sm-4 col-md-4 col-lg-3 required-field">
+	                                            <label class="d-label">Task :</label>
+	                                        </div>
+	                                        <div class="col-sm-6 col-md-4 col-lg-4">
+	                                            <input class="form-control input-anime" type="text" th:field="*{addTask}" placeholder="Add Task" id="task" required>
+											</div>
+										</div>
+										<div class="row mt-4">
+	                                        <div class="col-sm-4 col-md-4 col-lg-3">
+												<button type="submit" class="btn btn-info">Save</button>
+											</div>              
+	                                    </div> 
+	                                </form> 
+	                            </div>
+	                        </div>
+	                    </div>
+	                </div>
+	            </div>            
+	       </section>
+	   </div>
+			<script type="text/javascript">
+				$(document).ready(function () {
+			    	$("#startdate").datepicker({
+			        	dateFormat: "dd-mm-yy"
+			   		}).datepicker('setDate', '0');
+			
+			       	$("#enddate").datepicker({
+			        	dateFormat: "dd-mm-yy"
+			      	}).datepicker('setDate', '0');
+			            // DataTables initialisation
+			            var table = $('#data-table').DataTable();
+			        });
+			        
+				$(function(){
+				$("#cname, #category").change(function(){
+					$('#pname').find('option').remove().end();
+					
+					var Pname = $('#cname').val();
+					var category = $('#category').val();
+					$.ajax({
+						url:"[[@{/getprojectNamedropdown}]]",
+						data:{
+							name: Pname,
+							name1: category
+						},
+						success:function(data){
+						$('#pname').append($('<option>',{
+									value:"",
+									text:"Select"
+								}));
+							$.each(data,function(i,item){
+								$('#pname').append($('<option>',{
+									value:item.id,
+									text:item.projectName
+								}));
+							});
+						}
+					});
+				});	
+				$("#category, #pname").change(function(){
+					$('#projectCode').find('option').remove().end();
+					var Pcode =  $('#category').val();
+					var category = $('#pname').val();
+					$.ajax({
+						url:"[[@{/getdropdown}]]",
+						data:{
+							name: Pcode,
+							name1: category
+						},
+						success:function(data){
+							
+							$.each(data,function(i,item){
+								$('#projectCode').append($('<option>',{
+									value:item.projectcode,
+									text:item.projectcode
+								}));
+							});
+						}
+					});
+				});
+				
+			});
+			$("input").on("keypress", function(e) {
+				if (e.which === 32 && !this.value.length)
+					e.preventDefault();
+			});
+		</script>
+	</body> 
+</html>

@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">  
+<title>Update Address</title>
+		<link rel="icon" th:href="@{/dist/images/Dextero_Icon.ico}" type="image/x-icon" />
+        <link th:href="@{https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700}" rel="stylesheet" />
+        <link rel="stylesheet" th:href="@{/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css}"/>
+        <link rel="stylesheet" th:href="@{/plugins/datatables-responsive/css/responsive.bootstrap4.min.css}" />
+        <link rel="stylesheet" th:href="@{/dist/css/dextero.css}">
+        <link rel="stylesheet" th:href="@{/dist/css/all.css}">
+
+        <script th:src="@{/plugins/jquery/jquery.min.js}"></script>
+        <script th:src="@{/plugins/bootstrap/js/bootstrap.bundle.min.js}"></script>
+        <script th:src="@{/plugins/datatables/jquery.dataTables.min.js}"></script>
+        <script th:src="@{/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js}"></script>
+        <script th:src="@{/plugins/datatables-responsive/js/dataTables.responsive.min.js}"></script>
+        <script th:src="@{/plugins/datatables-responsive/js/responsive.bootstrap4.min.js}"></script>
+        <script th:src="@{/dist/js/dextero.js}"></script>
+        <script th:src="@{/dist/js/all.js}"></script>
+   		<link rel="stylesheet" href="//code.jquery.com/ui/1.13.1/themes/base/jquery-ui.css">
+   		
+   		<!----------------------------------------- Added files ----------------------------------------->
+		<link rel="stylesheet" th:href="@{/dist/css1/style.css}" />
+		<script src="https://kit.fontawesome.com/d13698d966.js" crossorigin="anonymous"></script>
+	    <script th:src="@{/dist/js/index.js}"></script>
+	
+	    <link rel="stylesheet" href="//code.jquery.com/ui/1.13.1/themes/base/jquery-ui.css">
+	    <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
+    	<script th:src="@{/chart js/cities.js}"></script>
+	
+</head>
+	<body class="hold-transition sidebar-mini layout-fixed">
+		<header th:include="header::header1"></header> 
+		<div class="content-wrapper">
+	        <section class="content-header">
+	            <div class="container-fluid">
+	                <div class="row">
+	                    <div class="col-lg-12">
+	                        <div class="card-header text-center pb-2 d-bg-h2 ">
+	                            <lable id="label" class="h2 font-weight-bold">Update Address Details</lable>
+	                        </div>
+	                        <div class="section">
+				                <div class="section_box">
+				                  <a th:href="@{/showFormForUpdate}" class="sectionBtn" id="link1"><i class="fa-solid fa-user"></i>Personal Details</a>
+				                  <a th:href="@{/address}" class="sectionBtn" id="link2"><i class="fa-solid fa-location-dot"></i>Address</a>
+				                  <a th:href="@{/education}" class="sectionBtn" id="link3"><i class="fa-solid fa-book"></i>Education</a>
+				                  <a th:href="@{/certificate_details}" class="sectionBtn" id="link4"><i class="fa-solid fa-certificate"></i>Certificate</a>
+				                  <a th:href="@{/bank_details}" class="sectionBtn" id="link5"><i class="fa-sharp fa-solid fa-chart-simple"></i>Bank Details</a>
+				                  <a th:href="@{/work_experience}" class="sectionBtn" id="link6"><i class="fa-solid fa-circle-info"></i>Work Experience</a>
+				                  <a th:href="@{/career_break}" class="sectionBtn" id="link7"><i class="fa-solid fa-lightbulb"></i>Career Break</a>
+				                </div>
+			              	</div>
+	                        <div class="card card-box-new tech-x-card-2 mt-5">
+	                            <div class="card-body">
+                               		<form action="#" class="form-horizontal" th:action="@{/save/address}" th:object="${addressDetails}"  method="POST" autocomplete="off">
+	                                	<div th:if="${successMessage}" class="success-message">
+											<b><p th:text="${successMessage}" style="font-size: 20px; color: green;"></p></b>
+										</div>
+	                                		<input type="hidden" th:field="*{employee_id}">
+                                        		<div class="row mt-4">
+                                                	<div class="col-sm-4 col-lg-4">
+                                                    	<label class="d-label">Address :</label>
+                                                  	</div>
+                                                    <div class="col-sm-6 col-md-4 col-lg-4">
+                                                 		<input type="text" th:field="*{PresentAddress1}" id="line1" placeholder="Address Line 1" class="form-control input-anime">
+                                                        <input type="text" th:field="*{PresentAddress2}" id="line2" placeholder="Address Line 2" class="form-control input-anime mt-4">
+                                              		</div>
+                                             	</div>
+                                              	<div class="row mt-4">
+                                                	<div class="col-sm-4 col-lg-4">
+                                                		<label class="d-label">Country :</label>
+                                             		</div>
+                                               		<div class="col-sm-6 col-md-4 col-lg-3">
+                                              			<select class="form-control input-anime" th:field="*{country}" onchange="print_state('country', this.selectedIndex);" id="cty" name ="cty">
+			                                        		<option th:value="*{country}" th:text="*{country}" selected>
+			        									</select>
+                                                   	</div>
+                                               	</div>
+                                                <div class="row mt-4">
+                                                	<div class="col-sm-4 col-lg-4">
+                                               			<label class="d-label">State :</label>
+                                                 	</div>
+                                               		<div class="col-sm-6 col-md-4 col-lg-3">
+                                                    	<select th:field="*{state}" id="country" onchange="print_city('state', this.selectedIndex);" name ="country" class="form-control input-anime">
+                                                       		<option th:value="*{state}" th:text="*{state}" selected>
+                                                  		</select>
+                                                	</div>
+                                             	</div>
+                                                <div class="row mt-4">
+                                            		<div class="col-sm-4 col-lg-4">
+                                                		<label class="d-label">City :</label>
+                                               		</div>
+                                                	<div class="col-sm-6 col-md-4 col-lg-3">
+                                                		<select th:field="*{city}" name="state" id ="state" class="form-control input-anime">
+                                                     		<option th:value="*{city}" th:text="*{city}" selected>
+		                                          		</select>
+                                                  	</div>
+                                              	</div>
+                                                <div class="row mt-4">
+                                               		<div class="col-sm-4 col-lg-4">
+                                                    	<label class="d-label">Pin Code</label>
+                                                    </div>
+                                             		<div class="col-sm-6 col-md-4 col-lg-2">
+                                                		<input type="text" th:field="*{pinCode}" id="pin code" placeholder="Pin Code" class="form-control input-anime">
+                                              		</div>
+                                           		</div>
+                                              	<div class="col-sm-4 col-md-4 col-lg-2 d-flex justify-content-between align-items-center">
+										        	<button type="submit" class="btn btn-info" id="subbut">Save</button>
+													<button class="nextBtn"><a th:href="@{/show_address_update_form}">Next<i class="fa-solid fa-arrow-right"></i></a></button>
+										       	</div> 
+										</form>
+                                	</div>
+                            	</div>
+                        	</div>
+                    	</div>
+                	</div>
+            </section>
+        </div>
+        <script language="javascript">print_state("sts");</script>
+        <script language="javascript">print_country("cty");</script>
+        <script>
+        	const setActiveLink = (linkId) => {
+		        const links = document.querySelectorAll(".section_box a");
+		        links.forEach((link) => {
+		          if (link.id === linkId) {
+		            link.classList.add("active");
+		          } else {
+		            link.classList.remove("active");
+		          }
+		        });
+		      };
+		
+		      const handleLinkClick = (event) => {
+		        const linkId = event.target.id;
+		        setActiveLink(linkId);
+		        localStorage.setItem("activeLink", linkId);
+		      };
+		
+		      document.addEventListener("DOMContentLoaded", () => {
+		        const activeLink = localStorage.getItem("activeLink");
+		        if (activeLink) {
+		          setActiveLink(activeLink);
+		        }
+		
+		        const links = document.querySelectorAll(".section_box a");
+		        links.forEach((link) => {
+		          link.addEventListener("click", handleLinkClick);
+		        });
+		      });
+        </script>
+	</body>
+         
+</html>

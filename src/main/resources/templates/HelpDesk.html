@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+	<title>Create Service Request</title>
+		<link rel="icon" th:href="@{/dist/images/Dextero_Icon.ico}" type="image/x-icon" />
+        <link th:href="@{https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700}" rel="stylesheet" />
+        <link rel="stylesheet" th:href="@{/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css}"/>
+        <link rel="stylesheet" th:href="@{/plugins/datatables-responsive/css/responsive.bootstrap4.min.css}" />
+        <link rel="stylesheet" th:href="@{/dist/css/dextero.css}">
+        <link rel="stylesheet" th:href="@{/dist/css/all.css}">
+
+        <script th:src="@{/plugins/jquery/jquery.min.js}"></script>
+        <script th:src="@{/plugins/bootstrap/js/bootstrap.bundle.min.js}"></script>
+        <script th:src="@{/plugins/datatables/jquery.dataTables.min.js}"></script>
+        <script th:src="@{/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js}"></script>
+        <script th:src="@{/plugins/datatables-responsive/js/dataTables.responsive.min.js}"></script>
+        <script th:src="@{/plugins/datatables-responsive/js/responsive.bootstrap4.min.js}"></script>
+        <script th:src="@{/dist/js/dextero.js}"></script>
+        <script th:src="@{/dist/js/all.js}"></script>
+
+		<link rel="stylesheet" href="https://code.jquery.com/ui/1.13.1/themes/base/jquery-ui.css">
+		<script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.13/css/bootstrap-multiselect.css" />
+		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.13/js/bootstrap-multiselect.min.js"></script>
+		<!--Export table button CSS-->
+		<script src="https://cdn.datatables.net/buttons/1.6.1/js/dataTables.buttons.min.js"></script>
+		<script src="https://cdn.datatables.net/buttons/1.6.1/js/buttons.flash.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+		<script src="https://cdn.datatables.net/buttons/1.6.1/js/buttons.html5.min.js"></script>
+		<script src="https://cdn.datatables.net/buttons/1.6.1/js/buttons.print.min.js"></script>
+		<!-- date filter -->
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.14.1/moment.min.js"></script>
+</head>
+	<body class="hold-transition sidebar-mini layout-fixed">
+	    <header th:include="header::header1"></header> 
+	  	<div class="content-wrapper">
+            <section class="content-header">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="card-header text-center pb-2 d-bg-h2 ">
+                                <lable id="label" class="h2 font-weight-bold">Create Service Request</lable>
+                            </div>
+                            <div class="card card-box-new tech-x-card-2 mt-5">
+                                <div class="card-body">
+                                    <form action="#" th:action="@{/SaveHelpDesk}" th:object="${helpdesk}" method="POST" autocomplete="off">
+                                       
+                                        <div class="row">
+                                           <div class="col-sm-6">
+                                                <div class="row mt-4">
+                                                    <div class="col-sm-5 required-field">
+                                                        <label class="d-label" >Client Name:</label>
+                                                    </div>
+                                                    <div class="col-sm-6">
+                                                        <select th:field="*{company_name_id}" id="cname" class="form-control input-anime">
+                                                            <option value="">Select</option>
+                                                            <option th:each="helpdesk:${CompanyList}" 
+                                                            		th:value="${helpdesk.id}"
+                                                                    th:text="${helpdesk.CompanyName}" th:if="${helpdesk.company_id}==${CompanyID} AND ${helpdesk.status}==true"></option>
+                                                        </select>
+                                                    </div>
+                                                </div>   
+                                           </div>
+                                           <div class="col-sm-6">
+                                                <div class="row mt-4">
+                                                    <div class="col-sm-6 required-field">
+                                                        <label class="d-label" >Category :</label>
+                                                    </div>
+                                                    <div class="col-sm-6 ">
+                                                        <select  class="form-control input-anime"  id="category" required>
+			                                                <option value="">Select</option>
+															<option th:each="t:${Categorylist}"
+																	th:value="${t.category}"
+																	th:text="${t.category}" ></option>
+	                                            		</select>                                         
+                                                    </div>   
+                                                </div> 
+                                           </div>
+                                           
+                                       </div>
+
+                                       <div class="row">
+                                       	<div class="col-sm-6">
+                                                <div class="row mt-4">
+                                                    <div class="col-sm-5 required-field">
+                                                        <label class="d-label" >Project Name :</label>
+                                                    </div>
+                                                    <div class="col-sm-6 ">
+                                                        <select th:field="*{project_id}" id="pname" class="form-control input-anime">
+                                                        </select>                                            
+                                                    </div>   
+                                                </div> 
+                                           </div>
+                                       		<div class="col-sm-6">
+                                                <div class="row mt-4">
+                                                    <div class="col-sm-6 required-field">
+                                                        <label class="d-label" >Project Code :</label>
+                                                    </div>
+                                                    <div class="col-sm-6">
+                                                        <select  id="projectCode" class="form-control input-anime">
+                                                        </select>                                            
+                                                    </div>   
+                                                </div> 
+                                           </div>
+                                                                   
+                                        </div>   
+                                        
+                                        <div class="row">
+                                        	<div class="col-sm-6">
+                                                <div class="row mt-4">
+                                                    <div class="col-sm-5 required-field">
+                                                        <label class="d-label" >Issue Date :</label>
+                                                    </div>
+                                                    <div class="col-sm-6 ">
+                                                        <input type="text" th:field="*{issuedate}" id="issuedate" class="form-control input-anime" placeholder="DD-MM-YYYY">
+                                                    </div>   
+                                                </div> 
+                                            </div>  
+                                            <div class="col-sm-6">
+                                                <div class="row mt-4">
+                                                    <div class="col-sm-6">
+                                                        <label class="d-label">Status :</label>
+                                                    </div>
+                                                    <div class="col-sm-6">
+                                                        <select th:field="*{status}" class="form-control input-anime">
+                                                            <option value="">Select</option>
+                                                            <option value="Open">Open</option>
+                                                            <option value="Work in progress">Work in progress</option>
+                                                            <option value="Hold">Hold</option>
+                                                            <option value="Closed">Closed</option>
+                                                        </select>
+                                                    </div>   
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="row">
+                                        	<div class="col-sm-6">
+                                                <div class="row mt-4">
+                                                    <div class="col-sm-5">
+                                                        <label class="d-label" >Type :</label>
+                                                    </div>
+                                                    <div class="col-sm-6">
+                                                        <select th:field="*{type}" class="form-control input-anime">
+                                                            <option value="">Select</option>
+                                                            <option value="Support">Support</option>
+                                                            <option value="Change Request">Change Request</option>
+                                                            <option value="Enhancement">Enhancement</option>
+                                                        </select>
+                                                    </div>   
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <div class="row mt-4">
+                                                    <div class="col-sm-6 required-field">
+                                                        <label class="d-label" >Assigned To(Resource)</label>
+                                                    </div>
+                                                    <div class="col-sm-6">
+                                                        <select th:field="*{employee_id}" class="form-control input-anime" id="assign_to">
+                                                            <option value="">Select</option>
+                                                            <option th:each="helpdesk:${employees}" 
+                                                            		th:value="${helpdesk.id}"
+                                                                	th:text="${helpdesk.firstname} + ' ' + ${helpdesk.lastname}" >
+                                                            </option>
+                                                        </select>
+                                                    </div>   
+                                                </div>
+                                            </div>
+                                        </div>  
+                                          
+                                        <div class="row">
+                                        	<div class="col-sm-6">
+                                                <div class="row mt-4">
+                                                    <div class="col-sm-5">
+                                                        <label class="d-label" >Supported By(Resource):</label>
+                                                    </div>
+                                                    <div class="col-sm-6">
+                                                        <select name="supportedBy" id="multiple-resource" multiple="multiple" class="form-control input-anime">
+                                                            <option th:each="e1:${employee}" 
+                                                            		 th:value="${e1.id}"
+                                                                	th:text="${e1.firstname} + ' ' + ${e1.lastname}" th:if="${e1.authority_id}==5 OR ${e1.authority_id}==6  AND ${e1.company_id}==${CompanyID}">
+                                                            </option>
+                                                        </select>
+                                                        <style>
+                                                			.dropdown-toggle::after {
+                                                    				display: inline-block;
+                                                   					margin-left: 16.255em;
+                                                    				vertical-align: 0.255em;
+                                                    				content: "";
+                                                    				border-top: 0.3em solid;
+                                                    				border-right: 0.3em solid transparent;
+                                                    				border-bottom: 0;
+                                                    				border-left: 0.3em solid transparent;
+                                               	 				}
+                                           			  </style>
+                                                    </div>   
+                                                </div>
+                                            </div>
+                                        	<div class="col-sm-6">
+                                                <div class="row mt-4">
+                                                    <div class="col-sm-6">
+                                                        <label class="d-label" >Responsibility :</label>
+                                                    </div>
+                                                    <div class="col-sm-6">
+                                                        <input type="text" th:field="*{responsibility}" class="form-control input-anime">
+                                                    </div>   
+                                                </div>
+                                            </div>
+                                            
+                                        </div> 
+                                        
+                                        <div class="row">
+                                        	<div class="col-sm-6">
+                                                <div class="row mt-4">
+                                                    <div class="col-sm-5">
+                                                        <label class="d-label" >Criticality :</label>
+                                                    </div>
+                                                    <div class="col-sm-6">
+                                                        <select th:field="*{criticality}"  class="form-control input-anime" >
+                                                            <option value="">Select</option>
+                                                            <option value="Low">Low</option>
+                                                            <option value="Medium">Medium</option>
+                                                            <option value="High">High</option>
+                                                        </select>
+                                                    </div>   
+                                                </div>
+                                            </div>  
+                                            <div class="col-sm-6">
+                                                <div class="row mt-4">
+                                                    <div class="col-sm-6">
+                                                        <label class="d-label" >Service Request Name :</label>
+                                                    </div>
+                                                    <div class="col-sm-6">
+                                                       <input class="form-control input-anime" type="text" th:field="*{serviceRequest}">
+                                                    </div>   
+                                                </div>
+                                            </div>   
+                                        </div> 
+                                        
+                                        <div class="row">
+                                        	<div class="col-sm-6">
+                                                <div class="row mt-4">
+                                                    <div class="col-sm-5">
+                                                        <label class="d-label" >Client StakeHolder :</label>
+                                                    </div>
+                                                    <div class="col-sm-6">
+                                                        <input  type="text" th:field="*{clientstakeholder}" class="form-control input-anime" >
+                                                    </div>   
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <div class="row mt-4">
+                                                    <div class="col-sm-6">
+                                                        <label class="d-label" >Category-1 :</label>
+                                                    </div>
+                                                    <div class="col-sm-6">
+                                                       <input class="form-control input-anime" type="text" th:field="*{category1}">
+                                                    </div>   
+                                                </div>
+                                            </div>
+                                        </div>   
+                                        
+                                        <div class="row">
+                                        	<div class="col-sm-6">
+                                                <div class="row mt-4">
+                                                    <div class="col-sm-5">
+                                                        <label class="d-label" >Category-2 :</label>
+                                                    </div>
+                                                    <div class="col-sm-6">
+                                                        <input  type="text" th:field="*{category2}" class="form-control input-anime" >
+                                                    </div>   
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <div class="row mt-4">
+                                                    <div class="col-sm-6">
+                                                        <label class="d-label" >Category-3 :</label>
+                                                    </div>
+                                                    <div class="col-sm-6">
+                                                       <input class="form-control input-anime" type="text" th:field="*{category3}">
+                                                    </div>   
+                                                </div>
+                                            </div>   
+                                         </div>
+                                        <div class="row">
+                                            <div class="col-sm-6">
+                                                <div class="row mt-4">
+                                                    <div class="col-sm-5">
+                                                        <label class="d-label" >Planned Start Date :</label>
+                                                    </div>
+                                                    <div class="col-sm-6">
+                                                        <input class="form-control input-anime"  type="text" th:field="*{plannedstartdate}" id="PlanStartDate"
+                                                        placeholder="DD-MM-YYYY" >
+                                                    </div>   
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <div class="row mt-4">
+                                                    <div class="col-sm-6">
+                                                        <label class="d-label" >Planned Closed Date :</label>
+                                                    </div>
+                                                    <div class="col-sm-6">
+                                                        <input class="form-control input-anime"type="text" th:field="*{plannedcloseddate}" id="PlanEndDate"
+                                                        placeholder="DD-MM-YYYY" >
+                                                    </div>   
+                                                </div>
+                                            </div>
+                                        </div>    
+
+                                        <div class="row">
+                                            <div class="col-sm-6">
+                                                <div class="row mt-4">
+                                                    <div class="col-sm-5">
+                                                        <label class="d-label" >Actual Start Date :</label>
+                                                    </div>
+                                                    <div class="col-sm-6">
+                                                        <input class="form-control input-anime" type="text" th:field="*{actualstartdate}" id="ActualStartDate"
+                                                        placeholder="DD-MM-YYYY">
+                                                    </div>   
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <div class="row mt-4">
+                                                    <div class="col-sm-6">
+                                                        <label class="d-label" >Actual Closed Date :</label>
+                                                    </div>
+                                                    <div class="col-sm-6">
+                                                        <input class="form-control input-anime" type="text" th:field="*{actualcloseddate}" id="ActualEndDate"
+                                                        placeholder="DD-MM-YYYY">
+                                                    </div>   
+                                                </div>  
+                                            </div>
+                                        </div> 
+                                        
+                                        <div class="row">
+                                            <div class="col-sm-6">
+                                                <div class="row mt-4">
+                                                    <div class="col-sm-5">
+                                                        <label class="d-label" >Description :</label>
+                                                    </div>
+                                                    <div class="col-sm-6">
+                                                        <textarea class="form-control input-anime"  maxlength="1000" th:field="*{description}" placeholder="Enter description"></textarea>
+                                                    </div>   
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <div class="row mt-4">
+                                                    <div class="col-sm-6">
+                                                        <label class="d-label" >Root Cause :</label>
+                                                    </div>
+                                                    <div class="col-sm-6">
+                                                        <textarea class="form-control input-anime" maxlength="1000" th:field="*{rootcause}" placeholder="Enter rootcause"></textarea>
+                                                    </div>   
+                                                </div>
+                                            </div>
+                                         </div>
+                                        <div class="row">
+                                            <div class="col-sm-6">
+                                                <div class="row mt-4">
+                                                    <div class="col-sm-5">
+                                                        <label class="d-label" >Action Plan :</label>
+                                                    </div>
+                                                    <div class="col-sm-6">
+                                                        <textarea class="form-control input-anime" maxlength="1000" th:field="*{actionplan}" placeholder="Enter action plan"></textarea>
+                                                    </div>   
+                                                </div>
+                                        	</div>
+                                            <div class="col-sm-6">
+                                                <div class="row mt-4">
+                                                    <div class="col-sm-6">
+                                                        <label class="d-label" >Current Status :</label>
+                                                    </div>
+                                                    <div class="col-sm-6">
+                                                        <textarea class="form-control input-anime" maxlength="1000" th:field="*{currentstatus}" placeholder="Enter current status"></textarea>
+                                                    </div>   
+                                                </div>        
+                                            </div>
+                                          </div>
+                                          <div class="row">
+                                            <div class="col-sm-6">
+                                                <div class="row mt-4">
+                                                    <div class="col-sm-5">
+                                                        <label class="d-label" >Next Step :</label>
+                                                    </div>
+                                                    <div class="col-sm-6">
+                                                        <textarea class="form-control input-anime" maxlength="1000" th:field="*{nextstep}" placeholder="Enter next step"></textarea>
+                                                    </div>   
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <div class="row mt-4">
+                                                    <div class="col-sm-6">
+                                                        <label class="d-label" >Remarks :</label>
+                                                    </div>
+                                                    <div class="col-sm-6">
+                                                        <textarea class="form-control input-anime" maxlength="1000" th:field="*{remarks}" placeholder="Enter remarks"></textarea>
+                                                    </div>   
+                                                </div> 
+                                            </div>
+                                         </div>
+                                         <div class="row">
+                                            <div class="col-sm-6">
+                                                <div class="row mt-4">
+                                                    <div class="col-sm-5">
+                                                        <label class="d-label" >Completion % :</label>
+                                                    </div>
+                                                    <div class="col-sm-6">
+                                                        <input type="number"  class="form-control input-anime" th:field="*{completion}" placeholder="eg. 10">
+                                                    </div>   
+                                                </div>
+                                            </div>
+                                                <div class="col-sm-4">
+                                            		<button type="submit" class="btn btn-primary mt-4">Submit</button>
+                                            	</div>
+                                        </div>    
+                                    </form>
+                                    <div class="table-responsive mt-4"> 
+                                        <table id="data-table"  border="1" class="table table-bordered table-responsive table-head-fixed table-striped">
+                                            <thead>
+                                                <tr>
+                                                    <!-- <th class="text-center">SR.NO.</th> -->
+                                                    <th class="text-center">Service Request ID</th>
+                                            		<th class="text-center">Client Name</th>
+                                            		<th class="text-center">Category</th>
+                                            		<th class="text-center">Project Name</th>
+                                            		<th class="text-center">Project Code</th>
+                                            		<th class="text-center">Issue Date</th>
+                                            		<th class="text-center">Criticality</th>
+                                            		<th class="text-center">Priority</th>
+                                            		<th class="text-center">Status</th>
+                                            		<th class="text-center">Type</th>
+                                            		<th class="text-center">Assigned To (Resource)</th>
+                                            		<th class="text-center">Supported By (Resource)</th>
+                                            		<th class="text-center">Service Requests Name</th>
+                                            		<th class="text-center">Description</th>
+                                            		<th class="text-center">Responsibility</th>
+                                            		<th class="text-center">Client Stakeholder</th>
+                                            		<th class="text-center">Category-1</th>
+                                            		<th class="text-center">Category-2</th>
+                                            		<th class="text-center">Category-3</th>
+                                            		<th class="text-center">Planned Start Date</th>
+                                            		<th class="text-center">Planned Close Date</th>
+                                            		<th class="text-center">Actual Start Date</th>
+                                            		<th class="text-center">Actual Close Date</th>
+                                            		<th class="text-center">Ageing</th>
+                                            		<th class="text-center">Root Cause</th>
+                                            		<th class="text-center">Action Plan</th>
+                                            		<th class="text-center">Current Status</th>
+                                            		<th class="text-center">Next Steps</th>
+                                            		<th class="text-center">Remarks</th>
+                                            		<th class="text-center">Completion %</th>
+                                            		<th class="text-center">Edit</th>
+                                            		<!-- <th class="text-center">Delete</th> -->
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr th:each="helpdesk:${HelpDeskList}" th:if="${helpdesk.company_id}==${CompanyID}">
+                                                    <!-- <td class="text-center" th:text="${helpdesk.id}"></td> -->
+                                                    <td class="text-center" th:text="${helpdesk.serviceRequestId}"></td>
+                                                    <td class="text-center" th:each="c:${CompanyList}" th:if="${c.id}==${helpdesk.company_name_id}" th:text="${c.CompanyName}"></td>
+		                                            <td class="text-center" th:each="p:${Projectlist}" th:if="${p.id}==${helpdesk.project_id}" th:text="${p.categoryName}"></td>
+		                                            <td class="text-center" th:each="p:${Projectlist}" th:if="${p.id}==${helpdesk.project_id}" th:text="${p.projectName}"></td>
+                                                    <td class="text-center" th:each="p:${Projectlist}" th:if="${p.id}==${helpdesk.project_id}" th:text="${p.projectcode}"></td>
+                                                    <td class="text-center" th:text="${helpdesk.issuedate}"></td>
+                                                    <td class="text-center" th:text="${helpdesk.criticality}"></td>
+                                                    <td class="text-center" th:text="${helpdesk.prioritylevel}"></td>
+                                                    <td class="text-center" th:text="${helpdesk.status}"></td>
+                                                    <td class="text-center" th:text="${helpdesk.type}"></td>
+                                                    <td class="text-center" th:each="e:${employee}" th:if="${e.id}==${helpdesk.employee_id}" th:text="${e.firstname} + ' ' + ${e.lastname}"></td>
+                                                    <td class="text-center">
+                                                    	<table>
+			                                            		<tr th:each="a:${HelpDeskMap}" th:if="${a.helpdesk_id}==${helpdesk.id}">
+			                                            			<td th:each="e1:${employee}" th:if="${e1.id}==${a.employee_id}" th:text="${e1.firstname} + ' ' + ${e1.lastname} "></td>
+			                                            		</tr>
+			                                            </table>
+                                                    </td>
+                                                    <td class="text-center" th:text="${helpdesk.serviceRequest}"></td>
+                                                    <td class="text-center" th:text="${helpdesk.description}"></td>
+                                                    <td class="text-center" th:text="${helpdesk.responsibility}"></td>
+                                                    <td class="text-center" th:text="${helpdesk.clientstakeholder}"></td>
+                                                    <td class="text-center" th:text="${helpdesk.category1}"></td>
+                                                    <td class="text-center" th:text="${helpdesk.category2}"></td>
+                                                    <td class="text-center" th:text="${helpdesk.category3}"></td>
+                                                    <td class="text-center" th:text="${helpdesk.plannedstartdate}"></td>
+                                                    <td class="text-center" th:text="${helpdesk.plannedcloseddate}"></td>
+                                                    <td class="text-center" th:text="${helpdesk.actualstartdate}"></td>
+                                                    <td class="text-center" th:text="${helpdesk.actualcloseddate}"></td>
+                                                    <td class="text-center" th:text="${helpdesk.ageing}"></td>
+                                                    <td class="text-center" th:text="${helpdesk.rootcause}"></td>
+                                                    <td class="text-center" th:text="${helpdesk.actionplan}"></td>
+                                                    <td class="text-center" th:text="${helpdesk.currentstatus}"></td>
+                                                    <td class="text-center" th:text="${helpdesk.nextstep}"></td>
+                                                    <td class="text-center" th:text="${helpdesk.remarks}"></td>
+                                                    <td class="text-center" th:text="${helpdesk.completion}"></td>
+                                                    <td class="text-center"><a th:href="@{/EditHelpDeskByAdmin/{id}(id=${helpdesk.id})}"><i class="fa-solid fa-pencil text-success"></i></a></td>
+                                                   <!--  <td class="text-center"><a th:href="@{/deleteHelpDeskForm/{id}(id=${helpdesk.id})}"><i class="fa-solid fa-trash text-danger"></i></a></td> -->
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>            
+            </section>
+        </div>
+        <script type="text/javascript">
+        	$(document).ready(function() {
+				  $('#data-table').DataTable( {
+				  	order: [5, 'desc'], // Order by the first column (date) in ascending order
+				    columnDefs: [
+				      {
+				        targets: 5,
+				        type: 'date-eu', // Set the column type to 'date-eu' for initial sorting
+				        render: function(data, type, row) {
+				          if (type === 'sort') {
+				            // Parse the date using moment.js
+				            var momentDate = moment(data, 'DD-MM-YYYY');
+				            // Return the parsed date as a sortable value
+				            return momentDate.isValid() ? momentDate.format('YYYYMMDD') : '';
+				          }
+				          return data;
+				        }
+				      }
+				    ],
+				    stateSave: true,
+				    stateDuration: 120,
+				    dom: "<'row'<'col-sm-0'l><'col-sm-2 text-right'B><'col-sm-1 text-right'><'col-sm-4'<'toolbar'>><'col-sm-3'f>>" +
+				         "<'row'<'col-sm-12'tr>>" +
+				         "<'row'<'col-sm-5'i><'col-sm-7'p>>",
+				    buttons: [
+				      {
+				        extend: 'excel',
+				        text: '<i class="fa fa-file-excel"></i> Excel',
+				        className: 'btn btn-primary btn-md',
+				        exportOptions: {
+          					columns: [1, 2, 3, 4, 5,6,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30] // Specify the columns to be included (column indexes)
+        				}
+				      }
+				    ]
+				 });
+			});
+            $(document).ready(function () {
+                $('select[multiple]').multiselect({
+                    buttonWidth: '250px'
+                });
+            });
+    
+             $(function(){
+				$("#cname, #category").change(function(){
+					$('#pname').find('option').remove().end();
+					
+					var Pname = $('#cname').val();
+					var Category= $('#category').val();
+					$.ajax({
+						url:"[[@{/getprojectNamedropdown}]]",
+						data:{
+							name: Pname,
+							name1: Category
+						},
+						success:function(data){
+						$('#pname').append($('<option>',{
+									value:"",
+									text:"Select"
+								}));
+							$.each(data,function(i,item){
+								$('#pname').append($('<option>',{
+									value:item.id,
+									text:item.projectName
+								}));
+							});
+						}
+					});
+				});	
+				$("#category, #pname").change(function(){
+					$('#projectCode').find('option').remove().end();
+					var Pcode =  $('#category').val();
+					var Category = $('#pname').val();
+					$.ajax({
+						url:"[[@{/getdropdown}]]",
+						data:{
+							name: Pcode,
+							name1: Category
+						},
+						success:function(data){
+							
+							$.each(data,function(i,item){
+								$('#projectCode').append($('<option>',{
+									value:item.projectcode,
+									text:item.projectcode
+								}));
+							});
+						}
+					});
+				});
+			});
+			 $(function(){
+				$("#pname").change(function(){
+					$('#assign_to').find('option').remove().end();
+					
+					var projectname = $('#pname').val();
+					$.ajax({
+						url:"[[@{/getAssignToDropdown}]]",
+						data:{
+							name1: projectname
+						},
+						success:function(data){
+							$.each(data,function(i,item){
+								$('#assign_to').append($('<option>',{
+									value:item.id,
+									text:item.firstname + ' ' + item.lastname 
+								}));
+							});
+						}
+					});
+				});
+    
+                $("#companyname").change(function () {
+                    $('#reqId').find('option').remove().end();
+    
+                    var requestID = $(this).val();
+                    $.ajax({
+                        url: "[[@{/getRequestIDdropdown}]]",
+                        data: {
+                            name: requestID
+                        },
+                        success: function (data) {
+                            $('#reqId').append($('<option>', {
+                                value: "",
+                                text: "Select"
+                            }));
+                            $.each(data, function (i, item) {
+                                $('#reqId').append($('<option>', {
+                                    value: item,
+                                    text: item
+                                }));
+                            });
+                        }
+                    });
+                });
+            });
+    
+            var dateToday = new Date();
+            $(document).ready(function () {
+                $("#issuedate").datepicker({
+                    dateFormat: "dd-mm-yy"
+                });
+    
+                $("#PlanStartDate").datepicker({
+                    dateFormat: 'dd-mm-yy',
+                    //minDate: dateToday,
+                    onClose: function (selected) {
+                        $("#PlanEndDate").datepicker("option", "minDate", selected);
+                    }
+                });
+    
+                $("#PlanEndDate").datepicker({
+                    dateFormat: "dd-mm-yy"
+                });
+    
+                $("#ActualStartDate").datepicker({
+                    dateFormat: 'dd-mm-yy',
+                    //minDate: dateToday,
+                    onClose: function (selected) {
+                        $("#ActualEndDate").datepicker("option", "minDate", selected);
+                    }
+                });
+    
+                $("#ActualEndDate").datepicker({
+                    dateFormat: "dd-mm-yy"
+                });
+            });
+            
+            $("input").on("keypress", function(e) {
+				if (e.which === 32 && !this.value.length)
+					e.preventDefault();
+			});
+			$("textarea").on("keypress", function(e) {
+				if (e.which === 32 && !this.value.length)
+					e.preventDefault();
+			});
+        </script>
+    </body>        
+</html>

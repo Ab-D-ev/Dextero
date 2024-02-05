@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+	<title>Employee Report</title>
+		<link rel="icon" th:href="@{/dist/images/Dextero_Icon.ico}" type="image/x-icon" />
+        <link th:href="@{https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700}" rel="stylesheet" />
+        <link rel="stylesheet" th:href="@{/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css}"/>
+        <link rel="stylesheet" th:href="@{/plugins/datatables-responsive/css/responsive.bootstrap4.min.css}" />
+        <link rel="stylesheet" th:href="@{/dist/css/dextero.css}">
+        <link rel="stylesheet" th:href="@{/dist/css/all.css}">
+
+        <script th:src="@{/plugins/jquery/jquery.min.js}"></script>
+        <script th:src="@{/plugins/bootstrap/js/bootstrap.bundle.min.js}"></script>
+        <script th:src="@{/plugins/datatables/jquery.dataTables.min.js}"></script>
+        <script th:src="@{/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js}"></script>
+        <script th:src="@{/plugins/datatables-responsive/js/dataTables.responsive.min.js}"></script>
+        <script th:src="@{/plugins/datatables-responsive/js/responsive.bootstrap4.min.js}"></script>
+        <script th:src="@{/dist/js/dextero.js}"></script>
+        <script th:src="@{/dist/js/all.js}"></script>
+		    <!-- date -->
+		<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+		<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+		<!--Export table button CSS-->
+		<script src="https://cdn.datatables.net/buttons/1.6.1/js/dataTables.buttons.min.js"></script>
+		<script src="https://cdn.datatables.net/buttons/1.6.1/js/buttons.flash.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+		<script src="https://cdn.datatables.net/buttons/1.6.1/js/buttons.html5.min.js"></script>
+		<script src="https://cdn.datatables.net/buttons/1.6.1/js/buttons.print.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.14.1/moment.min.js"></script>
+		
+</head>
+	<body class="hold-transition sidebar-mini layout-fixed">
+	    <header th:include="header::header1"></header> 
+		<div class="content-wrapper">
+            <section class="content-header">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="card-header text-center pb-2 d-bg-h2 ">
+                                <lable id="label" class="h2 font-weight-bold">Employee Report</lable>
+                            </div>
+                            <div class="card card-box-new tech-x-card-2 mt-5">
+                                <div class="card-body">
+                                	<div class="row mt-4">
+	                                    <div class="col-sm-4 col-md-4 col-lg-4">
+	                                        <label class="d-label" >Search By First Name :</label>
+	                                    </div>
+	                                    <div class="col-sm-6 col-md-4 col-lg-2">
+	                                         <input type="text" class="form-control input-anime" id="firstname"  th:onkeyup="myFunction()" autocomplete="off">
+	                                     </div>
+	                                </div>  
+	                                <div class="row mt-4">
+	                             		<div class="col-sm-4 col-md-4 col-lg-4">
+	                                   		<label class="d-label" >Search By Middle Name :</label>
+	                               		</div>
+	                                  	<div class="col-sm-6 col-md-4 col-lg-2">
+	                                 		<input type="text" class="form-control input-anime" id="middlename" th:onkeyup="myFunction()" autocomplete="off">
+	                                 	</div>
+	                                </div>  
+	                              	<div class="row mt-4">
+	                             		<div class="col-sm-4 col-md-4 col-lg-4">
+	                                		<label class="d-label" >Search By Last Name :</label>
+	                               		</div>
+	                               		<div class="col-sm-6 col-md-4 col-lg-2">
+	                                 		<input type="text" class="form-control input-anime" id="lastname" th:onkeyup="myFunction()" autocomplete="off">
+	                               		</div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	                                   		<button id="clearBtn" class="btn btn-info">Clear</button>
+	                               </div>
+                                 <div class="table-responsive mt-4"> 
+                                    <table id="data-table"  class="table table-bordered table-responsive table-striped">
+                                        <thead>
+                                            <tr>
+                                            	<th class="d-list-th">Edit</th>
+                                                <!-- <th class="d-list-th">SR.NO.</th> -->
+                                                <th class="d-list-th">First Name</th>
+                                                <th class="d-list-th">Middle Name</th>
+                                                <th class="d-list-th">Last Name</th>
+                                                <th class="d-list-th">Email ID</th>
+                                                <th class="d-list-th">Department</th>
+                                                <th class="d-list-th">Reporting Manager</th> 
+                                                <th class="d-list-th">Gender</th>
+                                                <th class="d-list-th">Age</th>
+                                                <th class="d-list-th">Date of Birth</th>
+                                                <th class="d-list-th">Present Address</th>
+                                                <th class="d-list-th">Mobile Number</th>
+                                                <th class="d-list-th">Telephone NO.</th>
+                                                <th class="d-list-th">Joining Date</th>
+                                                <th class="d-list-th">Blood Group</th>
+                                                <th class="d-list-th">Marital Status</th>
+                                                <th class="d-list-th">University/Institute</th>
+                                                <th class="d-list-th">Education Name</th>
+                                                <th class="d-list-th">Skill Sets</th>
+                                                <th class="d-list-th">Course</th>
+                                                <th class="d-list-th">Specialization</th>
+                                                <th class="d-list-th">Course Type</th>
+                                                <th class="d-list-th">Course Duration</th>
+                                                <th class="d-list-th">Grading System</th>
+                                                <th class="d-list-th">Grade</th>
+                                                <th class="d-list-th">Certification Name</th>
+                                                <th class="d-list-th">Certification Completion ID</th>
+                                                <th class="d-list-th">Certification Url</th>
+                                                <th class="d-list-th">Certification Validity</th>
+                                                <th class="d-list-th">Account Holder Name</th>
+                                                <th class="d-list-th">Bank Name</th>
+                                                <th class="d-list-th">Branch</th>
+                                                <th class="d-list-th">Account Number</th>
+                                                <th class="d-list-th">IFSC Code</th>
+                                                <th class="d-list-th">UAN No.</th>
+                                                <th class="d-list-th">PF No.</th>
+                                                <th class="d-list-th">ESI No.</th>
+                                                <th class="d-list-th">Disability</th>
+                                                <th class="d-list-th">Disability Type</th>
+                                                <th class="d-list-th">Reason Of Break</th>
+                                                <th class="d-list-th">Break Start From</th>
+                                                <th class="d-list-th">Break End</th>
+                                                <th class="d-list-th">Designation</th>
+            									<th class="d-list-th">Login Status</th>
+            									<th class="d-list-th">Email Status</th>
+                                                
+                                                <!-- <th class="d-list-th">Delete</th> -->
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr th:each="employee:${listEmployees}" th:if="${employee.company_id}==${CompanyID}">
+                                            	<td class="text-center"><a th:href="@{/UpdatePersonalDetailsByAdmin/{id}(id=${employee.id})}"><i class="fa-solid fa-pencil text-success"></i></a></td>
+                                               <!--  <td class="text-center sticky-col" th:text="${employee.id}"></td> -->
+                                                <td class="text-center" th:text="${employee.firstname}"></td>
+                                                <td class="text-center" th:text="${employee.middlename}"></td>
+                                                <td class="text-center" th:text="${employee.lastname}"></td>
+                                                <td class="text-center" th:text="${employee.email}"></td>
+                                                <td class="text-center" th:if="${employee.department == ' '}">
+													 -
+												</td>
+												<td class="text-center" th:if="${employee.department != ' '}">
+													 <div th:text="${employee.department}"></div>
+												</td>
+												<td class="text-center" th:if="${employee.reporting_manager == 0}">
+													 -
+												</td>
+												<td class="text-center" th:if="${employee.reporting_manager != 0}">
+													<div th:each="e1:${listEmployees}" th:if="${e1.id}==${employee.reporting_manager}" th:text="${e1.firstname} + ' ' + ${e1.lastname}"></div>
+												</td>
+                                                <td class="text-center" th:text="${employee.gender}"></td>
+                                                <td class="text-center" th:text="${employee.Age}"></td>
+                                                <td class="text-center" th:text="${employee.DateofBirth}"></td>
+                                                
+                                                <td class="text-center">
+                                                    <div th:each="a:${Addresslist}" th:if="${employee.id}==${a.employee_id}" th:text="${a.PresentAddress1}"></div>
+                                                    <div th:each="a:${Addresslist}" th:if="${employee.id}==${a.employee_id}" th:text="${a.PresentAddress2}"></div>
+                                                    <div th:each="a:${Addresslist}" th:if="${employee.id}==${a.employee_id}" th:text="${a.country}"></div>
+                                                    <div th:each="a:${Addresslist}" th:if="${employee.id}==${a.employee_id}" th:text="${a.state}"></div>
+                                                    <div th:each="a:${Addresslist}" th:if="${employee.id}==${a.employee_id}" th:text="${a.city}"></div>
+                                                    <div th:each="a:${Addresslist}" th:if="${employee.id}==${a.employee_id}" th:text="${a.pinCode}"></div>
+                                                </td>
+                                                <td class="text-center">
+                                                    <div th:text="${employee.MobileNumber1}"></div>
+                                                    <div th:text="${employee.MobileNumber2}"></div>
+                                                </td>
+                                                <td class="text-center">
+                                                    <div th:text="${employee.TelephoneNumber1}"></div>
+                                                    <div th:text="${employee.TelephoneNumber2}"></div>
+                                                </td>
+                                                <td class="text-center" th:text="${employee.joiningdate}"></td>
+                                                <td class="text-center" th:text="${employee.bloodgroup}"></td>
+                                                <td class="text-center" th:text="${employee.maritalStatus}"></td>
+                                                
+                                                <td class="text-center"><div th:each="u1:${Educationlist}" th:if="${employee.id}==${u1.employee_id}" th:text="${u1.instituteName}"></div></td>
+                                                <td class="text-center"><div th:each="u1:${Educationlist}" th:if="${employee.id}==${u1.employee_id}" th:text="${u1.educationName}"></div></td>
+                                                <td class="text-center"><div th:each="u1:${Educationlist}" th:if="${employee.id}==${u1.employee_id}" th:text="${u1.skillset}"></div></td>
+                                                <td class="text-center"><div th:each="u1:${Educationlist}" th:if="${employee.id}==${u1.employee_id}" th:text="${u1.course}"></div></td>
+                                                <td class="text-center"><div th:each="u1:${Educationlist}" th:if="${employee.id}==${u1.employee_id}" th:text="${u1.specialization}"></div></td>
+                                                <td class="text-center"><div th:each="u1:${Educationlist}" th:if="${employee.id}==${u1.employee_id}" th:text="${u1.courseType}"></div></td>
+                                                <td class="text-center"><div th:each="u1:${Educationlist}" th:if="${employee.id}==${u1.employee_id}" th:text="${u1.fromDate}  +  ' to '  +  ${u1.toDate}"></div></td>
+                                                <td class="text-center"><div th:each="u1:${Educationlist}" th:if="${employee.id}==${u1.employee_id}" th:text="${u1.gradingSystem}"></div></td>
+                                                <td class="text-center"><div th:each="u1:${Educationlist}" th:if="${employee.id}==${u1.employee_id}" th:text="${u1.grade}"></div></td>
+                                                
+                                                <td class="text-center"><div th:each="c:${Certificationlist}" th:if="${employee.id}==${c.employee_id}" th:text="${c.certificationName}"></div></td>
+                                                <td class="text-center"><div th:each="c:${Certificationlist}" th:if="${employee.id}==${c.employee_id}" th:text="${c.certificationCompletionID}"></div></td>
+                                                <td class="text-center"><div th:each="c:${Certificationlist}" th:if="${employee.id}==${c.employee_id}" th:text="${c.certificationUrl}"></div></td>
+                                                <td class="text-center"><div th:each="c:${Certificationlist}" th:if="${employee.id}==${c.employee_id}" th:text="${c.certificationValidity}"></div></td>
+                                                
+                                                <td class="text-center"><div th:each="b:${BankNamelist}" th:if="${employee.id}==${b.employee_id}" th:text="${b.accountholdername}"></div></td>
+                                                <td class="text-center"><div th:each="b:${BankNamelist}" th:if="${employee.id}==${b.employee_id}" th:text="${b.bankname}"></div></td>
+                                                <td class="text-center"><div th:each="b:${BankNamelist}" th:if="${employee.id}==${b.employee_id}" th:text="${b.branch}"></div></td>
+                                                <td class="text-center"><div th:each="b:${BankNamelist}" th:if="${employee.id}==${b.employee_id}" th:text="${b.accountnumber}"></div></td>
+                                                <td class="text-center"><div th:each="b:${BankNamelist}" th:if="${employee.id}==${b.employee_id}" th:text="${b.IFSC_Code}"></div></td>
+                                                <td class="text-center"><div th:each="b:${BankNamelist}" th:if="${employee.id}==${b.employee_id}" th:text="${b.UAN_Number}"></div></td>
+                                                <td class="text-center"><div th:each="b:${BankNamelist}" th:if="${employee.id}==${b.employee_id}" th:text="${b.PF_Number}"></div></td>
+                                                <td class="text-center"><div th:each="b:${BankNamelist}" th:if="${employee.id}==${b.employee_id}" th:text="${b.ESI_Number}"></div></td>
+                                                <td class="text-center" th:text="${employee.disability}"></td>
+                                                <td class="text-center" th:text="${employee.disabilityType}"></td>
+                                                
+                                                <td class="text-center"><div th:each="r:${CareerBreaklist}" th:if="${employee.id}==${r.employee_id}" th:text="${r.reasonOfBreak}"></div></td>
+                                                <td class="text-center"><div th:each="r:${CareerBreaklist}" th:if="${employee.id}==${r.employee_id}" th:text="${r.breakStartFrom}"></div></td>
+                                                <td class="text-center"><div th:each="r:${CareerBreaklist}" th:if="${employee.id}==${r.employee_id}" th:text="${r.breakEnd}"></div><br></td>
+                                                <td class="text-center"><div th:each="d:${Designationlist}" th:if="${d.id}==${employee.designation_id}" th:text="${d.designation}"></div></td>
+												<td class="text-center">
+													<span th:if="${employee.status}" ><b><a class="text-success" th:href="@{/Status/inactive/{id}(id=${employee.id})}">Active</a></b></span>
+    												<span th:if="${!employee.status}"><b><a class="text-danger" th:href="@{/Status/active/{id}(id=${employee.id})}">Inactive</a></b></span>
+												</td>
+												<td class="text-center">
+													<span th:if="${employee.email_status}" ><b><a class="text-success" th:href="@{/emailstatus/inactive/{id}(id=${employee.id})}">Active</a></b></span>
+    												<span th:if="${!employee.email_status}"><b><a class="text-danger" th:href="@{/emailstatus/active/{id}(id=${employee.id})}">Inactive</a></b></span>
+												</td>
+                                                
+                                                <!-- <td class="text-center"><a th:href="@{/deleteEmployee/{id}(id=${employee.id})}"><i class="fa-solid fa-trash text-danger"></i></a></td> -->
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                   	</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>            
+            </section>
+        </div>
+    	
+		<script type="text/javascript">
+			$(document).ready(function() {
+			    var table = $('#data-table').DataTable({
+			        dom: "<'row'<'col-sm-0'l><'col-sm-2 text-right'B><'col-sm-1 text-right'><'col-sm-4'<'toolbar'>><'col-sm-3'f>>" +
+			            "<'row'<'col-sm-12'tr>>" +
+			            "<'row'<'col-sm-5'i><'col-sm-7'p>>",
+			        buttons: [{
+			            extend: 'excel',
+			            text: '<i class="fa fa-file-excel"></i> Excel',
+			            className: 'btn btn-primary btn-md'
+			        }],
+			    });
+			});
+
+		 </script>
+		 <script>
+				$(function() {
+					  var table = $('#data-table').DataTable();
+					  var firstnameInput = $('#firstname');
+					  var middlenameInput = $('#middlename');
+					  var lastnameInput = $('#lastname');
+					  var clearBtn = $('#clearBtn');
+						
+					 function applyDateRangeFilter() {
+						var firstname = firstnameInput.val();
+					    var middlename = middlenameInput.val();
+					    var lastname = lastnameInput.val();
+				
+						 table
+					      .columns(1)
+					      .search(firstname)
+					      .draw();
+					
+					    table
+					      .columns(2)
+					      .search(middlename)
+					      .draw();
+					
+					    table
+					      .columns(3)
+					      .search(lastname)
+					      .draw();
+				
+					    if (firstname && middlename && lastname) {
+					      table.draw();
+					    } 
+					
+					    $.fn.dataTable.ext.search.pop();
+					  }
+					
+					  firstnameInput.on('input', applyDateRangeFilter);
+					  middlenameInput.on('input', applyDateRangeFilter);
+					  lastnameInput.on('input', applyDateRangeFilter);
+					
+					  // Event listener for clear button
+					  clearBtn.on('click', function() {
+					    firstnameInput.val('');
+					    middlenameInput.val('');
+					    lastnameInput.val('');
+					
+					    // Clear the filters and redraw the table
+					    table.search('').columns().search('').draw();
+					 });
+				});
+			 $("input").on("keypress", function(e) {
+				if (e.which === 32 && !this.value.length)
+					e.preventDefault();
+			});
+		</script>
+	</body>        
+</html>

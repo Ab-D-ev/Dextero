@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+	<title>Expense Report Back To Employee</title>
+		<link rel="icon" th:href="@{/dist/images/Dextero_Icon.ico}" type="image/x-icon" />
+        <link th:href="@{https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700}" rel="stylesheet" />
+        <link rel="stylesheet" th:href="@{/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css}"/>
+        <link rel="stylesheet" th:href="@{/plugins/datatables-responsive/css/responsive.bootstrap4.min.css}" />
+        <link rel="stylesheet" th:href="@{/dist/css/dextero.css}">
+        <link rel="stylesheet" th:href="@{/dist/css/all.css}">
+
+        <script th:src="@{/plugins/jquery/jquery.min.js}"></script>
+        <script th:src="@{/plugins/bootstrap/js/bootstrap.bundle.min.js}"></script>
+        <script th:src="@{/plugins/datatables/jquery.dataTables.min.js}"></script>
+        <script th:src="@{/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js}"></script>
+        <script th:src="@{/plugins/datatables-responsive/js/dataTables.responsive.min.js}"></script>
+        <script th:src="@{/plugins/datatables-responsive/js/responsive.bootstrap4.min.js}"></script>
+        <script th:src="@{/dist/js/dextero.js}"></script>
+        <script th:src="@{/dist/js/all.js}"></script>
+        
+   		<link rel="stylesheet" href="//code.jquery.com/ui/1.13.1/themes/base/jquery-ui.css">
+  		<script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
+		<link rel="stylesheet" href="https://cdn.datatables.net/select/1.3.4/css/select.dataTables.min.css">
+		<script src="https://cdn.datatables.net/select/1.3.4/js/dataTables.select.min.js"></script>
+		<style>
+			tfoot td {
+				font-weight:bold;
+			}
+		</style>
+</head>
+
+	<body class="hold-transition sidebar-mini layout-fixed">
+    	<header th:include="header::header1"></header> 
+		<div class="content-wrapper">
+            <section class="content-header">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="card-header text-center pb-2 d-bg-h2 ">
+                                <lable id="label" class="h2 font-weight-bold">Edit Expence Report List</lable>    
+                            </div>
+                            <div class="card card-box-new tech-x-card-2 mt-5">
+                                <div class="card-body">
+                                    <div class="table-responsive">    
+                                        <table id="data-table"  border="1" class="table table-bordered mt-4">
+                                            <thead>
+                                                <tr>
+													<th>Expense Category</th>
+													<th>From Location</th>
+													<th>To Location</th>
+													<th>Location</th>
+													<th>From Date</th>
+													<th>To Date</th>
+													<th>Mode of Travel</th>
+													<th>Vendor</th>
+													<th>Receipt</th>
+													<th>Amount</th>
+													<th>Edit</th>
+													<th>Action</th>
+													<th>Status</th>
+													<th>Reason</th>
+												</tr>
+											</thead>
+	   										<tbody>
+												<tr th:each="expense:${ExpenseReportList}" th:if="${expense.company_id}==${CompanyID}"> 
+													<td th:text="${expense.Category}"></td>
+													<td th:text="${expense.FromLocation}"></td>
+													<td th:text="${expense.ToLocation}"></td>
+													<td th:text="${expense.Location}"></td>
+													<td th:text="${expense.FromDate}"></td>
+													<td th:text="${expense.ToDate}"></td>
+													<td th:text="${expense.ModeOfTravel}"></td>
+													<td th:text="${expense.Vendor}"></td>
+													<td><a th:href="@{'/Image Folder/' + ${expense.Receipt}}">
+														<img  th:src="@{'/Image Folder/' + ${expense.Receipt}}" width="50" height="40" style="border: 1px solid black;"></img></a>
+													</td>
+													<td>
+														<span th:text="${expense.currency}" id="data1"></span>
+														<span th:text="${expense.Amount}" id="Amount"></span>
+													</td>
+													<td>
+				  					 					<a th:href="@{/EditBackToEmployeeExpense/{id}(id=${expense.id})}" th:if="${!expense.active && expense.approvedRejectFlag}"><i class="fa-solid fa-pencil text-success"></i></a> 
+                									</td>
+                									<td>
+                   										<a th:href="@{/ExpenseReport/approved/{id}(id=${expense.id})}"
+                      										th:if="${expense.ApprovedRejectFlag}==false AND ${expense.active}==false">
+                         										<span class="text-success">Approve</span></a> 
+                    									<a th:href="@{/ExpenseReport/reject/{id}(id=${expense.id})}"
+                       										th:if="${expense.ApprovedRejectFlag}==false AND ${expense.active}==false">
+                          										<span class="text-danger" >Reject</span></a>
+                 						 			</td>
+            										<td>   
+                   										<span th:if="${expense.active && expense.approvedRejectFlag}" class="text-success">APPROVED</span>
+                   										<span th:if="${!expense.active && expense.approvedRejectFlag}" class="text-danger">REJECTED</span>
+               							 			</td>
+               							 			<td th:text="${expense.reason}"></td>  
+												</tr>
+                                            </tbody>
+                                        </table>    
+                                    </div>
+                                    	<div class="row mt-4">   
+                                    		<a th:href="@{/EditExpenseReportPage}">Back to list</a> 
+                                    	</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>            
+            </section>
+        </div>
+        <script type="text/javascript">
+        	$(document).ready(function() {
+				  $('#data-table').DataTable( {
+				  	columnDefs: [{
+		                    targets: 4,
+		                    type: "date-eu"
+		                }],
+		              order: [4, 'desc']
+				    
+				  });
+				});
+        	$(function() {
+	            	var TotalValue1 = ' ';
+	       				$("#data1").each(function(index,value){
+		         			currentRow = ($(this).text());
+		         			TotalValue1 += currentRow
+	       			});
+       				
+       				var TotalValue = 0;
+       				$("tr #Amount").each(function(index,value){
+	         			currentRow1 = parseFloat($(this).text());
+	         			TotalValue += currentRow1
+       				});
+					document.getElementById('total').innerHTML = TotalValue1 + '   ' + TotalValue;
+				 });
+        </script>
+	</body>
+</html>

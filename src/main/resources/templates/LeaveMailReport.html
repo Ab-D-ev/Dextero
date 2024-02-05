@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title></title>
+	<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    
+<style>
+table, th, td {
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+</style>
+</head>
+
+ <body>
+ <p th:text="${companyName}"></p>
+    <span th:text="${ename}"></span>
+      has submitted a leave application.
+		<table border="1" style="width:70%">
+			<thead>
+				<tr class="text-center">
+					<th class="text-center">From Date</th>
+					<th class="text-center">To Date</th>
+					<th class="text-center">Leave Category</th>
+					<th class="text-center">Leave Type</th>
+					<th class="text-center">Reason</th>
+					<th class="text-center">Status</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="report:${LeaveMailReportList}" th:if="${report.company_id}==${CompanyID}">
+					<td class="text-center" th:text="${report.dateFrom}"></td>
+					<td class="text-center" th:text="${report.dateTo}"></td>
+					<td class="text-center" th:text="${report.leavecategory}"></td>
+					<td class="text-center" th:text="${report.leaveType}"></td>
+					<td class="text-center" th:text="${report.reason}"></td>
+					<td class="text-center">
+	                	<span th:if="${!report.active && !report.acceptRejectFlag}" class=" text-primary">PENDING</span>
+	                	<span th:if="${report.active && report.acceptRejectFlag}" class="text-success">ACCEPTED</span>
+	                   	<span th:if="${!report.active && report.acceptRejectFlag}" class="text-danger">REJECTED</span>
+	                </td>
+				</tr>
+			</tbody>
+		</table>
+		<br><br>
+			<a th:href="@{http://104.211.94.254:8080/HRportal/}" >Click Me</a>
+	</body>
+</html>

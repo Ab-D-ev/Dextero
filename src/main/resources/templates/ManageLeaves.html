@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title>Manage Leave</title>
+    	<link rel="icon" th:href="@{/dist/images/Dextero_Icon.ico}" type="image/x-icon" />
+        <link th:href="@{https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700}" rel="stylesheet" />
+        <link rel="stylesheet" th:href="@{/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css}"/>
+        <link rel="stylesheet" th:href="@{/plugins/datatables-responsive/css/responsive.bootstrap4.min.css}" />
+        <link rel="stylesheet" th:href="@{/dist/css/dextero.css}">
+        <link rel="stylesheet" th:href="@{/dist/css/all.css}">
+
+        <script th:src="@{/plugins/jquery/jquery.min.js}"></script>
+        <script th:src="@{/plugins/bootstrap/js/bootstrap.bundle.min.js}"></script>
+        <script th:src="@{/plugins/datatables/jquery.dataTables.min.js}"></script>
+        <script th:src="@{/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js}"></script>
+        <script th:src="@{/plugins/datatables-responsive/js/dataTables.responsive.min.js}"></script>
+        <script th:src="@{/plugins/datatables-responsive/js/responsive.bootstrap4.min.js}"></script>
+        <script th:src="@{/dist/js/dextero.js}"></script>
+        <script th:src="@{/dist/js/all.js}"></script>
+   		<!--Export table button CSS-->
+		<script src="https://cdn.datatables.net/buttons/1.6.1/js/dataTables.buttons.min.js"></script>
+		<script src="https://cdn.datatables.net/buttons/1.6.1/js/buttons.flash.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+		<script src="https://cdn.datatables.net/buttons/1.6.1/js/buttons.html5.min.js"></script>
+		<script src="https://cdn.datatables.net/buttons/1.6.1/js/buttons.print.min.js"></script>
+		<!-- date filter -->
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.14.1/moment.min.js"></script>
+   		     <!-- date -->
+		<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+		<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+</head>
+
+	<body class="hold-transition sidebar-mini layout-fixed">
+	    <header th:include="header::header1"></header> 
+		<div class="content-wrapper">
+	        <section class="content-header">
+	            <div class="container-fluid">
+	                <div class="row">
+	                    <div class="col-lg-12">
+	                        <div class="card-header text-center pb-2 d-bg-h2 ">
+	                            <lable id="label" class="h2 font-weight-bold">Manage Leave</lable>
+	                        </div>
+	                        <div class="card card-box-new tech-x-card-2 mt-5">
+	                            <div class="card-body">
+	                            	<div class="row mt-4">
+	                                	<div class="col-sm-4 col-md-4 col-lg-4">
+	                                    	<label class="d-label" >Search By Employee Name :</label>
+	                                   	</div>
+	                                   	<div class="col-sm-6 col-md-4 col-lg-2">
+	                                    	<input type="text" class="form-control input-anime" id="username" th:onkeyup="myFunction()" autocomplete="off">
+	                                   	</div>
+	                              	</div> 
+	                            	<div class="row mt-4">
+                                    	<div class="col-sm-4 col-md-4 col-lg-1">
+                                        	<label class="d-label" >From :</label>
+                                        </div>
+                                      	<div class="col-sm-6 col-md-4 col-lg-2">
+                                        	<input type="text" class="form-control input-anime" id="fromdate" th:onkeyup="myFunction()" placeholder="DD-MM-YYYY" autocomplete="off">
+                                      	</div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    	<div class="col-sm-4 col-md-4 col-lg-1">
+                                       		<label class="d-label" >To :</label>
+                                     	</div>
+                                      	<div class="col-sm-6 col-md-4 col-lg-2">
+                                       		<input class="form-control input-anime"  type="text" id="todate" th:onkeyup="myFunction()" placeholder="DD-MM-YYYY" autocomplete="off">
+                                      	</div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	                                   	<button id="clearBtn" class="btn btn-info">Clear</button>
+                                  	</div>
+	                                <div class="table-responsive mt-4">
+	                                    <table id="data-table" border="1" class="table table-bordered table-striped">
+	                                        <thead>
+	                                        	<tr th:if="${status}=='true'">
+	                                            	<!-- <th class="text-center">SR.NO.</th> -->
+	                                            	<th class="text-center">Employee Name</th>
+	                                                <th class="text-center">Leave Category</th>
+	                                                <th class="text-center">Type</th>
+	                                                <th class="text-center">Date From</th>
+	                                                <th class="text-center">Date To</th>
+	                                                <th class="text-center">Leave Type</th>
+	                                                <th class="text-center">Reason For Leave</th>
+	                                                <th class="text-center">Created Date</th>
+	                                                <th class="text-center">Action</th>
+	                                                <th class="text-center">Status</th>
+	                                                <!-- <th class="text-center">Edit</th> -->
+	                                            	<!-- <th class="text-center">Delete</th> -->
+	                                            </tr>
+	                                            <tr th:if="${status}=='false'">
+	                                            	<!-- <th class="text-center">SR.NO.</th> -->
+	                                            	<th class="text-center">Employee Name</th>
+	                                                <th class="text-center">Leave Category</th>
+	                                                <th class="text-center">Type</th>
+	                                                <th class="text-center">Date From</th>
+	                                                <th class="text-center">Date To</th>
+	                                                <th class="text-center">Leave Type</th>
+	                                                <th class="text-center">Reason For Leave</th>
+	                                                <th class="text-center">Created Date</th>
+	                                                <th class="text-center">Action</th>
+	                                                <th class="text-center">Status</th>
+	                                                <!-- <th class="text-center">Edit</th> -->
+	                                            	<!-- <th class="text-center">Delete</th> -->
+	                                            </tr>
+	                                        </thead>
+	                                        <tbody>
+	                                        		<tr th:each="leave:${leaveList}" th:if="${status}=='true' AND ${leave.employee_id}!=${UserName}AND ${leave.company_id}==${CompanyID}">
+		                                            	<!-- <td class="text-center" th:text="${leave.id}"></td> -->
+		                                            	<td class="text-center" th:each="e:${EmployeeList}" th:if="${e.id}==${leave.employee_id}" th:text="${e.firstname} + ' ' + ${e.lastname}"></td>
+		                                                <td class="text-center" th:each="l1:${leavecategorylist}" th:if="${l1.id}==${leave.leavecategory_id}" th:text="${l1.lcategory}"></td>
+		                                               <td class="text-center" th:text="${leave.type}"></td>
+		                                                <td class="text-center" th:text="${leave.dateFrom}"></td>
+		                                                <td class="text-center" th:text="${leave.dateTo}"></td>
+		                                                <td class="text-center" th:text="${leave.leaveType}"></td>
+		                                                <td class="text-center" th:text="${leave.reason}"></td>
+		                                                <td class="text-center" th:text="${leave.currentdate}"></td>
+		                                                <td class="text-center">
+		                                                    <a th:href="@{/ManageLeaves/accept/{id}(id=${leave.id})}"
+		                                                        th:if="${leave.acceptRejectFlag}==false AND ${leave.active}==false">
+		                                                        <span class="text-success">ACCEPT</span></a>
+		                                                    <a th:href="@{/ManageLeaves/reject/{id}(id=${leave.id})}"
+		                                                        th:if="${leave.acceptRejectFlag}==false AND ${leave.active}==false">
+		                                                        <span class="text-danger" >REJECT</span></a>
+		                                                </td>
+		                                                <td class="text-center">
+		                                                    <span th:if="${!leave.active && !leave.acceptRejectFlag}" class=" text-primary">PENDING</span>
+		                                                    <span th:if="${leave.active && leave.acceptRejectFlag}" class="text-success">ACCEPTED</span>
+		                                                    <span th:if="${!leave.active && leave.acceptRejectFlag}" class="text-danger">REJECTED</span>
+		                                                </td>
+		                                                <!-- <td class="text-center"><a th:href="@{/EditLeaveForm/{id}(id=${leave.id})}"><i class="fa-solid fa-pencil text-success"></i></a></td> -->
+		                                           		<!-- <td class="text-center"><a th:href="@{/deleteLeaveForm/{id}(id=${leave.id})}"><i class="fa-solid fa-trash text-danger"></i></a></td> -->
+		                                            </tr>
+		                                            
+	                                        	<div th:each="u:${ListUserName}">
+	                                        		<tr th:each="leave:${leaveList}" th:if="${leave.employee_id}!=${UserName} AND ${leave.employee_id}==${u.id} AND ${leave.company_id}==${CompanyID}">
+		                                            	<!-- <td class="text-center" th:text="${leave.id}"></td> -->
+		                                            	<td class="text-center" th:each="e:${ListUserName}" th:if="${e.id}==${leave.employee_id}" th:text="${e.firstname} + ' ' + ${e.lastname}"></td>
+		                                                <td class="text-center" th:each="l1:${leavecategorylist}" th:if="${l1.id}==${leave.leavecategory_id}" th:text="${l1.lcategory}"></td>
+		                                                <td class="text-center" th:text="${leave.type}"></td>
+		                                                <td class="text-center" th:text="${leave.dateFrom}"></td>
+		                                                <td class="text-center" th:text="${leave.dateTo}"></td>
+		                                                <td class="text-center" th:text="${leave.leaveType}"></td>
+		                                                <td class="text-center" th:text="${leave.reason}"></td>
+		                                                <td class="text-center" th:text="${leave.currentdate}"></td>
+		                                                <td class="text-center">
+		                                                    <a th:href="@{/ManageLeaves/accept/{id}(id=${leave.id})}"
+		                                                        th:if="${leave.acceptRejectFlag}==false AND ${leave.active}==false">
+		                                                        <span class="text-success">ACCEPT</span></a>
+		                                                    <a th:href="@{/ManageLeaves/reject/{id}(id=${leave.id})}"
+		                                                        th:if="${leave.acceptRejectFlag}==false AND ${leave.active}==false">
+		                                                        <span class="text-danger" >REJECT</span></a>
+		                                                </td>
+		                                                <td class="text-center">
+		                                                    <span th:if="${!leave.active && !leave.acceptRejectFlag}" class=" text-primary">PENDING</span>
+		                                                    <span th:if="${leave.active && leave.acceptRejectFlag}" class="text-success">ACCEPTED</span>
+		                                                    <span th:if="${!leave.active && leave.acceptRejectFlag}" class="text-danger">REJECTED</span>
+		                                                </td>
+		                                                <!-- <td class="text-center"><a th:href="@{/EditLeaveForm/{id}(id=${leave.id})}"><i class="fa-solid fa-pencil text-success"></i></a></td> -->
+		                                           		<!-- <td class="text-center"><a th:href="@{/deleteLeaveForm/{id}(id=${leave.id})}"><i class="fa-solid fa-trash text-danger"></i></a></td> -->
+		                                            </tr>
+	                                        	</div> 
+	                                        </tbody>
+	                                    </table>
+	                                </div>
+	                            </div>
+	                        </div>
+	                    </div>
+	                </div>
+	            </div>            
+	        </section>
+	    </div>
+	</body> 
+		<script type="text/javascript">
+			 $(document).ready(function() {
+				  $('#data-table').DataTable( {
+				  	order: [3, 'desc'], // Order by the first column (date) in ascending order
+				    columnDefs: [
+				      {
+				        targets: 3,
+				        type: 'date-eu', // Set the column type to 'date-eu' for initial sorting
+				        render: function(data, type, row) {
+				          if (type === 'sort') {
+				            // Parse the date using moment.js
+				            var momentDate = moment(data, 'DD-MM-YYYY');
+				            // Return the parsed date as a sortable value
+				            return momentDate.isValid() ? momentDate.format('YYYYMMDD') : '';
+				          }
+				          return data;
+				        }
+				      }
+				    ],
+				    stateSave: true,
+				    stateDuration: 120,
+				    dom: "<'row'<'col-sm-0'l><'col-sm-2 text-right'B><'col-sm-1 text-right'><'col-sm-4'<'toolbar'>><'col-sm-3'f>>" +
+				         "<'row'<'col-sm-12'tr>>" +
+				         "<'row'<'col-sm-5'i><'col-sm-7'p>>",
+				    buttons: [
+				      
+				      {
+				        extend: 'excel',
+				        text: '<i class="fa fa-file-excel"></i> Excel',
+				        className: 'btn btn-primary btn-md',
+				        exportOptions: {
+          					columns: [0, 1, 2, 3, 4, 5,6,8] // Specify the columns to be included (column indexes)
+        				}
+				      },
+				      {
+				        extend: 'pdf',
+				        text: '<i class="fa fa-file-pdf"></i> PDF',
+				        className: 'btn btn-primary btn-md',
+				        exportOptions: {
+          					columns: [0, 1, 2, 3, 4, 5,6,8] // Specify the columns to be included (column indexes)
+        				}
+				      }
+				    ]
+				  });
+				});
+			
+        	$(function() {
+				  var table = $('#data-table').DataTable();
+				  var usernameInput = $('#username');
+				  var fromdateInput = $('#fromdate');
+				  var todateInput = $('#todate');
+				  var clearBtn = $('#clearBtn');
+				
+				  // Datepicker initialization
+				  fromdateInput.datepicker({
+				    dateFormat: "dd-mm-yy",
+				    onClose: function(selected) {
+				      todateInput.datepicker("option", "minDate", selected);
+				    }
+				  });
+				
+				  todateInput.datepicker({
+				    dateFormat: "dd-mm-yy",
+				    onClose: function(selected) {
+				      fromdateInput.datepicker("option", "maxDate", selected);
+				    }
+				  });
+				
+				  // Event listener for date range change
+				  function applyDateRangeFilter() {
+				    var username = usernameInput.val();
+				    var fromDate = moment(fromdateInput.val(), 'DD-MM-YYYY');
+				    var toDate = moment(todateInput.val(), 'DD-MM-YYYY');
+				
+				    table
+				      .columns(0)
+				      .search(username)
+				      .draw();
+				
+				    $.fn.dataTable.ext.search.push(function(settings, data, dataIndex) {
+				      var date = moment(data[2,3], 'DD-MM-YYYY');
+				
+				      if (date.isSameOrAfter(fromDate) && date.isSameOrBefore(toDate)) {
+				        return true;
+				      }
+				
+				      return false;
+				    });
+				
+				    if (username && fromDate && toDate) {
+				      table.draw();
+				    } 
+				
+				    $.fn.dataTable.ext.search.pop();
+				  }
+				
+				  usernameInput.on('input', applyDateRangeFilter);
+				  fromdateInput.on('change', applyDateRangeFilter);
+				  todateInput.on('change', applyDateRangeFilter);
+				
+				  // Event listener for clear button
+				  clearBtn.on('click', function() {
+				    usernameInput.val('');
+				    fromdateInput.val('');
+				    todateInput.val('');
+				
+				    // Clear the filters and redraw the table
+				    table.search('').columns().search('').draw();
+				  });
+				});
+				 $("input").on("keypress", function(e) {
+					if (e.which === 32 && !this.value.length)
+						e.preventDefault();
+				});
+		</script>   			
+</html>

@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title>Bank Details</title>
+    	<link rel="icon" th:href="@{/dist/images/Dextero_Icon.ico}" type="image/x-icon" />
+        <link th:href="@{https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700}" rel="stylesheet" />
+        <link rel="stylesheet" th:href="@{/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css}"/>
+        <link rel="stylesheet" th:href="@{/plugins/datatables-responsive/css/responsive.bootstrap4.min.css}" />
+        <link rel="stylesheet" th:href="@{/dist/css/dextero.css}">
+        <link rel="stylesheet" th:href="@{/dist/css/all.css}">
+
+        <script th:src="@{/plugins/jquery/jquery.min.js}"></script>
+        <script th:src="@{/plugins/bootstrap/js/bootstrap.bundle.min.js}"></script>
+        <script th:src="@{/plugins/datatables/jquery.dataTables.min.js}"></script>
+        <script th:src="@{/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js}"></script>
+        <script th:src="@{/plugins/datatables-responsive/js/dataTables.responsive.min.js}"></script>
+        <script th:src="@{/plugins/datatables-responsive/js/responsive.bootstrap4.min.js}"></script>
+        <script th:src="@{/dist/js/dextero.js}"></script>
+        <script th:src="@{/dist/js/all.js}"></script>
+        <!-- date -->
+		<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+		<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+		<!--Export table button CSS-->
+		<script src="https://cdn.datatables.net/buttons/1.6.1/js/dataTables.buttons.min.js"></script>
+		<script src="https://cdn.datatables.net/buttons/1.6.1/js/buttons.flash.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+		<script src="https://cdn.datatables.net/buttons/1.6.1/js/buttons.html5.min.js"></script>
+		<script src="https://cdn.datatables.net/buttons/1.6.1/js/buttons.print.min.js"></script>
+		<!-- date filter -->
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.14.1/moment.min.js"></script>
+		<style>
+			.btn-text-center{
+				text-align: center;	
+			}
+		</style>
+	
+</head>
+	<body class="hold-transition sidebar-mini layout-fixed">
+		<header th:include="header::header1"></header> 
+		<div class="content-wrapper">
+	        <section class="content-header">
+	            <div class="container-fluid">
+	                <div class="row">
+	                    <div class="col-lg-12">
+	                        <div class="card-header text-center pb-2 d-bg-h2 ">
+	                            <lable id="label" class="h2 font-weight-bold">Bank Details</lable>
+	                        </div>
+	                        <div class="card card-box-new tech-x-card-2 mt-5">
+	                            <div class="card-body">
+                                	<form action="#" class="form-horizontal" th:action="@{/save/bank_details}" th:object="${bankDetails}" method="post">
+                                  
+                                        	<div class="row mt-4">
+                                                    <div class="col-sm-4 col-lg-4">
+                                                        <label class="d-label">Account Holder Name:</label>
+                                                    </div>
+                                                    <div class="col-sm-6 col-md-4 col-lg-4">
+                                                        <input class="form-control input-anime" type="text"
+                                                            th:field="*{accountholdername}" placeholder="Account Holder Name">
+                                                    </div>
+                                                </div>
+
+                                                <div class="row mt-4">
+                                                    <div class="col-sm-4 col-lg-4">
+                                                        <label class="d-label">Bank Name:</label>
+                                                    </div>
+                                                    <div class="col-sm-6 col-md-4 col-lg-4">
+                                                        <input class="form-control input-anime" type="text"
+                                                            th:field="*{bankname}" placeholder="Bank Name">
+                                                    </div>
+                                                </div>
+
+                                                <div class="row mt-4">
+                                                    <div class="col-sm-4 col-lg-4">
+                                                        <label class="d-label">Branch:</label>
+                                                    </div>
+                                                    <div class="col-sm-6 col-md-4 col-lg-4">
+                                                        <input class="form-control input-anime" type="text"
+                                                            th:field="*{branch}" placeholder="Branch">
+                                                    </div>
+                                                </div>
+
+                                                <div class="row mt-4">
+                                                    <div class="col-sm-4 col-lg-4">
+                                                        <label class="d-label">Account Number:</label>
+                                                    </div>
+                                                    <div class="col-sm-6 col-md-4 col-lg-2">
+                                                        <input class="form-control input-anime" type="text"
+                                                            th:field="*{accountnumber}" placeholder="Account Number"
+                                                            oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+                                                            minlength="13" maxlength="13" id="accountnumber">
+                                                    </div>
+                                                    <label id="message4"></label>
+                                                </div>
+
+                                                <div class="row mt-4">
+                                                    <div class="col-sm-4 col-lg-4">
+                                                        <label class="d-label">IFSC Code:</label>
+                                                    </div>
+                                                    <div class="col-sm-6 col-md-4 col-lg-2">
+                                                        <input class="form-control input-anime" type="text"
+                                                            th:field="*{IFSC_Code}" placeholder="IFSC Code"
+                                                            oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+                                                            minlength="11" maxlength="11" id="ifsc">
+                                                    </div>
+                                                    <label id="message5"></label>
+                                                </div>
+												<div class="row mt-4">
+			                                            <div class="col-sm-4 col-lg-4">
+			                                                <label class="d-label">UAN NO:</label>
+			                                            </div>
+			                                            <div class="col-sm-6 col-md-4 col-lg-2">
+			                                                <input class="form-control input-anime" type="text" th:field="*{UAN_Number}" placeholder="UAN Number" 
+			                                                oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+			                                                minlength="12" maxlength="12" style='text-transform:uppercase' id="uan_number">
+			                                            </div>
+			                                            <label id="message6"></label>
+			                                        </div> 
+													<div class="row mt-4">
+			                                            <div class="col-sm-4 col-lg-4">
+			                                                <label class="d-label">PF NO:</label>
+			                                            </div>
+			                                            <div class="col-sm-6 col-md-4 col-lg-3">
+			                                                <input class="form-control input-anime" type="text" th:field="*{PF_Number}" placeholder="PF Number" pattern="[A-Z|a-z]{5}[0-9]{17}$"
+			                                                oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+			                                                minlength="22" maxlength="22" style='text-transform:uppercase' id="pf_number">
+			                                            </div>
+			                                            <label id="message7"></label>
+			                                        </div> 
+													<div class="row mt-4">
+			                                            <div class="col-sm-4 col-lg-4">
+			                                                <label class="d-label">ESI NO:</label>
+			                                            </div>
+			                                            <div class="col-sm-6 col-md-4 col-lg-3">
+			                                                <input class="form-control input-anime" type="text" th:field="*{ESI_Number}" placeholder="ESI Number" pattern="[0-9]{17}$"
+			                                                oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+			                                                minlength="17" maxlength="17" style='text-transform:uppercase' id="esi_number">
+			                                            </div>
+			                                            <label id="message8"></label>
+			                                        </div>
+												<div class="row mt-4">
+					                            	<div class="col-sm-4 col-md-4 col-lg-3">
+					                             		<button type="submit" class="btn btn-info ">Save</button>
+					                                </div> 
+					                           	</div>    
+										</form>
+										<div class="table-responsive mt-4">
+		                                 <table id="data-table" data-order='[[ 0, "desc" ]]'  class="table table-bordered table-responsive table-head-fixed table-striped">
+											<thead>
+												<tr class="text-center">
+				                              		<th class="d-list-th">Account Holder Name</th>
+	                                                <th class="d-list-th">Bank Name</th>
+	                                                <th class="d-list-th">Branch</th>
+	                                                <th class="d-list-th">Account Number</th>
+	                                                <th class="d-list-th">IFSC Code</th>
+	                                                <th class="d-list-th">UAN No.</th>
+	                                                <th class="d-list-th">PF No.</th>
+	                                                <th class="d-list-th">ESI No.</th>
+				                                   	<th class="text-center">Edit</th> 
+				                                </tr>
+	                                        </thead>
+		                                        <tbody>
+		                                        	<tr class="text-center" th:each="a:${BankDetailsList}" th:if="${a.employee_id}==${UserName}">
+							                        	<td class="text-center" th:text="${a.accountholdername}"></td>
+		                                                <td class="text-center" th:text="${a.bankname}"></td>
+		                                                <td class="text-center" th:text="${a.branch}"></td>
+		                                                <td class="text-center" th:text="${a.accountnumber}"></td>
+		                                                <td class="text-center" th:text="${a.IFSC_Code}"></td>
+		                                                <td class="text-center" th:text="${a.UAN_Number}"></td>
+		                                                <td class="text-center" th:text="${a.PF_Number}"></td>
+		                                                <td class="text-center" th:text="${a.ESI_Number}"></td>
+							                       		<td class="text-center"><a th:href="@{/edit/bank/details/{id}(id=${a.id})}"><i class="fa-solid fa-pencil text-success"></i></a></td>
+						                            </tr>
+		                                        </tbody>
+											</table> 
+										</div>
+                            		</div>
+                        		</div>
+                    		</div>
+                		</div>
+           			</div>
+        	</section>
+    	</div>
+    	<script>
+	       $(document).ready(function() {
+				  $('#data-table').DataTable( {
+				    stateSave: true,
+				    stateDuration: 120,
+				    dom: "<'row'<'col-sm-0'l><'col-sm-2 text-right'B><'col-sm-1 text-right'><'col-sm-4'<'toolbar'>><'col-sm-3'f>>" +
+				         "<'row'<'col-sm-12'tr>>" +
+				         "<'row'<'col-sm-5'i><'col-sm-7'p>>",
+				    buttons: [
+				      
+				      {
+				        extend: 'excel',
+				        text: '<i class="fa fa-file-excel"></i> Excel',
+				        className: 'btn btn-primary btn-md'
+				      },
+				      {
+				        extend: 'pdf',
+				        text: '<i class="fa fa-file-pdf"></i> PDF',
+				        className: 'btn btn-primary btn-md'
+				      }
+				    ]
+				  });
+				});
+				
+				
+	    </script>
+     	 <script type="text/javascript">
+      		
+      		$("#accountnumber").on("keyup", function(){
+			    var valid = /^[0-9]{13}$/.test(this.value),
+			        val = this.value;
+			      if(valid){
+			        $('#message4').html('').css('color', 'green');
+					 }
+			     else{
+			     	if(val==''){
+			     		$('#message4').html('').css('color', 'red');
+			     	}
+			     	else{
+						$('#message4').html('It should be 13 digit.').css('color', 'red');
+				 	}
+				}
+			});
+			
+			$("#ifsc").on("keyup", function(){
+			    var valid = /^[A-Z|a-z]{4}[0][a-zA-Z0-9]{6}$/.test(this.value),
+			        val = this.value;
+			      if(valid){
+			        $('#message5').html('').css('color', 'green');
+					 }
+			     else{
+			     	if(val==''){
+			     		$('#message5').html('').css('color', 'red');
+			     	}
+			     	else{
+						$('#message5').html('It should be 11 characters long <br> The first four characters should be upper case alphabets. <br> The fifth character should be 0. <br> The last six characters usually numeric, but can also be alphabetic.').css('color', 'red');
+				 	}
+				}
+			});
+			
+			$("#uan_number").on("keyup", function(){
+			    var valid = /^[0-9]{12}$/.test(this.value),
+			        val = this.value;
+			      if(valid){
+			        $('#message6').html('').css('color', 'green');
+					 }
+			     else{
+			     	if(val==''){
+			     		$('#message6').html('').css('color', 'red');
+			     	}
+			     	else{
+						$('#message6').html('It should be 12 digit.').css('color', 'red');
+				 	}
+				}
+			});
+			
+			$("#pf_number").on("keyup", function(){
+			    var valid = /^[A-Z|a-z]{5}[0-9]{17}$/.test(this.value),
+			        val = this.value;
+			      if(valid){
+			        $('#message7').html('').css('color', 'green');
+					 }
+			     else{
+			     	if(val==''){
+			     		$('#message7').html('').css('color', 'red');
+			     	}
+			     	else{
+						$('#message7').html('It should be 22 characters long <br> The first five characters should be upper case alphabets. and rest should be number.').css('color', 'red');
+				 	}
+				}
+			});
+			$("#esi_number").on("keyup", function(){
+			    var valid = /^[0-9]{17}$/.test(this.value),
+			        val = this.value;
+			      if(valid){
+			        $('#message8').html('').css('color', 'green');
+					 }
+			     else{
+			     	if(val==''){
+			     		$('#message8').html('').css('color', 'red');
+			     	}
+			     	else{
+						$('#message8').html('It should be 17 characters long and should be number.').css('color', 'red');
+				 	}
+				}
+			});
+      
+			$("input").on("keypress", function(e) {
+			    if (e.which === 32 && !this.value.length)
+			        e.preventDefault();
+			});
+			
+			$("textarea").on("keypress", function(e) {
+			    if (e.which === 32 && !this.value.length)
+			        e.preventDefault();
+			});
+			
+			
+	</script>
+</body>
+
+</html>

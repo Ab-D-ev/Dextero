@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title></title>
+	<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    
+<style>
+table, th, td {
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+</style>
+</head>
+
+ <body>
+ <p th:text="${companyName}"></p>
+    <span th:text="${ename}"></span>
+      has submitted a expense report.
+		<table border="1" style="width:70%">
+			<thead>
+				<tr class="text-center">
+					<!-- <th class="text-center">Expense Report Id</th> -->
+               		<th class="text-center">Expense Report Name</th>
+                   	<th class="text-center">Date</th>
+                   	<th class="text-center">Status</th>
+              	</tr>
+			</thead>
+			<tbody>
+				<tr th:each="expense:${ExpenseMailReportList}">
+					<!-- <td th:text="${expense.id}"></td> -->
+					<td th:text="${expense.expenseName}"></td>
+					<td th:text="${expense.edate}"></td>
+                    <td>
+                    	<span th:if="${expense.active && expense.approvedRejectFlag}" class="text-success">Approval Submitted By Manager</span>
+                    	<span th:if="${!expense.active && expense.approvedRejectFlag}" class="text-danger">Reject By Manager</span>
+                    	<span th:if="${!expense.active && !expense.approvedRejectFlag}" class="text-info">Approval Inprogress</span>
+                        <span th:if="${expense.active && !expense.approvedRejectFlag}" class="text-danger">Modification Required</span>
+                    </td>
+				</tr>
+			</tbody>
+		</table><br><br>
+			<a th:href="@{http://20.219.248.45:8080/HRportal/}" >Click Me</a>
+	</body>
+</html>

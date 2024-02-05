@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	
+	<title>Home</title>
+        <link rel="icon" th:href="@{/dist/images/Dextero_Icon.ico}" type="image/x-icon" />
+        <link th:href="@{https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700}" rel="stylesheet" />
+        <link rel="stylesheet" th:href="@{/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css}"/>
+        <link rel="stylesheet" th:href="@{/plugins/datatables-responsive/css/responsive.bootstrap4.min.css}" />
+        <link rel="stylesheet" th:href="@{/dist/css/dextero.css}">
+        <link rel="stylesheet" th:href="@{/dist/css/all.css}">
+
+        <script th:src="@{/plugins/jquery/jquery.min.js}"></script>
+        <script th:src="@{/plugins/bootstrap/js/bootstrap.bundle.min.js}"></script>
+        <script th:src="@{/plugins/datatables/jquery.dataTables.min.js}"></script>
+        <script th:src="@{/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js}"></script>
+        <script th:src="@{/plugins/datatables-responsive/js/dataTables.responsive.min.js}"></script>
+        <script th:src="@{/plugins/datatables-responsive/js/responsive.bootstrap4.min.js}"></script>
+        <script th:src="@{/dist/js/dextero.js}"></script>
+        <script th:src="@{/dist/js/all.js}"></script>
+                <!-- date -->
+		<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+		<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+		<script th:src="@{/chart js/Chart.js}"></script>
+        <style>
+	        .tech-x-card-2:hover{
+	            box-shadow: 5px 4px 10px grey;
+	            transition-timing-function: ease-in-out;
+	            transition:0.5s;
+	        }
+	        .btn-outline-d-dark {
+	            color: #000000;
+	            border-color: #00000047;
+	        }
+	        .btn-outline-d-dark:hover {
+	            box-shadow: 2.5px 2px 5px grey;
+	            transition-timing-function: ease-in-out;
+	            transition: 0.2 s;
+	        }
+	        .nav-item .d-nav-hover:hover {
+	            color: #000000;
+	        }
+	        .d-btn-primary {
+	            color: #fff;
+	            background-color: #6672fb;
+	            ;
+	            border-color: #6672fb;
+	        }
+	        .d-btn-primary:hover {
+	            color: #fff;
+	            background-color: #5360f7;
+	            border-color: #5360f7;
+	        }
+	        @media (min-width:991.98px){
+	            .d-card-img{
+	                height: 32vh;
+	                width: 20vw;
+	                margin-left: 30px;
+	            }
+	        }
+    	</style>
+        
+</head>
+    <body class="hold-transition sidebar-mini layout-fixed">
+        <header th:include="header::header1"></header> 
+        <div class="content-wrapper">
+        <!-- <section class="content-header"> -->
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-sm-9 mt-2">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="card card-box-new bg-whiteborder tech-x-card-2"
+                                    style="border-radius: 15px;">
+                                    <div class="card-header">
+                                        <div class="row">
+                                            <div class="col-lg-6 col-6">
+                                                <h5 class="font-weight-bold">Total Employee</h5>
+                                            </div>
+                                            <div class="col-lg-2 col "></div>
+                                            <div class="col-lg-3 col">
+                                                <h5 class="font-weight-bold"><span th:text="${TotalEmployee}"></span></h5>
+                                            </div>
+                                            <div class="col-lg-1 col ">
+                                                <div class="card-tools">
+                                                    <button type="button" class="btn btn-tool"
+                                                        data-card-widget="collapse">
+                                                        <i class="fas fa-minus text-dark"></i>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="card-body">
+                                        <canvas id="barChart" class="card-img " alt=""></canvas>
+                                        <div class="row mt-1">
+                                            <div class="col-sm-2"></div>
+                                            <div class="col-sm-4 col">
+                                                <button class="btn btn-outline-d-dark" type="submit"><i
+                                                        class="fa-solid fa-circle mr-2"
+                                                        style="color: #6672fb;"></i>Male</button>
+                                            </div>
+
+                                            <div class=" col-sm-6 col">
+                                                <button class="btn btn-outline-d-dark" type="submit"><i
+                                                        class="fa-solid fa-circle mr-2"
+                                                        style="color: #ff3d55  ;"></i>Female</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-6">
+                                <div class="card card-box-new bg-white border tech-x-card-2" style="border-radius: 15px;">
+                                    <div class="card-header">
+                                        <div class="card-title"><h5 class="font-weight-bold">Job & Responses</h5></div>
+                                        <div class="card-tools">
+                                            <button type="button" class="btn btn-tool"
+                                                data-card-widget="collapse">
+                                                <i class="fas fa-minus text-dark"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="table-responsive">
+                                            <table class="table table-bordered ">
+                                                <caption><a th:href="@{/jobResponse}">More.....</a></caption>
+			                                        <thead>
+			                                            <tr>
+			                                                <th class="text-center">Job ID</th>
+			                                                <th class="text-center">Job Title</th>
+			                                                <th class="text-center">Responses</th>
+			                                            </tr>
+			                                        </thead>
+			                                        <tbody>
+			                                            <tr th:each="response:${allResponse}" th:if="${response.company_id}==${CompanyID}">
+			                                                <td class="text-center" th:text="${response.id}"></td>
+			                                                <td class="text-center" th:each="p:${PostNameList}" th:if="${p.id}==${response.jobTitle}" th:text="${p.post}"></td>
+			                                                <td class="text-center" th:text="${response.response}"></td>
+			                                            </tr>
+			                                        </tbody>  
+                                     		</table>
+                                   		 </div>
+                                	</div>
+                            	</div>
+                        	</div>
+						</div>
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="card card-box-new bg-white border tech-x-card-2" style="border-radius: 15px;">
+                                    <div class="card-header">
+                                        <div class="card-title"><h5 class="font-weight-bold">TimeSheet Report</h5></div>
+                                        <div class="card-tools">
+                                            <button type="button" class="btn btn-tool"
+                                                data-card-widget="collapse">
+                                                <i class="fas fa-minus text-dark"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="table-responsive" style="max-height: 300px; overflow-y: auto;">
+                                            <table class="table table-bordered ">
+                                                <caption><a th:href="@{/TimeSheetMailReport}">More.....</a></caption>
+                                                <thead>
+                                                    <tr th:if="${status}=='true'" class="text-center">
+                                                        <th>Date </th>
+                                                        <th>Completion Status</th>
+                                                        <th>Employee Name</th>
+            
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+				                          			<tr class="text-center" th:each="d:${ReportListDate}" th:if="${status}=='true' AND ${d.company_id}==${CompanyID}">
+						                           		<td class="text-center" th:text="${d.sdate}"></td>
+							                          	<td class="text-center" th:text="${d.completionstatus}"></td>
+						                             	<td class="text-center">
+							                           		<div th:each="MailReport:${ReportList}" th:if="${MailReport.company_id}==${CompanyID} AND ${MailReport.sdate} == ${d.sdate} AND ${MailReport.completionstatus}== ${d.completionstatus}">
+								                           		<div th:each="e:${EmployeeNameList}" th:if="${MailReport.company_id}==${CompanyID} AND ${e.id} == ${MailReport.employee_id}">
+								                              		<span th:text="${e.firstname} + ' ' + ${e.lastname}" th:if="${e.authority_id}==5 AND ${e.company_id}==${CompanyID} OR ${e.authority_id}==6 AND ${e.company_id}==${CompanyID}"></span>
+								                             	</div>
+							                             	</div>
+							                            </td>
+					                             	</tr>
+				                            	</tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="card card-box-new bg-white border tech-x-card-2" style="border-radius: 15px;">
+                                    <div class="card-header">
+                                        <div class="card-title"><h5 class="font-weight-bold">Expense Report</h5></div>
+                                        <div class="card-tools">
+                                            <button type="button" class="btn btn-tool"
+                                                data-card-widget="collapse">
+                                                <i class="fas fa-minus text-dark"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="card-body">
+                                        <canvas id="pieChart" class="card-img " alt=""></canvas>
+                                        <div class="row mt-1">
+                                           <div class="col-lg-1"></div>
+                                            <div class=" col-lg-5 col-6">
+                                                    <button class="btn btn-outline-d-dark" type="submit"><i
+                                                        class="fa-solid fa-circle mr-2" style="color: #6672fb;"></i>Approved</button>        
+                                            </div>
+                                            <div class="col-lg-5  col-6  ">
+                                                <button class="btn btn-outline-d-dark" type="submit"><i
+                                                    class="fa-solid fa-circle mr-2" style="color: #ff3d55  ;"></i>Unapproved</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-3">
+                        <div class="card card-box-new bg-white mt-2 border tech-x-card-2" style="border-radius: 15px;">
+                            <div class="card-header">
+                                <div class="card-title"><h5 class="font-weight-bold">Employees Birthday</h5></div>
+                                <div class="card-tools">
+                                    <button type="button" class="btn btn-tool"
+                                        data-card-widget="collapse">
+                                        <i class="fas fa-minus text-dark"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-lg-3 col-3">
+                                        <img src="dist/images/user1.jpeg" alt="User Avatar" class="img-size-50 mr-3 img-circle">
+                                    </div>
+                                    <div class="col-lg-6 col-6" th:each="employee:${EmployeesList}" th:if="${employee.company_id}==${CompanyID}">
+                                        <h5 class="font-weight-bold "><span th:text="${employee.firstname}  + ' ' + ${employee.lastname}"></span></h5>
+                                    </div>
+                                    <div class="col-lg-3 col-3">
+                                        <a th:href="@{/EmployeeBirthdayAndAnniversary}">More..</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card card-box-new bg-white mt-2 border tech-x-card-2" style="border-radius: 15px;">
+                            <div class="card-header">
+                                <div class="card-title"><h5 class="font-weight-bold ">Employees on holiday</h5></div>
+                                <div class="card-tools">
+                                    <button type="button" class="btn btn-tool"
+                                        data-card-widget="collapse">
+                                        <i class="fas fa-minus text-dark"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-lg-3 col-3">
+                                        <img src="dist/images/pexels-pixabay-415829.jpeg" alt="User Avatar" class="img-size-50 mr-3 img-circle">
+                                    </div>
+                                    <div class="col-lg-6 col-6" th:each="leave:${leaveList}">
+                                        <h5 class="font-weight-bold " th:each="e:${EmployeeNameList}"  th:if="${e.id}==${leave.employee_id} AND ${e.company_id}==${CompanyID}" th:text="${e.firstname} + ' ' + ${e.lastname}"></h5> 
+                                    </div>
+                                    <div class="col-lg-3 col-3">
+                                        <a th:href="@{/EmployeeOnHoliday}">More..</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card card-box-new bg-white border tech-x-card-2" style="border-radius: 15px;">
+                            <div class="card-header">
+                                <div class="card-title"> <h5 class="font-weight-bold">Need Help ?</h5></div>
+                                <div class="card-tools">
+                                    <button type="button" class="btn btn-tool"
+                                        data-card-widget="collapse">
+                                        <i class="fas fa-minus text-dark"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <!-- <img src="dist/undraw_hello_re_3evm.svg" class="card-img" alt="">   -->
+                                <div class="row">
+                                    <div class="col-lg-8 col-8">
+                                        <p class=" text-sm">Do yo have any problem while using the hr management Portal ?
+                                        </p>
+                                    </div>
+                                    <div class="col-lg-4 col-4">
+                                        <a th:href="@{/FeedbackForm}"><button type="button" class="btn btn-primary btn-sm">Contact Us</button></a>
+                                    </div>
+                                </div>  
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        <!-- </section> -->
+    </div>
+	    <script type="text/javascript">
+		    $(document).ready(function () {
+		        $.ajax({
+		            url: "[[@{/getChartData}]]",
+		            success: function (data){
+		                console.log(data);
+						
+						var male;
+		                var female;
+		                
+		                $.each(data, function (i,item) {
+		                   	female=item.age;
+		                    male=item.firstname;
+		                });
+		               console.log(male);
+		               console.log(female);
+		
+					var pieChartCanvas = document.getElementById('barChart').getContext('2d');
+					var pieChart = new Chart(pieChartCanvas, {
+					  type: 'pie', 
+					  data: {
+		                    labels: ["Female","Male"],
+		                    datasets: [{
+						        data: [female,male],
+						        backgroundColor: [
+						            "#ff3d55",
+						            "#6672fb"
+						        ],
+					    	}], 
+					    },
+					  options:{
+					  	  event: false,
+						  animation: {
+						    duration: 300,
+						    onComplete: function () {
+						      var ctx = this.chart.ctx;
+						      ctx.textAlign = 'center';
+						      this.data.datasets.forEach(function (dataset) {
+						        for (var i = 0; i < dataset.data.length; i++) {
+						          var model = dataset._meta[Object.keys(dataset._meta)[0]].data[i]._model,
+						              total = dataset._meta[Object.keys(dataset._meta)[0]].total,
+						              mid_radius = model.innerRadius + (model.outerRadius - model.innerRadius)/2,
+						              start_angle = model.startAngle,
+						              end_angle = model.endAngle,
+						              mid_angle = start_angle + (end_angle - start_angle)/2;
+						          var x = mid_radius * Math.cos(mid_angle);
+						          var y = mid_radius * Math.sin(mid_angle);
+						          ctx.fillStyle = '#fff';
+						          if (i == 2){ 
+						            ctx.fillStyle = '#444';
+						          }
+						          var percent = String(Math.round(dataset.data[i]/total*100)) + "%";
+						          // Display percent in another line, line break doesn't work for fillText
+						          ctx.fillText(percent, model.x + x, model.y + y + 15);
+						        }
+						      });               
+						    }
+						  },
+						  legend: { display: false },
+					  },
+					});
+					pieChart.update();
+				}
+			});
+		});
+	
+		////////////////////////////////////////////// expense Report pie chart///////////////
+		
+		$(document).ready(function () {
+		        $.ajax({
+		            url: "[[@{/getChartData1}]]",
+		            success: function (data){
+		                console.log(data);
+						
+						var approved;
+		                var unapproved;
+		
+		                $.each(data, function (i,item) {
+		                   approved=item.firstname;
+		                   unapproved=item.age;
+		                });
+		               console.log(approved);
+		               console.log(unapproved);
+		
+					var pieChartCanvas = document.getElementById('pieChart').getContext('2d');
+					var pieChart = new Chart(pieChartCanvas, {
+					  type: 'pie', 
+					  data: {
+		                    labels: ["Approved","Unapproved"],
+		                    datasets: [{
+						        data: [approved,unapproved],
+						        backgroundColor: [
+						            "#4BC0C0",
+						            "#FF6384"
+						        ],
+					    	}], 
+					    },
+					  options:{
+					  	  event: false,
+						  animation: {
+						    duration: 300,
+						    onComplete: function () {
+						      var ctx = this.chart.ctx;
+						      ctx.textAlign = 'center';
+						      this.data.datasets.forEach(function (dataset) {
+						        for (var i = 0; i < dataset.data.length; i++) {
+						          var model = dataset._meta[Object.keys(dataset._meta)[0]].data[i]._model,
+						              total = dataset._meta[Object.keys(dataset._meta)[0]].total,
+						              mid_radius = model.innerRadius + (model.outerRadius - model.innerRadius)/2,
+						              start_angle = model.startAngle,
+						              end_angle = model.endAngle,
+						              mid_angle = start_angle + (end_angle - start_angle)/2;
+						          var x = mid_radius * Math.cos(mid_angle);
+						          var y = mid_radius * Math.sin(mid_angle);
+						          ctx.fillStyle = '#fff';
+						          if (i == 2){ 
+						            ctx.fillStyle = '#444';
+						          }
+						          var percent = String(Math.round(dataset.data[i]/total*100)) + "%";
+						          // Display percent in another line, line break doesn't work for fillText
+						          ctx.fillText(percent, model.x + x, model.y + y + 15);
+						        }
+						      });               
+						    }
+						  },
+						  legend: { display: false },
+					  },
+					});
+					pieChart.update();
+				}
+			});
+		});
+	   </script>
+	</body>
+</html>

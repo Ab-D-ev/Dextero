@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    
+   	<title>Home</title>
+		<link rel="icon" th:href="@{/dist/images/Dextero_Icon.ico}" type="image/x-icon" />
+		<link th:href="@{https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700}" rel="stylesheet" />
+		<link rel="stylesheet" th:href="@{/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css}"/>
+		<link rel="stylesheet" th:href="@{/plugins/datatables-responsive/css/responsive.bootstrap4.min.css}" />
+		<link rel="stylesheet" th:href="@{/dist/css/dextero.css}">
+		<link rel="stylesheet" th:href="@{/dist/css/all.css}">
+	
+		<script th:src="@{/plugins/jquery/jquery.min.js}"></script>
+		<script th:src="@{/plugins/bootstrap/js/bootstrap.bundle.min.js}"></script>
+		<script th:src="@{/plugins/datatables/jquery.dataTables.min.js}"></script>
+		<script th:src="@{/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js}"></script>
+		<script th:src="@{/plugins/datatables-responsive/js/dataTables.responsive.min.js}"></script>
+		<script th:src="@{/plugins/datatables-responsive/js/responsive.bootstrap4.min.js}"></script>
+		<script th:src="@{/dist/js/dextero.js}"></script>
+		<script th:src="@{/dist/js/all.js}"></script>	    
+                <!-- date -->
+		<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+		<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+		<script th:src="@{/chart js/Chart.js}"></script>
+        <style>
+            tfoot td {
+                font-weight: bold;
+            }
+	         .tech-x-card-2:hover{
+	            box-shadow: 5px 4px 10px grey;
+	            transition-timing-function: ease-in-out;
+	            transition:0.5s;
+	          }
+       </style>
+</head>
+    <body class="hold-transition sidebar-mini layout-fixed">
+    	<header th:include="header::header1"></header> 
+         <div class="content-wrapper">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-sm-9">
+                        <div class="card card-box-new bg-white border tech-x-card-2 mt-2" style="border-radius: 15px;"> 
+                            <div class="card-header">
+                                <div class="card-title"> <h5 class="font-weight-bold">Todays Task</h5></div>
+                                <div class="card-tools">
+                                    <button type="button" class="btn btn-tool"
+                                        data-card-widget="collapse">
+                                        <i class="fas fa-minus text-dark"></i>
+                                    </button>
+                                </div>
+                            </div>  
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="table table-bordered ">
+                                       <thead>
+                                          	<tr class="text-center" th:if="${status}=='true'">
+			                              		<th class="text-center">Company Name</th>
+			                                   	<th class="text-center">Task Name</th>
+			                               		<th class="text-center">Start Date</th>
+			                                  	<th class="text-center">End Date</th> 
+			                                    <th class="text-center">Task Description</th> 
+			                                </tr>
+                                        </thead>
+                                        <tbody>
+                                        	<tr class="text-center" th:each="assigntask:${AssignTaskList}"  th:if="${status}=='true' AND  ${assigntask.employee_id}==${username}">
+				                            	<td class="text-center" th:each="e:${Customerlist}" th:if="${e.id}==${assigntask.company_name_id}" th:text="${e.CompanyName}"></td>
+				                             	<td class="text-center" th:text="${assigntask.TaskName}"></td>
+				                             	<td class="text-center" th:text="${assigntask.StartDate}"></td>
+				                                <td class="text-center" th:text="${assigntask.EndDate}"></td>
+				                               	<td class="text-center" th:text="${assigntask.TaskDescription}"></td>
+				                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <a th:href="@{/TodayTask}" class="ml-1">More....</a>
+                                </div>    
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-5">
+                                <div class="card card-box-new bg-white border tech-x-card-2" style="border-radius: 15px;">   
+                                    <div class="card-header">
+                                        <div class="card-title">  <h5 class="font-weight-bold">TimeSheet Report</h5></div>
+                                        <div class="card-tools">
+                                            <button type="button" class="btn btn-tool"
+                                                data-card-widget="collapse">
+                                                <i class="fas fa-minus text-dark"></i>
+                                            </button>
+                                        </div>
+                                    </div> 
+                                    <div class="card-body">
+                                        <div class="table-responsive">
+                                            <table class="table table-bordered">
+                                                <thead>
+		                                        	<tr class="text-center" th:if="${status}=='true'"> 
+														<th class="text-center">Date</th>
+														<th class="text-center">Completion Status</th>
+													</tr>
+		                                        </thead>
+		                                        <tbody>
+							               			<tr class="text-center" th:each="d : ${ReportList}" th:if="${status}=='true' AND ${d.company_id}==${CompanyID} AND ${d.employee_id}==${username}">
+													    <td class="text-center" th:text="${d.sdate}"></td>
+													    <td class="text-center" th:text="${d.completionstatus}"></td>
+													   
+													</tr>
+		                                        </tbody>
+                                            </table>
+                                            <a th:href="@{/TimeSheetUserReport}" class="ml-1">More....</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-7">
+                                <div class="card card-box-new bg-white border tech-x-card-2" style="border-radius: 15px;"> 
+                                    <div class="card-header">
+                                        <div class="card-title"><h5 class="font-weight-bold">Project Status</h5></div>
+                                        <div class="card-tools">
+                                            <button type="button" class="btn btn-tool"
+                                                data-card-widget="collapse">
+                                                <i class="fas fa-minus text-dark"></i>
+                                            </button>
+                                        </div>
+                                    </div> 
+                                    <div class="card-body">
+                                        <div class="table-responsive">
+                                            <table class="table table-bordered">
+                                                <thead>
+		                                            <tr class="text-center">
+		                                                <th>Project Code</th>
+		                                                <th>Project Name</th>
+		                                                <th>Employee Name</th>
+		                                                <th>Project Status</th>
+		                                                
+		                                            </tr>
+		                                        </thead>
+		                                        <tbody>
+		                                            <tr th:each="project:${ProjectStatusList}">
+			                                            <td class="text-center" th:text="${project.pcode}"></td>
+			                                            <td class="text-center" th:text="${project.pname}"></td>
+								    					<td class="text-center" th:text="${project.ename}"></td>
+								    					<td class="text-center" th:text="${project.status}"></td>
+			                                        </tr>	
+		                                        </tbody>
+                                            </table>
+                                            <a th:href="@{/ProjectStatusReport}" class="ml-1">More....</a>
+                                        </div>    
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-3">
+                        <div class="card card-box-new bg-white mt-2 border tech-x-card-2" style="border-radius: 15px;">
+                            <div class="card-header">
+                                <div class="card-title"><h5 class="font-weight-bold">Employees Birthday</h5></div>
+                                <div class="card-tools">
+                                    <button type="button" class="btn btn-tool"
+                                        data-card-widget="collapse">
+                                        <i class="fas fa-minus text-dark"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-lg-3 col-3">
+                                        <img src="dist/images/user1.jpeg" alt="User Avatar" class="img-size-50 mr-3 img-circle">
+                                    </div>
+                                    <div class="col-lg-6 col-6" th:each="employee:${EmployeesList1}" th:if="${employee.company_id}==${CompanyID}">
+                                        <h5 class="font-weight-bold "><span th:text="${employee.firstname}  + ' ' + ${employee.lastname}"></span></h5>
+                                    </div>
+                                    <div class="col-lg-3 col-3">
+                                        <a th:href="@{/EmployeeBirthdayAndAnniversary}">More..</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card card-box-new bg-white mt-2 border tech-x-card-2" style="border-radius: 15px;">
+                            <div class="card-header">
+                                <div class="card-title"><h5 class="font-weight-bold ">Employees on holiday</h5></div>
+                                <div class="card-tools">
+                                    <button type="button" class="btn btn-tool"
+                                        data-card-widget="collapse">
+                                        <i class="fas fa-minus text-dark"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-lg-3 col-3">
+                                        <img src="dist/images/pexels-pixabay-415829.jpeg" alt="User Avatar" class="img-size-50 mr-3 img-circle">
+                                    </div>
+                                    <div class="col-lg-6 col-6" th:each="leave:${leaveList}">
+                                        <h5 class="font-weight-bold " th:each="e:${EmployeeNameList}" th:if="${e.id}==${leave.employee_id}" th:text="${e.firstname} + ' ' + ${e.lastname}"></h5>
+                                        
+                                    </div>
+                                    <div class="col-lg-3 col-3">
+                                        <a th:href="@{/EmployeeOnHoliday}">More..</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card card-box-new bg-white border tech-x-card-2" style="border-radius: 15px;">
+                            <div class="card-header">
+                                <div class="card-title"> <h5 class="font-weight-bold">Need Help ?</h5></div>
+                                <div class="card-tools">
+                                    <button type="button" class="btn btn-tool"
+                                        data-card-widget="collapse">
+                                        <i class="fas fa-minus text-dark"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <!-- <img src="dist/undraw_hello_re_3evm.svg" class="card-img" alt="">   -->
+                                <div class="row">
+                                    <div class="col-lg-8 col-8">
+                                        <p class=" text-sm">Do yo have any problem while using the hr management Portal ?
+                                        </p>
+                                    </div>
+                                    <div class="col-lg-4 col-4">
+                                        <a th:href="@{/FeedbackForm}"><button type="button" class="btn btn-primary btn-sm">Contact Us</button></a>
+                                    </div>
+                                </div>  
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>  
+    </body>
+</html>    

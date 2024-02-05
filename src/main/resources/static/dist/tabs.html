@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="../../plugins/fontawesome-free/css/all.min.css">
+    <link href="dist/css/dextero.css" rel="stylesheet">
+</head>
+<body class="container">
+    <div class="tabs">
+        <div class="tab-header">
+            <div class="active">
+                <i class="fa fa-code"></i>Code
+            </div>
+            <div class="">
+                <i class="fa fa-code"></i>About
+            </div>
+            <div class="">
+                <i class="fa fa-code"></i>Services
+            </div>
+            <div class="">
+                <i class="fa fa-code"></i>Contact
+            </div>
+        </div>
+        
+        <div class="tab-indicator"></div>
+        
+        <div class="tab-body">
+            <div class="active">
+                <h2>This is code section</h2>
+                <p>lorem Lorem ipsum dolor sit amet consectetur, adipisicing elit. Animi cum minima sequi necessitatibus! </p>
+            
+            </div>
+            <div class="">
+                <h2>This is About section</h2>
+                <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Animi cum minima sequi necessitatibus! </p>
+            </div>
+            <div class="">
+                <h2>This is service section</h2>
+                <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Animi cum minima sequi necessitatibus! </p>
+            </div>
+            <div class="">  
+                <h2>This is Contact section</h2>
+                <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Animi cum minima sequi necessitatibus! </p>
+            </div>  
+        </div>
+    </div>
+    
+    <style>
+        body {
+            background:#ddd;
+        }
+        .tabs {
+            position:absolute;
+            /* top:50%;
+            left:50%;
+            transform:translate(-50%,-50%); */
+            width:500px;
+            height:500px;
+            background:#f5f5f5;
+            padding:20px 30px;
+            overflow:hidden;
+            border-radius:50px;
+            box-shadow:5px 10px 5px #ccc;
+        }
+        .tabs .tab-header {
+            height:60px;
+            display:flex;
+            align-items:center;
+        }
+        .tabs .tab-header > div {
+            width:calc(100% / 4);
+            text-align:center;
+            color:#888;
+            font-weight:600;
+            cursor:pointer;
+            font-size:14px;
+            text-transform:uppercase;
+            outline:none;
+        }
+        .tabs .tab-header > div > i {
+            display:block;
+            margin-bottom:5px;
+        }
+        .tabs .tab-header > div.active {
+            color:#00acee;
+        }
+        .tabs .tab-indicator {
+            position:relative;
+            width:calc(100% / 4);
+            height:5px;
+            background:#00acee;
+            left:0px;
+            border-radius:5px;
+            transition:all 500ms ease-in-out;
+        }
+        .tabs .tab-body {
+            position:relative;
+            height:calc(100% - 60px);
+            margin-top: 20px;
+            padding:10px 5px;
+        }
+        .tabs .tab-body > div {
+            position:absolute;
+            top:-200%;
+            opacity:0;
+            transform:scale(0.9);
+            transition:opacity 500ms ease-in-out 0ms,
+            transform 500ms ease-in-out 0ms;
+        }
+        .tabs .tab-body > div.active {
+            top:0px;
+            opacity:1;
+            transform:scale(1);
+        }
+    </style>
+    
+    <script>
+        let tabHeader = document.getElementsByClassName("tab-header")[0];
+        let tabIndicator = document.getElementsByClassName("tab-indicator")[0];
+        let tabBody = document.getElementsByClassName("tab-body")[0];
+
+        let tabsPane = tabHeader.getElementsByTagName("div");
+
+        for(let i=0;i<tabsPane.length;i++){
+        tabsPane[i].addEventListener("click",function(){
+            tabHeader.getElementsByClassName("active")[0].classList.remove("active");
+            tabsPane[i].classList.add("active");
+            tabBody.getElementsByClassName("active")[0].classList.remove("active");
+            tabBody.getElementsByTagName("div")[i].classList.add("active");
+            
+            tabIndicator.style.left = `calc(calc(100% / 4) * ${i})`;
+        });
+        }
+    </script>
+</body>
+</html>

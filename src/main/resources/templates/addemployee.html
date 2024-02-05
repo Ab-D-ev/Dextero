@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">  
+<title>Create New Employee</title>
+<link rel="icon" href="@{/dist/images/Dextero_Icon.ico}" type="image/x-icon" />
+
+   <link th:href="@{https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700}" rel="stylesheet" />
+    <link rel="stylesheet" th:href="@{/plugins/fontawesome-free/css/all.min.css}">
+    <script th:src="@{/plugins/jquery/jquery.min.js}"></script>
+    <script th:src="@{/plugins/bootstrap/js/bootstrap.bundle.min.js}"></script>
+    <link rel="stylesheet" th:href="@{/plugins/bootstrap-wizards/css/smart_wizard.all.css}">
+    <script th:src="@{/plugins/bootstrap-wizards/js/jquery.smartWizard.min.js}"></script>
+    <link rel="stylesheet" th:href="@{/dist/css/dextero.css}">
+	<link rel="stylesheet" th:href="@{/dist/css/all.css}">
+	<script th:src="@{/dist/js/all.js}"></script>
+    <link rel="stylesheet" th:href="@{/dist/icon/css/all.css}">
+    <script th:src="@{/dist/js/dextero.js}"></script>
+    
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.13.1/themes/base/jquery-ui.css">
+  	<script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
+ 
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.13/css/bootstrap-multiselect.css" />
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.13/js/bootstrap-multiselect.min.js"></script>
+	<script th:src="@{/chart js/cities.js}"></script>
+	
+</head>
+	<body class="hold-transition sidebar-mini layout-fixed">
+		<header th:include="header::header1"></header> 
+		<div class="content-wrapper">
+	        <section class="content-header">
+	            <div class="container-fluid">
+	                <div class="row">
+	                    <div class="col-lg-12">
+	                        <div class="card-header text-center pb-2 d-bg-h2 ">
+	                            <lable id="label" class="h2 font-weight-bold">Create New Employee</lable>
+	                        </div>
+	                        <div class="card card-box-new tech-x-card-2 mt-5">
+	                            <div class="card-body">
+                                 	<form action="#" class="form-horizontal" th:action="@{/saveEmployee}" th:object="${employee}" enctype="multipart/form-data" method="post">
+	                                    <div class="row mt-4">
+                                      		<div class="col-sm-4 col-lg-4 required-field">
+                                   				<label class="d-label">First Name :</label>
+                                       		</div>
+	                                       	<div class="col-sm-6 col-md-4 col-lg-4">
+	                                      		<input class="form-control input-anime tab1" type="text" th:field="*{firstname}" placeholder="Enter First Name" required>
+                                     		</div>
+                                   		</div>
+	                                    <div class="row mt-4">
+                                        	<div class="col-sm-4 col-lg-4 required-field">
+                                            	<label class="d-label">Last Name :</label>
+                                            </div>
+                                        	<div class="col-sm-6 col-md-4 col-lg-4">
+                                           	 	<input class="form-control input-anime tab1" type="text" th:field="*{lastname}" placeholder="Enter Last Name" required>
+                                            </div>
+                                       	</div>
+	                                   	<div class="row mt-4">
+                                      		<div class="col-sm-4 col-lg-4 required-field">
+                                            	<label class="d-label">Email ID:</label>
+                                       		</div>
+                                            <div class="col-sm-6 col-md-4 col-lg-4">
+                                           		<input class="form-control input-anime tab1" type="email" th:field="*{email}" id="username" placeholder="Enter Email ID" required>
+                                       		</div>
+                                  			<div class="col-sm-4 col-lg-4">
+                                         		<label id="message1"></label>
+                                        	</div>
+                                		</div>
+										<div class="row mt-4">
+                                     		<div class="col-sm-4 col-lg-4 required-field">
+                                       			<label class="d-label">Profile :</label>
+                                           	</div>
+                                      		<div class="col-sm-6 col-md-4 col-lg-4">
+                                      			<select  class="form-control input-anime tab1" th:field="*{authority_id}" id="authorityid"  required>
+                                             		<option value="">Select</option>
+                                               		<option value="6">Employee</option>
+                                                  	<option value="5">Employee Manager</option>
+                                          			<option value="4">HR Manager</option>
+                                             		<option value="3">Admin</option>
+                                         		</select>
+                                    		</div>
+                                     	</div> 
+                                       	<div class="row mt-4">
+                                   			<div class="col-sm-4 col-lg-4 required-field">
+                                            	<label class="d-label">Department :</label>
+                                           	</div>
+                                         	<div class="col-sm-6 col-md-4 col-lg-4">
+                                       	 		<select  class="form-control input-anime tab1" th:field="*{department}" required>
+                                               		<option value="">Select</option>
+												  	<option th:each="employee:${departmentslist}" 
+												    		th:value="${employee.departmentname}"
+												      		th:text="${employee.departmentname}" th:if="${employee.company_id}==${CompanyID}">
+												    </option>
+                                            	</select>
+                                           	</div>
+                                      	</div> 
+                                      	<div class="data">
+	                                        <div class="row mt-4">
+	                                  			<div class="col-sm-4 col-lg-4">
+	                                           		<label class="d-label">Reporting Manager Department :</label>
+	                                            </div>
+	                                       		<div class="col-sm-6 col-md-4 col-lg-4">
+	                                        		<select  class="form-control input-anime" name="dept" id="dept" >
+	                                               		<option value="">Select</option>
+														<option th:each="employee:${departmentslist}" 
+													    		th:value="${employee.departmentname}"
+													         	th:text="${employee.departmentname}" th:if="${employee.company_id}==${CompanyID}">
+														</option>
+	                                        		</select>
+	                                            </div>
+	                                       	</div> 
+	                                   	
+		                             		<div class="row mt-4" >
+		                                		<div class="col-sm-4 col-lg-4">
+		                                         	<label class="d-label">Reporting Manager :</label>
+		                                       	</div>
+		                                      	<div class="col-sm-6 col-md-4 col-lg-4">
+		                                       		<select  class="form-control input-anime" th:field="*{reporting_manager}" id="report">
+		                                          		<!-- <option value="">Select</option>
+															<option th:each="employee:${employeesManagerNameList}" 
+														   			th:value="${employee.firstname+' '+employee.middlename+' '+employee.lastname}"
+														  			th:text="${employee.firstname+' '+employee.middlename+' '+employee.lastname}" >
+															</option> -->
+		                                        	</select>
+		                                    	</div>
+		                                  	</div>        
+										</div> 
+											<div class="row mt-4">
+                                           		<div class="col-sm-4 col-lg-4 required-field">
+                                                  	<label class="d-label">Designation :</label>
+	                                             </div>
+	                                        	<div class="col-sm-6 col-md-4 col-lg-4">
+                                                 	<select  class="form-control input-anime" th:field="*{designation_id}" required>
+                                                 		<option value="">Select</option>
+												   		<option th:each="d:${Designationlist}" 
+												         		th:value="${d.id}"
+												           		th:text="${d.designation}" th:if="${d.company_id}==${CompanyID}">
+												      	</option>
+                                                	</select>
+                                             	</div>
+                                        	</div> 
+										
+                                            	<div class="card-body">
+                                            		<input class="form-control input-anime" type="hidden" th:field="*{middlename}" placeholder="Middle Name">
+                                                     <input class="form-control input-anime" type="hidden" th:field="*{gender}" >
+                                                     <input class="form-control input-anime" type="hidden" th:field="*{maritalStatus}">
+                                                   	 <input class="form-control input-anime" type="hidden" th:field="*{DateofBirth}" id ="dob" onchange = "ageCalculator()" placeholder="DD-MM-YYYY">
+                                                     <input class="form-control input-anime" type="hidden" th:field="*{age}" id="AGE" placeholder="Age" readonly/>
+                                                     <input class="form-control input-anime" type="hidden" th:field="*{joiningdate}"  id="joiningdate">
+													 <input class="form-control input-anime" type="hidden" th:field="*{MobileNumber1}">
+													 <input class="form-control input-anime" type="hidden" th:field="*{MobileNumber2}">
+													 <input class="form-control input-anime" type="hidden" th:field="*{mcode}"> 
+													 <input class="form-control input-anime" type="hidden" th:field="*{tcode}"> 
+                                                     <input class="form-control input-anime" type="hidden" th:field="*{TelephoneNumber1}">
+                                                     <input class="form-control input-anime" type="hidden" th:field="*{TelephoneNumber2}">
+			                                   		 <input class="form-control input-anime" type="hidden" th:field="*{bloodgroup}"> 
+			                                   		 <input class="form-control input-anime" type="hidden" th:field="*{disability}">
+			                                   		 <input class="form-control input-anime" type="hidden" th:field="*{disabilityType}">
+												
+												<input type="hidden" th:value="${countstatus}" id="countstatus" name="countstatus">
+	                                            
+	                                            <button type="submit" class="btn btn-primary" th:if="${countstatus}=='true'" id="subbut">Submit</button> 
+                                           </div>
+									</form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+	</body>
+        <script type="text/javascript">
+		    $(document).ready(function () {
+		    var coursename = $('#countstatus').val();
+		    if (coursename === 'false') {
+		                alert("Employee Count Exceed Limit");
+		            }
+		    });
+			  
+		    $(function() {
+		    	$("#authorityid").change(function(){
+		    	if($('#authorityid').val()=='5' ||  $('#authorityid').val()=='6'){
+		    		$(".data").show();
+		    	}
+		    	else{
+		    		$(".data").hide();
+		    	}
+		    });
+		    	
+		    });
+		   </script>
+		   <script>
+			$('#username').on('keyup', function () {
+        		var valid = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}/igm.test(this.value),
+			    	val = this.value;
+			// get the currently selected 
+		      var user1 = $('#username').val();
+		      $.ajax({
+		      	// make the ajax call to our server and pass the country ID as a GET variable
+		          url: "[[@{/checkusername}]]",
+		          data: { name: user1},
+		          success: function(data){
+		          	if (data == 'true') {
+		          		if(user1==''){
+		          			$('#message1').html('').css('color', 'red');
+		          			$("#subbut").attr("disabled", true);
+		          		}
+			          	else{
+			          		if(valid){
+						        $('#message1').html('Congrats! The username is available').css('color', 'green');
+						        $("#subbut").attr("disabled", false);
+								 }
+						     else{
+						     	if(val==''){
+						     		$('#message1').html('').css('color', 'red');
+						     		$("#subbut").attr("disabled", true);
+						     	}
+						     	else{
+									$('#message1').html('Not a valid email address').css('color', 'red');
+									$("#subbut").attr("disabled", true);
+							 	}
+							}
+			          	 }
+		          	  } 
+		          	  else {
+		          	  		if(user1==''){
+				     			$('#message1').html('').css('color', 'red');
+				     			$("#subbut").attr("disabled", false);
+				     		}
+				     		else{
+								$('#message1').html('A user with that username already exists').css('color', 'red');
+								$("#subbut").attr("disabled", true);
+					 		}
+					 	}
+		           }
+		        });
+			});
+			
+			$(function(){
+				$("#dept").change(function(){
+					$('#report').find('option').remove().end();
+					
+					var name = $(this).val();
+					$.ajax({
+						url:"[[@{/getEmployeeManagerNameDropdown}]]",
+						data:{
+							name: name
+						},
+						success:function(data){
+						$('#report').append($('<option>',{
+									value:"",
+									text:"Select"
+								}));
+							$.each(data,function(i,item){
+								$('#report').append($('<option>',{
+									value:item.id,
+									text:item.firstname + " " +  item.lastname
+								}));
+							});
+						}
+					});
+				});	
+			});
+	</script>
+</html>

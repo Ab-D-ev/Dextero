@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<title>Edit Leave Policy</title>
+		<link rel="icon" th:href="@{/dist/images/Dextero_Icon.ico}" type="image/x-icon" />
+        <link th:href="@{https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700}" rel="stylesheet" />
+        <link rel="stylesheet" th:href="@{/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css}"/>
+        <link rel="stylesheet" th:href="@{/plugins/datatables-responsive/css/responsive.bootstrap4.min.css}" />
+        <link rel="stylesheet" th:href="@{/dist/css/dextero.css}">
+        <link rel="stylesheet" th:href="@{/dist/css/all.css}">
+
+        <script th:src="@{/plugins/jquery/jquery.min.js}"></script>
+        <script th:src="@{/plugins/bootstrap/js/bootstrap.bundle.min.js}"></script>
+        <script th:src="@{/plugins/datatables/jquery.dataTables.min.js}"></script>
+        <script th:src="@{/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js}"></script>
+        <script th:src="@{/plugins/datatables-responsive/js/dataTables.responsive.min.js}"></script>
+        <script th:src="@{/plugins/datatables-responsive/js/responsive.bootstrap4.min.js}"></script>
+        <script th:src="@{/dist/js/dextero.js}"></script>
+        <script th:src="@{/dist/js/all.js}"></script>
+      
+</head>
+
+	<body class="hold-transition sidebar-mini layout-fixed">
+		<header th:include="header::header1"></header> 
+		<div class="content-wrapper">
+	        <section class="content-header">
+	            <div class="container-fluid">
+	                <div class="row">
+	                    <div class="col-lg-12">
+	                        <div class="card-header text-center pb-2 d-bg-h2 ">
+	                            <lable id="label" class="h2 font-weight-bold">Edit Leave Policy</lable>
+	                        </div>
+	                        <div class="card card-box-new tech-x-card-2 mt-5">
+	                            <div class="card-body">
+	                                <form action="#" th:action="@{/save/leave_policy}" th:object="${leavePolicy}" method="POST" autocomplete="off">
+	                                	<input type="hidden" th:field="*{id}">
+	                                	
+	                                	<div class="row mt-4 required-field">
+	                                        <div class="col-sm-4 col-md-4 col-lg-3">
+	                                            <label class="d-label">Enter Year :</label>
+	                                        </div>
+	                                        <div class="col-sm-6 col-md-4 col-lg-2">
+	                                            <input type="text" class="form-control input-anime" th:field="*{year}" placeholder="YYYY" required>
+	                                        </div>
+	                                     </div>
+	                                      <div class="row mt-4 required-field">
+	                                        <div class="col-sm-4 col-md-4 col-lg-3">
+	                                            <label class="d-label">Paid Leave :</label>
+	                                        </div>
+	                                        <div class="col-sm-6 col-md-4 col-lg-2">
+	                                            <input type="text" class="form-control input-anime" th:field="*{paidLeave}" placeholder="Enter " required>
+	                                        </div>
+	                                     </div>
+	                                     
+	                                     <div class="row mt-4 required-field">
+	                                        <div class="col-sm-4 col-md-4 col-lg-3">
+	                                            <label class="d-label">Leave Carried Forward :</label>
+	                                        </div>
+	                                        <div class="col-sm-6 col-md-4 col-lg-2">
+	                                            <input type="text" class="form-control input-anime" th:field="*{leavesCarriedForward}" placeholder="Enter " required>
+	                                        </div>
+	                                     </div>
+	                                    
+	                                     <div class="row mt-4">
+	                                        <div class="col-sm-4 col-md-4 col-lg-3">
+	                                            <button type="submit" class="btn btn-info ">Save</button>
+	                                        </div> 
+	                                     </div>                                          
+	                                </form> 
+	                                <div class="row mt-4">   
+	                                	<a th:href="@{/leave_policy}">Back to List</a>
+	                                </div>
+	                        	</div>
+	                    	</div>
+	                	</div>
+	            	</div>  
+	        	</div>          
+			</section>
+		</div>
+	</body> 
+	<script type="text/javascript">
+         $(document).ready(function() {
+            $('#data-table').DataTable();
+         });
+         $("input").on("keypress", function(e) {
+			    if (e.which === 32 && !this.value.length)
+			        e.preventDefault();
+			});
+      </script>
+</html>

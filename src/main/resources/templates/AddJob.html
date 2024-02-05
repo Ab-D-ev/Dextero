@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<title>Post a Job</title>
+		<link rel="icon" th:href="@{/dist/images/Dextero_Icon.ico}" type="image/x-icon" />
+        <link th:href="@{https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700}" rel="stylesheet" />
+        <link rel="stylesheet" th:href="@{/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css}"/>
+        <link rel="stylesheet" th:href="@{/plugins/datatables-responsive/css/responsive.bootstrap4.min.css}" />
+        <link rel="stylesheet" th:href="@{/dist/css/dextero.css}">
+        <link rel="stylesheet" th:href="@{/dist/css/all.css}">
+
+        <script th:src="@{/plugins/jquery/jquery.min.js}"></script>
+        <script th:src="@{/plugins/bootstrap/js/bootstrap.bundle.min.js}"></script>
+        <script th:src="@{/plugins/datatables/jquery.dataTables.min.js}"></script>
+        <script th:src="@{/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js}"></script>
+        <script th:src="@{/plugins/datatables-responsive/js/dataTables.responsive.min.js}"></script>
+        <script th:src="@{/plugins/datatables-responsive/js/responsive.bootstrap4.min.js}"></script>
+        <script th:src="@{/dist/js/dextero.js}"></script>
+        <script th:src="@{/dist/js/all.js}"></script>
+        
+  		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.13/css/bootstrap-multiselect.css" />
+		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.13/js/bootstrap-multiselect.min.js"></script>
+		<script type="text/javascript">  
+		    $(document).ready(function() {  
+		        $('select[multiple]').multiselect({
+			    	includeSelectAllOption: false,
+			    	buttonWidth:'500px'
+		    });
+		  });
+		</script>
+</head>
+	<body class="hold-transition sidebar-mini layout-fixed">
+		<header th:include="header::header1"></header> 
+		<div class="content-wrapper">
+	        <section class="content-header">
+	            <div class="container-fluid">
+	                <div class="row">
+	                    <div class="col-lg-12">
+	                        <div class="card-header text-center pb-2 d-bg-h2 ">
+	                            <lable id="label" class="h2 font-weight-bold">Post a Job - Hot Vacancy </lable>
+	                        </div>
+	                        <div class="card card-box-new tech-x-card-2 mt-5">
+	                            <div class="card-body">
+	                                <form action="#" th:action="@{/SaveJobPost}" th:object="${jpost}" method="POST" autocomplete="off" enctype="multipart/form-data">
+	                                 		<div class="row mt-4">
+		                                        <div class="col-sm-6 col-md-4 col-lg-5">
+		                                            <label  for="content" class="d-label">Job Title / Designation :</label><b class="required-field"></b>
+		                                            <select class="form-control input-anime" th:field="*{Designation}"  required> 
+		                                        		<option value="">Select</option>
+		                                                <option th:each="p:${PostNameList}" 
+		                                                		th:value="${p.id}"
+		                                                    	th:text="${p.post}" th:if="${p.company_id}==${CompanyID}">
+		                                                </option>
+		                                            </select>
+		                                        </div>
+		                                    
+		                                        <div class="col-sm-6 col-md-4 col-lg-4">
+		                                            <label  for="content" class="d-label">Employment Type :</label><b class="required-field"></b>
+		                                            <select class="form-control input-anime" th:field="*{EmploymentType}" required> 
+		                                            	<option value="">Select</option>
+		                                                <option th:each="jpost:${EtypeList}" 
+		                                                		th:value="${jpost.id}"
+		                                                    	th:text="${jpost.etype}" th:if="${jpost.company_id}==${CompanyID}">
+		                                                </option>
+		                                            </select>
+		                                        </div>
+		                                    </div>
+		                                    <div class="row mt-4">
+		                                        <div class="col-sm-6 col-md-4 col-lg-8">
+		                                            <label  for="content" class="d-label">Job Description(Max Size 100KB) :</label><b class="required-field"></b>
+		                                            <input type="file" class="form-control input-anime" name="readFile" id="importJd"
+		                                             accept=".doc, .docx, .pdf" placeholder="import JD" required>
+		                                        </div>
+		                                    </div>
+		                                    <div class="row mt-4">
+		                                        <div class="col-sm-6 col-md-4 col-lg-5 required-field">
+		                                        	<label  for="content" class="d-label">Roles and Responsibilities :</label>
+		                                        </div>
+		                                        <div class="col-sm-6 col-md-4 col-lg-8">
+		                                        	<textarea class="form-control input-anime"  th:field="*{Responsibilities}" 
+		                                        	placeholder="Outline the activities a person in this role will perform on a regular basis" required></textarea>
+		                                        </div>
+		                                    </div>
+		                                    <div class="row mt-4">
+		                                        <div class="col-sm-6 col-md-4 col-lg-5 required-field">
+		                                        	<label  for="content" class="d-label">Desired Candidate Profile :</label>
+		                                        </div>
+		                                        <div class="col-sm-6 col-md-4 col-lg-8">
+		                                        	<textarea class="form-control input-anime"  th:field="*{DesiredCandidateProfile}" 
+		                                        	placeholder="Specify required technical expertise previous job experience or certification" required></textarea>
+		                                        </div>
+		                                    </div>
+		                                    <div class="row mt-4">
+		                                        <div class="col-sm-6 col-md-4 col-lg-4">
+		                                            <label  for="content" class="d-label">Work mode :</label><b class="required-field"></b>
+		                                            <select class="form-control input-anime" th:field="*{WorkMode}" required> 
+		                                            	<option value="">Select</option>
+		                                                <option th:each="jpost:${WorkModeList}" 
+		                                                		th:value="${jpost.id}"
+		                                                    	th:text="${jpost.workmode}" th:if="${jpost.company_id}==${CompanyID}">
+		                                                </option>
+		                                            </select>
+		                                        </div>
+		                                        <div class="col-sm-6 col-md-4 col-lg-4">
+		                                            <label  for="content" class="d-label">Role :</label><b class="required-field"></b>
+		                                            <select class="form-control input-anime" th:field="*{Role}" required> 
+		                                            	<option value="">Select</option>
+		                                                <option th:each="jpost:${RoleList}" 
+		                                                		th:value="${jpost.id}"
+		                                                    	th:text="${jpost.roles}" th:if="${jpost.company_id}==${CompanyID}">
+		                                                </option>
+		                                            </select>
+		                                        </div>
+		                                    </div>
+		                                    <div class="row mt-4">
+		                                        <div class="col-sm-6 col-md-4 col-lg-9">
+		                                            <label  for="content" class="d-label">Key Skills :</label><b class="required-field"></b>
+		                                            <div><span>Specify key skills required for this job role</span></div>
+		                                            <textarea class="form-control input-anime" th:field="*{KeySkills}"  
+		                                            placeholder="Add skill(250 characters allowed)" required></textarea>
+		                                        </div>
+		                                    </div>
+		                                    <div class="row mt-4">
+		                                        <div class="col-sm-4 col-md-4 col-lg-3 required-field">
+		                                            <label  for="content" class="d-label">Work Experience(Years):</label>
+		                                        </div>
+		                                        <div class="col-sm-6 col-md-4 col-lg-1">
+		                                            <input type="text" class="form-control input-anime" th:field="*{MinWorkExperience}" placeholder="Min" required> 
+		                                        </div>
+		                                    	to
+		                                        <div class="col-sm-6 col-md-4 col-lg-1">
+		                                            <input type="text" class="form-control input-anime" th:field="*{MaxWorkExperience}" placeholder="Max" required> 
+		                                        </div>
+		                                    </div>
+		                                    <div class="row mt-4">
+		                                        <div class="col-sm-4 col-md-4 col-lg-3 required-field">
+		                                            <label  for="content" class="d-label">Annual Salary Range:</label>
+		                                        </div>
+		                                        <div class="col-sm-6 col-md-4 col-lg-2">
+		                                        	<select class="form-control input-anime" th:field="*{MinAnnualSalary}" required> 
+		                                            	<option value="">Select</option>
+		                                                <option th:each="a:${AnnualSalaryList}" 
+			                                                		th:value="${a.id}"
+			                                                    	th:text="${a.salary}" th:if="${a.company_id}==${CompanyID}">
+			                                                </option>
+		                                            </select>
+		                                        </div>
+		                                    		to
+		                                        <div class="col-sm-6 col-md-4 col-lg-2"> 
+			                                    	<select class="form-control input-anime" th:field="*{MaxAnnualSalary}"  required> 
+		                                            	<option value="">Select</option>
+		                                                <option th:each="a:${AnnualSalaryList}" 
+			                                                		th:value="${a.id}"
+			                                                    	th:text="${a.salary}" th:if="${a.company_id}==${CompanyID}">
+			                                                </option>
+		                                            </select>
+		                                        </div>
+		                                    </div>
+		                                    <div class="row mt-4">
+		                                        <div class="col-sm-4 col-md-4 col-lg-5">
+		                                            <label  for="content" class="d-label">Location :</label><b class="required-field"></b>
+		                                            <select class="form-control input-anime" th:field="*{Location}" id="multiple-location" multiple="multiple" 
+		                                            placeholder="Enter Location" required> 
+			                                                <option value="">Select</option>
+			                                                <option th:each="jpost:${LocationList}" 
+			                                                		th:value="${jpost.id}"
+			                                                    	th:text="${jpost.location}" th:if="${jpost.company_id}==${CompanyID}">
+			                                                </option>
+		                                            </select>
+		                                        </div>
+		                                        <style>
+	                                                .dropdown-toggle::after {
+	                                                    display: inline-block;
+	                                                    margin-left: 16.255em;
+	                                                    vertical-align: 0.255em;
+	                                                    content: "";
+	                                                    border-top: 0.3em solid;
+	                                                    border-right: 0.3em solid transparent;
+	                                                    border-bottom: 0;
+	                                                    border-left: 0.3em solid transparent;
+	                                               	 }
+	                                            </style>
+		                                    </div>
+		                                    <div class="row mt-4">
+		                                        <div class="col-sm-4 col-md-4 col-lg-6">
+		                                            <label  for="content" class="d-label">Industry :</label><b class="required-field"></b>
+		                                            	<select  class="form-control input-anime" th:field="*{Industry}"  required> 
+			                                            	<option value="">Select</option>
+			                                                <option th:each="jpost:${IndustryList}" 
+			                                                		th:value="${jpost.id}"
+			                                                    	th:text="${jpost.industryname}" th:if="${jpost.company_id}==${CompanyID}">
+			                                                </option>
+			                                            </select>
+		                                        </div>
+		                                    </div>
+		                                    <div class="row mt-4">
+		                                        <div class="col-sm-4 col-md-4 col-lg-6">
+		                                            <label  for="content" class="d-label">Preferred Industry :</label><b class="required-field"></b>
+		                                         <div><span>Add the industries you're looking to hire candidates from</span></div>
+		                                            	<select class="form-control input-anime"  th:field="*{PreferredIndustry}" required> 
+			                                            	<option value="">Select</option>
+			                                                <option th:each="jpost:${IndustryList}" 
+			                                                		th:value="${jpost.id}"
+			                                                    	th:text="${jpost.industryname}" th:if="${jpost.company_id}==${CompanyID}">
+			                                                </option>
+		                                            	</select>
+		                                        </div>
+		                                    </div>
+		                                    <div class="row mt-4">
+		                                        <div class="col-sm-4 col-md-4 col-lg-6">
+		                                            <label  for="content" class="d-label">Functional Area :</label><b class="required-field"></b>
+		                                            <select class="form-control input-anime" th:field="*{FunctionalArea}" required> 
+			                                            	<option value="">Select</option>
+			                                                <option th:each="jpost:${FunctionalAreaList}" 
+			                                                		th:value="${jpost.id}"
+			                                                    	th:text="${jpost.FArea}" th:if="${jpost.company_id}==${CompanyID}">
+			                                                </option>
+		                                            	</select>
+		                                        </div>
+		                                    </div>
+		                                    <div class="row mt-4">
+		                                        <div class="col-sm-4 col-md-4 col-lg-3">
+		                                            <label  for="content" class="d-label">Reference Code :</label><b class="required-field"></b>
+		                                            <input type="text" class="form-control input-anime" th:field="*{ReferenceCode}" placeholder="Enter Reference Code" required> 
+		                                        </div>
+		                                    
+		                                        <div class="col-sm-4 col-md-4 col-lg-3">
+		                                            <label  for="content" class="d-label">Number of Vacancies :</label><b class="required-field"></b>
+		                                            <input type="text" class="form-control input-anime" th:field="*{NumberofVacancies}" placeholder="Enter Number of Vacancies" required> 
+		                                        </div>
+		                                    </div>
+		                                    <div class="row mt-4">
+		                                        <div class="col-sm-4 col-md-4 col-lg-6">
+		                                            <label  for="content" class="d-label">Educational Qualification :</label><b class="required-field"></b>
+		                                            <select class="form-control input-anime" th:field="*{EducationalQualification}"  required>      
+			                                                <option value="">Select</option>
+			                                                <option th:each="jpost:${qualificationList}" 
+			                                                		th:value="${jpost.id}"
+			                                                    	th:text="${jpost.qualification}" th:if="${jpost.company_id}==${CompanyID}">
+			                                                </option>
+		                                            </select>
+		                                        </div>
+		                                    </div>
+		                                    <div class="row mt-4">
+		                                        <div class="col-sm-4 col-md-4 col-lg-6">
+		                                            <label  for="content" class="d-label">Company Name :</label><b class="required-field"></b>
+		                                            <input type="text" class="form-control input-anime" th:field="*{CompanyName}" placeholder="Enter Company Name" required> 
+		                                        </div>
+		                                    </div>
+		                                    <div class="row mt-4">
+		                                        <div class="col-sm-4 col-md-4 col-lg-9">
+		                                            <label  for="content" class="d-label">Company Details :</label><b class="required-field"></b>
+		                                            <textarea cols="20" rows="15" maxlength="1500" class="form-control input-anime" th:field="*{CompanyDetails}" 
+		                                            placeholder="Mention about your company profile, things you would want to highlight to jobseekers" required> </textarea>
+		                                        </div>
+		                                    </div>
+		                                   
+		                                    <div class="row mt-4">
+		                                        <div class="col-sm-6 col-md-4 col-lg-2">
+		                                            <button type="submit" class="btn btn-info ">Save</button>
+		                                        </div>
+	                                        </div>       
+	                                	</form>  
+	                        		</div>
+	                    		</div>
+	                		</div>
+	            		</div> 
+					</div>           
+			</section>
+		</div>
+		<script>
+			var uploadField = document.getElementById("importJd");
+				uploadField.onchange = function() {
+		    		if(this.files[0].size >= 102400){
+		       		alert("File is too big!");
+		       		this.value = "";
+		    		};
+				};
+				
+         	$("input").on("keypress", function(e) {
+			    if (e.which === 32 && !this.value.length)
+			        e.preventDefault();
+			});
+		
+			$("textarea").on("keypress", function(e) {
+			    if (e.which === 32 && !this.value.length)
+			        e.preventDefault();
+			});
+		</script>
+	</body> 
+</html>

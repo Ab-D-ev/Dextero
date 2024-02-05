@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title>Edit Work Experience</title>
+    	<link rel="icon" th:href="@{/dist/images/Dextero_Icon.ico}" type="image/x-icon" />
+        <link th:href="@{https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700}" rel="stylesheet" />
+        <link rel="stylesheet" th:href="@{/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css}"/>
+        <link rel="stylesheet" th:href="@{/plugins/datatables-responsive/css/responsive.bootstrap4.min.css}" />
+        <link rel="stylesheet" th:href="@{/dist/css/dextero.css}">
+        <link rel="stylesheet" th:href="@{/dist/css/all.css}">
+
+        <script th:src="@{/plugins/jquery/jquery.min.js}"></script>
+        <script th:src="@{/plugins/bootstrap/js/bootstrap.bundle.min.js}"></script>
+        <script th:src="@{/plugins/datatables/jquery.dataTables.min.js}"></script>
+        <script th:src="@{/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js}"></script>
+        <script th:src="@{/plugins/datatables-responsive/js/dataTables.responsive.min.js}"></script>
+        <script th:src="@{/plugins/datatables-responsive/js/responsive.bootstrap4.min.js}"></script>
+        <script th:src="@{/dist/js/dextero.js}"></script>
+        <script th:src="@{/dist/js/all.js}"></script>
+   		<link rel="stylesheet" href="//code.jquery.com/ui/1.13.1/themes/base/jquery-ui.css">
+   		
+   		<!----------------------------------------- Added files ----------------------------------------->
+		<link rel="stylesheet" th:href="@{/dist/css1/style.css}" />
+		<script src="https://kit.fontawesome.com/d13698d966.js" crossorigin="anonymous"></script>
+	    <script th:src="@{/dist/js/index.js}"></script>
+        <!-- date -->
+        <link rel="stylesheet" href="//code.jquery.com/ui/1.13.1/themes/base/jquery-ui.css">
+		<script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
+	
+</head>
+	<body class="hold-transition sidebar-mini layout-fixed">
+		<header th:include="header::header1"></header> 
+		<div class="content-wrapper">
+	        <section class="content-header">
+	            <div class="container-fluid">
+	                <div class="row">
+	                    <div class="col-lg-12">
+	                        <div class="card-header text-center pb-2 d-bg-h2 ">
+	                            <lable id="label" class="h2 font-weight-bold">Edit Work Experience Details</lable>
+	                        </div>
+	                        <div class="section">
+				                <div class="section_box">
+				                  <a th:href="@{/showFormForUpdate}" class="sectionBtn" id="link1"><i class="fa-solid fa-user"></i>Personal Details</a>
+				                  <a th:href="@{/address}" class="sectionBtn" id="link2"><i class="fa-solid fa-location-dot"></i>Address</a>
+				                  <a th:href="@{/education}" class="sectionBtn" id="link3"><i class="fa-solid fa-book"></i>Education</a>
+				                  <a th:href="@{/certificate_details}" class="sectionBtn" id="link4"><i class="fa-solid fa-certificate"></i>Certificate</a>
+				                  <a th:href="@{/bank_details}" class="sectionBtn" id="link5"><i class="fa-sharp fa-solid fa-chart-simple"></i>Bank Details</a>
+				                  <a th:href="@{/work_experience}" class="sectionBtn" id="link6"><i class="fa-solid fa-circle-info"></i>Work Experience</a>
+				                  <a th:href="@{/career_break}" class="sectionBtn" id="link7"><i class="fa-solid fa-lightbulb"></i>Career Break</a>
+				                </div>
+			              	</div>
+	                        <div class="card card-box-new tech-x-card-2 mt-5">
+	                            <div class="card-body">
+                                	<form action="#" class="form-horizontal" th:action="@{/save/work_experience}" th:object="${workExperience}" method="post">
+                                        <input type="hidden" th:field="*{id}" />
+                                        	<div class="row mt-4">
+                                         		<div class="col-sm-4 col-lg-3">
+                                               		<label class="d-label">Company Name :</label>
+                                             	</div>
+                                         		<div class="col-sm-6 col-md-4 col-lg-6">
+                                           			<input type="text" class="form-control input-anime" th:field="*{companyname}" placeholder="Enter Company Name">
+                                              	</div>
+                                       		</div>
+											<div class="row mt-4">
+                                            	<div class="col-sm-4 col-lg-3">
+                                             		<label class="d-label">Start Date :</label>
+                                               	</div>
+                                          		<div class="col-sm-6 col-md-4 col-lg-2">
+                                                	<input type="text" class="form-control input-anime" th:field="*{startDate}" id="start_date" placeholder="DD-MM-YYYY">
+                                                </div>
+                                            	<div class="col-sm-4 col-lg-2">
+                                             		<label class="d-label">End Date :</label>
+                                               	</div>
+                                          		<div class="col-sm-6 col-md-4 col-lg-2">
+                                                	<input type="text" class="form-control input-anime" th:field="*{endDate}" id="end_date" placeholder="DD-MM-YYYY">
+                                                </div>
+                                           	</div>
+                                           	<div class="row mt-4">
+                                            	<div class="col-sm-4 col-lg-3">
+                                             		<label class="d-label">Work Type :</label>
+                                               	</div>
+                                          		<div class="col-sm-6 col-md-4 col-lg-2">
+                                                	<select class="form-control input-anime" th:field="*{workType}">
+		                                                <option value="Part Time">Part Time</option>
+		                                                <option value="Full Time">Full Time</option>
+                                                	</select>
+                                                </div>
+                                           	</div>
+                                           	<div class="row mt-4">
+                                            	<div class="col-sm-4 col-lg-3">
+                                             		<label class="d-label">Designation :</label>
+                                               	</div>
+                                          		<div class="col-sm-6 col-md-4 col-lg-4">
+                                                	<input type="text" class="form-control input-anime" th:field="*{designation}" placeholder="Enter Designation">
+                                                </div>
+                                           	</div>
+                                           	<div class="row mt-4">
+                                            	<div class="col-sm-4 col-lg-3">
+                                             		<label class="d-label">Roles & Responsibilities  :</label>
+                                               	</div>
+                                          		<div class="col-sm-6 col-md-4 col-lg-6">
+                                                	<textarea class="form-control input-anime" cols="15" rows="6" maxlength="1500" th:field="*{roles}" placeholder="Enter Roles & Responsibilities"></textarea>
+                                                </div>
+                                           	</div>
+											<div class="row mt-4">
+				                            	<div class="col-sm-4 col-md-4 col-lg-3">
+				                             		<button type="submit" class="btn btn-info ">Save</button>
+				                                </div> 
+				                           	</div>    
+										</form>
+                            		</div>
+                        		</div>
+                    		</div>
+                		</div>
+           			</div>
+        	</section>
+    	</div>
+     	 <script type="text/javascript">
+      		$(function() {
+			  var todaydt = new Date();
+			    $("#start_date").datepicker({
+					minDate: 0,
+		          	autoclose: true,
+		           	dateFormat: "dd-mm-yy",
+		          	endDate: todaydt,
+		            onSelect: function (date) {
+		            	//Get selected date 
+		            	var date2 = $('#start_date').datepicker('getDate');
+		              	//sets minDate to txt_date_to
+		           		$('#end_date').datepicker('option', 'minDate', date2);
+		            }
+		        }).datepicker('setDate','0');
+			    
+			    $('#end_date').datepicker({
+					minDate: 0,
+		       		dateFormat: "dd-mm-yy",
+		         });
+		        // DataTables initialisation
+		  		var table = $('#data-table').DataTable();
+		  	});
+	         $("input").on("keypress", function(e) {
+				if (e.which === 32 && !this.value.length)
+					e.preventDefault();
+			});
+			$("textarea").on("keypress", function(e) {
+				if (e.which === 32 && !this.value.length)
+					e.preventDefault();
+			});
+			
+				const setActiveLink = (linkId) => {
+		        const links = document.querySelectorAll(".section_box a");
+		        links.forEach((link) => {
+		          if (link.id === linkId) {
+		            link.classList.add("active");
+		          } else {
+		            link.classList.remove("active");
+		          }
+		        });
+		      };
+		
+		      const handleLinkClick = (event) => {
+		        const linkId = event.target.id;
+		        setActiveLink(linkId);
+		        localStorage.setItem("activeLink", linkId);
+		      };
+		
+		      document.addEventListener("DOMContentLoaded", () => {
+		        const activeLink = localStorage.getItem("activeLink");
+		        if (activeLink) {
+		          setActiveLink(activeLink);
+		        }
+		
+		        const links = document.querySelectorAll(".section_box a");
+		        links.forEach((link) => {
+		          link.addEventListener("click", handleLinkClick);
+		        });
+		      });
+	</script>
+</body>
+
+</html>

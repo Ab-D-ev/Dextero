@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+	<title>Expense</title>
+		<link rel="icon" th:href="@{/dist/images/Dextero_Icon.ico}" type="image/x-icon" />
+        <link th:href="@{https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700}" rel="stylesheet" />
+        <link rel="stylesheet" th:href="@{/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css}"/>
+        <link rel="stylesheet" th:href="@{/plugins/datatables-responsive/css/responsive.bootstrap4.min.css}" />
+        <link rel="stylesheet" th:href="@{/dist/css/dextero.css}">
+        <link rel="stylesheet" th:href="@{/dist/css/all.css}">
+
+        <script th:src="@{/plugins/jquery/jquery.min.js}"></script>
+        <script th:src="@{/plugins/bootstrap/js/bootstrap.bundle.min.js}"></script>
+        <script th:src="@{/plugins/datatables/jquery.dataTables.min.js}"></script>
+        <script th:src="@{/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js}"></script>
+        <script th:src="@{/plugins/datatables-responsive/js/dataTables.responsive.min.js}"></script>
+        <script th:src="@{/plugins/datatables-responsive/js/responsive.bootstrap4.min.js}"></script>
+        <script th:src="@{/dist/js/dextero.js}"></script>
+        <script th:src="@{/dist/js/all.js}"></script>
+		<!-- date filter -->
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.14.1/moment.min.js"></script>
+		<link rel="stylesheet" href="//code.jquery.com/ui/1.13.1/themes/base/jquery-ui.css">
+		<script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
+		
+		<style>
+			.data{
+				display:none;
+			}
+			tfoot td {
+				font-weight:bold;
+			}
+		</style>
+</head>
+
+	<body class="hold-transition sidebar-mini layout-fixed">
+	    <header th:include="header::header1"></header> 
+		<div class="content-wrapper">
+            <section class="content-header">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="card-header text-center pb-2 d-bg-h2 ">
+                                <lable id="label" class="h2 font-weight-bold">Expense</lable>   
+                            </div>
+                            <div class="card card-box-new tech-x-card-2 mt-5">
+                                <div class="card-body">
+                                    <form action="#" th:action="@{/SaveExpense}" th:object="${expense}" method="POST"
+                                    enctype="multipart/form-data" autocomplete="off">
+                                        <div class="row mt-4">
+                                            <div class="col-sm-2 ">
+                                                <label class="d-label" for="date">Expense Category :</label>
+                                            </div>
+                                            <div class="col-sm-2">
+                                                <select  class="input-anime form-control" th:field="*{Category}" id="Category" required>
+                                                    <option value="Travel">Travel</option>
+                                                    <option value="Stay">Stay</option>
+                                                    <option value="Telephone">Telephone</option>
+                                                    <option value="Food">Food</option>
+                                                </select>
+                                            </div>
+                                        </div>
+										<div class="content">
+       										<div id="Travel" class="data">
+       											<div class="row  mt-4">
+       												<div class="col-sm-4">
+       													<div class="row">
+       														<div class="col-sm-6">
+       															<label class="d-label">From Location:</label>
+       														</div>
+       														<div class="col-sm-6">
+       															<input type="text" class="input-anime form-control" th:field="*{FromLocation}" id="fromlocation" 
+       															 value="--" placeholder="Location" required>
+       														</div>
+       													</div>
+       												</div>
+       												<div class="col-sm-4">
+       													<div class="row">
+       														<div class="col-sm-6">
+       															<label class="d-label">To Location:</label>
+       														</div>
+       														<div class="col-sm-6">
+       															<input type="text" class="input-anime form-control" th:field="*{ToLocation}" id="tolocation" 
+       															 value="--" placeholder="Location" required>
+       														</div>
+       													</div>
+       												</div>
+       												<div class="col-sm-4">
+       													<div class="row">
+       														<div class="col-sm-6">
+       															<label class="d-label">Mode of Travel:</label>
+       														</div>
+       														<div class="col-sm-6">
+       															<select class="input-anime form-control" id="mode" th:field="*{ModeOfTravel}" required> 
+        															<option value="--">Select</option>
+																	<option value="Car">Car</option>
+																	<option value="Train">Train</option>
+																	<option value="Flight">Flight</option>
+																	<option value="Auto">Auto</option>
+        														</select>
+       														</div>
+       													</div>
+       												</div>
+       											</div>
+       										</div>
+                                        <div id="Stay" class="data">
+                                            <div class="row mt-4">
+                                                <div class="col-sm-2">
+                                                    <label class="d-label" >Location:</label>
+                                                </div>
+                                                <div class="col-sm-2">
+                                                    <input type="text" class="input-anime form-control"  th:field="*{Location}" id="location" value="--"
+                                                    placeholder="Location" required>
+                                                </div>
+                                            </div>   
+                                        </div>
+                                        <div class="row mt-4">
+                                            <div class="col-sm-4">
+                                                <div class="row">
+                                                    <div class="col-sm-6">
+                                                        <label class="d-label" for="date">From Date: </label>
+                                                    </div>
+                                                    <div class="col-sm-6 ">
+                                                        <input type="text" class="form-control input-anime"  th:field="*{FromDate}" id="fromdate"
+                                                        placeholder="DD-MM-YYYY" required>
+                                                    </div>
+                                                </div> 
+
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <div class="row">
+                                                    <div class="col-sm-6">
+                                                        <label class="d-label" for="date">To Date:  </label>
+                                                    </div>
+                                                    <div class="col-sm-6 ">
+                                                        <input type="text" class="form-control input-anime"  th:field="*{ToDate}" id="todate"
+                                                        placeholder="DD-MM-YYYY" required>
+                                                    </div>
+                                                </div> 
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <div class="row">
+                                                    <div class="col-sm-6">
+                                                        <label class="d-label" for="date">  Vendor Name:</label>
+                                                    </div>
+                                                    <div class="col-sm-6 ">
+                                                        <input type="text" class="form-control input-anime"  th:field="*{Vendor}" 
+                                                        placeholder="Enter Vendor Name" required>
+                                                    </div>
+                                                </div>  
+                                            </div>   
+                                        </div>
+										<div class="row mt-4">
+                                            <div class="col-sm-4">
+                                                <div class="row">
+                                                    <div class="col-sm-6">
+                                                        <label class="d-label" for="date">Amount:</label>
+                                                    </div>
+                                                    <div class="col-sm-3">
+                                                    	<select class="form-control input-anime"  th:field="*{currency}" id="mySelect" required>
+			                                                <option th:each="expense:${currencyList}" 
+			                                                		th:value="${expense.addcurrency}"
+			                                                    	th:text="${expense.addcurrency}" th:if="${expense.company_id}==${CompanyID}">
+			                                                </option>
+                                                    	</select>
+                                                    </div>
+                                                    <div class="col-sm-3">
+                                                        <input type="text" class="form-control input-anime"  th:field="*{Amount}"
+                                                        placeholder="Enter Amount" required>
+                                                    </div>
+                                                </div> 
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <div class="row">
+                                                    <div class="col-sm-6 required-field">
+                                                        <label class="d-label" for="date">Receipt:</label>
+                                                    </div>
+                                                    <div class="col-sm-6 ">
+                                                        <input type="file"  name="ReceiptImg" id="ReceiptImg" accept=".jpg,.png,.jpeg" required>
+                                                    </div>
+                                                </div> 
+                                            </div>
+                                        </div>
+                                        	<button type="submit" onclick="myFunction()" class="btn btn-primary">ADD</button>
+                                     </div>
+                                  </form>
+                                        <div class="row mt-4">
+                                            <div class="col-sm-4">
+                                                <div class="row">
+                                                    <div class="col-sm-4">
+                                                        <label class="d-label" for="date">From:</label>
+                                                    </div>
+                                                    <div class="col-sm-6 ">
+                                                        <input type="text" class="form-control input-anime" id="startDate" th:onkeyup="myFunction()" placeholder="DD-MM-YYYY">
+                                                    </div>
+                                                </div> 
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <div class="row">
+                                                    <div class="col-sm-3">
+                                                        <label class="d-label" for="date">To:</label>
+                                                    </div>
+                                                    <div class="col-sm-6 ">
+                                                        <input type="text" class="form-control input-anime" id="endDate" th:onkeyup="myFunction()" placeholder="DD-MM-YYYY">
+                                                    </div>
+                                                </div> 
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <div class="row">
+                                                    <div class="col-sm-1"></div>
+                                                    
+                                                    <div class="col-sm-3">
+                                                        <input type="button" id="clearBtn" value="Clear" class="btn btn-primary">
+                                                    </div>
+                                                </div> 
+                                            </div>
+                                        </div>
+                                    <form th:action="@{/ExpenseReport}" method="GET">
+                                        <div class="row mt-4">
+                                            <div class="col-sm-6"></div>
+                                            <div class="col-sm-6">
+                                                <div class="row">
+                                                    <div class="col-sm-4"></div>
+                                                    <div class="col-sm-8">
+                                                        <input type="submit" class="btn btn-primary ml-4" value="Create Expense Report"
+                                                            id="frmExpense" required>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <h1 class="mt-4 mb-4">Available Expenses</h1>
+                                        <div class="table-responsive">
+                                            <table id="data-table" data-order='[[ 5, "desc" ]]' border="1" class="table table-bordered table-responsive table-striped">
+                                                <thead>
+                                                    <tr>
+                                                        <th><input type="checkbox"></th>
+                                                        <th>Expense Category</th>
+                                                        <th>From Location</th>
+                                                        <th>To Location</th>
+                                                        <th>Location</th>
+                                                        <th>From Date</th>
+                                                        <th>To Date</th>
+                                                        <th>Mode Of Travel</th>
+                                                        <th>Vendor</th>
+                                                        <th>Receipt</th>
+                                                        <th>Amount</th>
+                                                        <th>Edit</th>
+                                                        <!-- <th>Delete</th> -->
+                                                    </tr>
+                                                </thead>
+                                                <tfoot>
+                                                    <tr>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td>Totals</td>
+                                                        <td id="total"></td>
+                                                        <td></td>
+                                                        <!-- <td></td> -->
+                        
+                                                    </tr>
+                                                </tfoot>
+                                                <tbody>
+                                                    <tr th:each="expense:${ExpenseList}" th:if="${expense.company_id}==${CompanyID} AND ${expense.employee_id}==${UserName}">
+                                                        <td><input type="checkbox" name="travel_id" th:value="${expense.id}"></td>
+                                                        <td th:text="${expense.Category}"></td>
+                                                        <td th:text="${expense.FromLocation}"></td>
+                                                        <td th:text="${expense.ToLocation}"></td>
+                                                        <td th:text="${expense.Location}"></td>
+                                                        <td th:text="${expense.FromDate}"></td>
+                                                        <td th:text="${expense.ToDate}"></td>
+                                                        <td th:text="${expense.ModeOfTravel}"></td>
+                                                        <td th:text="${expense.Vendor}"></td>
+                                                        <td><a th:href="@{'/Image Folder/' + ${expense.Receipt}}">
+                                                                <img th:src="@{'/Image Folder/' + ${expense.Receipt}}" width="50" height="40"
+                                                                    style="border: 1px solid black;"></img></a>
+                                                        </td>
+                                                        <td><span th:text="${expense.currency}" id="data1"></span>
+                                                        	<span th:text="${expense.Amount}" id="data"></span> 
+                                                        </td>
+                                                        <td><a th:href="@{/EditExpense/{id}(id=${expense.id})}"><i class="fa-solid fa-pencil text-success"></i></a></td>
+                                                        <!-- <td><a th:href="@{/deleteAllExpense/{id}(id=${expense.id})}"><i class="fa-solid fa-trash text-danger"></i></a></td> -->
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>    
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>            
+            </section>
+        </div>
+            <script type="text/javascript">
+        		$(document).ready(function () {
+            		var table = $('#data-table').DataTable({
+                		columnDefs: [{
+                    	targets: 0,
+                    	orderable: false,
+                    	searchable: false,
+                    	className: 'selectall-checkbox',
+                		}],
+                	select: {
+                    style: 'multi',
+                    selector: 'td:first-child',
+                	},
+            	});
+            	
+            	$(function() {
+            		var TotalValue1 = ' ';
+       				$("#data1").each(function(index,value){
+         			currentRow = ($(this).text());
+         			TotalValue1 += currentRow
+       				});
+       				
+       				var TotalValue = 0;
+       				$("tr #data").each(function(index,value){
+         			currentRow1 = parseFloat($(this).text());
+         			TotalValue += currentRow1
+       				});
+				document.getElementById('total').innerHTML = TotalValue1 + '   ' + TotalValue;
+				});
+            	table.on('select.dt deselect.dt', function (e, dt, type, indexes) {
+                	var countSelectedRows = table.rows({ selected: true }).count();
+                	var countItems = table.rows().count();
+
+                	if (countItems > 0) {
+                    	if (countSelectedRows == countItems) {
+                        	$('thead .selectall-checkbox input[type="checkbox"]', this).prop('checked', true);
+                    	} else {
+                        	$('thead .selectall-checkbox input[type="checkbox"]', this).prop('checked', false);
+                    	}
+                	}
+                	if (e.type === 'select') {
+                    	$('.selectall-checkbox input[type="checkbox"]', table.rows({ selected: true }).nodes()).prop('checked', true);
+                	} else {
+                    	$('.selectall-checkbox input[type="checkbox"]', table.rows({ selected: false }).nodes()).prop('checked', false);
+                	}
+            	});
+          	  // When clicking on "thead .selectall-checkbox", trigger click on checkbox in that cell.
+            	table.on('click', 'thead .selectall-checkbox', function () {
+                	$('input[type="checkbox"]', this).trigger('click');
+            	});
+            	// When clicking on the checkbox in "thead .selectall-checkbox"
+            	table.on('click', 'thead .selectall-checkbox input[type="checkbox"]', function (e) {
+               		if (this.checked) {
+                    	table.rows().select();
+                	} else {
+                    	table.rows().deselect();
+                	}
+                	e.stopPropagation();
+            		});
+       			 });
+
+			var dateToday = new Date(); 
+				$(document).ready(function () {
+            		$( "#fromdate" ).datepicker({
+    					dateFormat:'dd-mm-yy',
+    					//minDate: dateToday,
+    					onClose: function (selected) {
+     			 			$("#todate").datepicker("option", "minDate", selected);
+   				 			}
+  						});
+            
+            		$("#todate").datepicker({
+               			dateFormat: "dd-mm-yy"
+            		});
+          		 		var table = $('#data-table').DataTable();
+          			$("#Category").on('change', function(){
+          				$(".data").hide();
+          				$("#" + $(this).val()).fadeIn(100);
+          			}).change();
+				});
+	
+	 		function myFunction() {
+            	document.getElementById("fromlocation").defaultValue = "--";
+            	document.getElementById("tolocation").defaultValue = "--";
+           		document.getElementById("mode").defaultValue = "--";
+            	document.getElementById("location").defaultValue = "--";
+        		}
+
+	 		var uploadField = document.getElementById("ReceiptImg");
+				uploadField.onchange = function() {
+		    		if(this.files[0].size >= 102400){
+		       		alert("File is too big!");
+		       		this.value = "";
+		    		};
+				};
+				
+			document.getElementById("mySelect").selectedIndex = 0;
+			$("input").on("keypress", function(e) {
+				if (e.which === 32 && !this.value.length)
+					e.preventDefault();
+			});
+			
+			$(function() {
+					  var table = $('#data-table').DataTable();
+					  var fromdateInput = $('#startDate');
+					  var todateInput = $('#endDate');
+					  var clearBtn = $('#clearBtn');
+					
+					  // Datepicker initialization
+					  fromdateInput.datepicker({
+					    dateFormat: "dd-mm-yy",
+					    onClose: function(selected) {
+					      todateInput.datepicker("option", "minDate", selected);
+					    }
+					  });
+					
+					  todateInput.datepicker({
+					    dateFormat: "dd-mm-yy",
+					    onClose: function(selected) {
+					      fromdateInput.datepicker("option", "maxDate", selected);
+					    }
+					  });
+					
+					  // Event listener for date range change
+					  function applyDateRangeFilter() {
+					    var fromDate = moment(fromdateInput.val(), 'DD-MM-YYYY');
+					    var toDate = moment(todateInput.val(), 'DD-MM-YYYY');
+					
+					    $.fn.dataTable.ext.search.push(function(settings, data, dataIndex) {
+					      var date = moment(data[5,6], 'DD-MM-YYYY');
+					
+					      if (date.isSameOrAfter(fromDate) && date.isSameOrBefore(toDate)) {
+					        return true;
+					      }
+					
+					      return false;
+					    });
+					
+					    table.draw();
+					
+					    $.fn.dataTable.ext.search.pop();
+					  }
+					
+					  fromdateInput.on('change', applyDateRangeFilter);
+					  todateInput.on('change', applyDateRangeFilter);
+					
+					  // Event listener for clear button
+					  clearBtn.on('click', function() {
+					    fromdateInput.val('');
+					    todateInput.val('');
+					
+					    // Clear the filters and redraw the table
+					    table.columns().search('').draw();
+					  });
+				});
+				
+		</script> 	
+	</body>        
+</html>

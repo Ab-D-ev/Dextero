@@ -1,0 +1,81 @@
+.section {
+  background: #e4e4e4;
+  width: 100%;
+  margin: 0.5rem 0;
+}
+
+.section_box {
+  width: 100%;
+  margin: 0 auto;
+  display: flex;
+  /* justify-content: space-between; */
+  gap: 0.4rem;
+  padding: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.sectionBtn {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  background: #f9feff;
+  color: #000;
+  font-size: 14px;
+  padding: 0.7rem 0.5rem;
+  border-radius: 6px;
+  font-family: sans-serif;
+  text-decoration: none;
+  transition: all 0.3s ease-in;
+  cursor: pointer;
+}
+
+.sectionBtn:hover {
+  background: #4dafe1;
+    color: white;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+.sectionBtn.active {
+  background: #4dafe1;
+  color: white;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+.nextBtn {
+  padding: 0.5rem;
+  background: #3838ff;
+  border: none;
+  outline: none;
+  border-radius: 5px;
+  opacity: 0.8;
+  cursor: pointer;
+  transition: all 0.3s ease-in;
+}
+
+.nextBtn:hover {
+  opacity: 1;
+}
+
+.nextBtn > a {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  text-decoration: none;
+  color: white;
+  font-size: 0.9rem;
+}
+
+
+.edit-btn {
+	position: absolute;
+	top: 10px;
+	right: 40px;
+	display: inline-block;
+	padding: 6px 12px;
+	background-color: #3838ff;
+	color: #fff;
+	text-decoration: none;
+	border: none;
+	border-radius: 4px;
+	cursor: pointer;
+}

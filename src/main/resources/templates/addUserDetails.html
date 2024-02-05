@@ -1,0 +1,767 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">  
+<title>Add User Details</title>
+<link rel="icon" href="@{/dist/images/Dextero_Icon.ico}" type="image/x-icon" />
+
+   <link th:href="@{https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700}" rel="stylesheet" />
+    <link rel="stylesheet" th:href="@{/plugins/fontawesome-free/css/all.min.css}">
+    <script th:src="@{/plugins/jquery/jquery.min.js}"></script>
+    <script th:src="@{/plugins/bootstrap/js/bootstrap.bundle.min.js}"></script>
+    <link rel="stylesheet" th:href="@{/plugins/bootstrap-wizards/css/smart_wizard.all.css}">
+    <script th:src="@{/plugins/bootstrap-wizards/js/jquery.smartWizard.min.js}"></script>
+    <link rel="stylesheet" th:href="@{/dist/css/dextero.css}">
+	<link rel="stylesheet" th:href="@{/dist/css/all.css}">
+	<script th:src="@{/dist/js/all.js}"></script>
+    <link rel="stylesheet" th:href="@{/dist/icon/css/all.css}">
+    <script th:src="@{/dist/js/dextero.js}"></script>
+    <script th:src="@{/plugins/moment/moment.min.js}"></script>
+    <script th:src="@{/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js}"></script>
+    
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.13.1/themes/base/jquery-ui.css">
+  	<script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
+ 
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.13/css/bootstrap-multiselect.css" />
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.13/js/bootstrap-multiselect.min.js"></script>
+<script th:src="@{/chart js/cities.js}"></script>
+
+<script type="text/javascript">  
+    $(document).ready(function() {  
+        $('select[multiple]').multiselect({
+        	allSelectedText: 'All',
+		    includeSelectAllOption: true,
+	    	buttonWidth:'250px'
+    });
+      
+    	$("#dateofbirth").datepicker({
+                dateFormat: "dd-mm-yy",
+            }); 
+        });
+		
+ </script>  
+<style>
+	.dropdown-toggle::after {
+		display: inline-block;
+		margin-left: 16.255em;
+		vertical-align: 0.255em;
+		content: "";
+		border-top: 0.3em solid;
+		border-right: 0.3em solid transparent;
+		border-bottom: 0;
+		border-left: 0.3em solid transparent;
+	}
+</style>
+</head>
+	<body class="hold-transition sidebar-mini layout-fixed">
+	    <header th:include="header::header1"></header> 
+		<div class="content-wrapper" style="background-color:white;">
+            <section class="content-header">
+                <div class="container-fluid"> </div>
+            </section>
+            <section class="content">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card-header text-center pb-2 d-bg-h2 ">
+                                <lable id="label" class="h2 font-weight-bold">Add User Details</lable>
+                            </div>
+                            	<div class="card   tech-x-card-2 mt-5">
+                                    <div class="tab-content" style="height: auto !important;">
+                                        <form id="regForm" action="#" class="form-horizontal" th:action="@{/SaveUserProfile}" th:object="${userProfile}" enctype="multipart/form-data" method="post">
+                                            
+                                            <div class="tab">
+                                                <div class="card-body">
+                                                    <h4 class="mt-4 font-weight-bold">Personal Details</h4>
+                                                    <div class="row mt-4">
+                                                        <div class="col-sm-4 col-lg-4 required-field">
+                                                            <label class="d-label">Full Name :</label>
+                                                        </div>
+                                                        <div class="col-sm-6 col-md-4 col-lg-5">
+                                                            <input type="text" class="form-control input-anime tab1"  th:field="*{fullName}" placeholder="Enter Full Name" required>
+                                                        </div>
+                                                    </div>
+													
+													<div class="row mt-4">
+                                                        <div class="col-sm-4 col-lg-4 required-field">
+                                                            <label class="d-label">Email ID :</label>
+                                                        </div>
+                                                        <div class="col-sm-6 col-md-4 col-lg-5">
+                                                            <input type="email" class="form-control input-anime tab1"  th:field="*{emailId}" id="username" placeholder="Enter Email ID" required>
+                                                        </div>
+                                                         <div class="col-sm-4 col-lg-4">
+                                                            <label id="message1"></label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row mt-4">
+                                                        <div class="col-sm-4 col-lg-4">
+                                                            <label class="d-label">Work Status :</label>
+                                                        </div>
+                                                        <div class="col-sm-6 col-md-4 col-lg-4">
+                                                            <select class="form-control input-anime">
+                                                                <option value="">Please select</option>
+                                                                <option>I'm Experienced</option>
+                                                                <option>I'm Fresher</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row mt-4">
+                                                        <div class="col-sm-4 col-lg-4">
+                                                            <label class="d-label">Gender :</label>
+                                                        </div>
+                                                        <div class="col-sm-6 col-md-4 col-lg-2">
+                                                            <select class="form-control input-anime" th:field="*{gender}">
+										                     	<option value=" ">Select a type</option>
+										                        <option value="Male">Male</option>
+										                       	<option value="Female">Female</option>
+										                     </select>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row mt-4">
+                                                        <div class="col-sm-4 col-lg-4">
+                                                            <label class="d-label">Marital Status :</label>
+                                                        </div>
+                                                        <div class="col-sm-6 col-md-4 col-lg-2">
+                                                            <select class="form-control input-anime" th:field="*{maritalStatus}">
+									                           <option value=" ">Select a type</option>
+									                           <option value="Single">Single</option>
+									                           <option value="Married">Married</option>
+									                        </select>
+                                                        </div>
+                                                    </div>
+                                                    
+                                                    <div class="row mt-4">
+                                                        <div class="col-sm-4 col-lg-4 required-field">
+                                                            <label class="d-label">Date of Birth :</label>
+                                                        </div>
+                                                        <div class="col-sm-6 col-md-4 col-lg-2">
+                                                            <input type="text" class="form-control input-anime tab1" th:field="*{dateOfBirth}" id="dateofbirth" 
+                                                             placeholder="DD-MM-YYYY" required >
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row mt-4">
+                                                        <div class="col-sm-4 col-lg-4 required-field">
+                                                            <label class="d-label">Contact Number :</label>
+                                                        </div>
+                                                        <div class="col-sm-6 col-md-4 col-lg-6">
+                                                        	<div class="row">
+                                                        		<div class="col-sm-4 col-lg-4">
+                                                        			<input type="text" class="form-control input-anime tab1"  th:field="*{contactNumber}" placeholder="Contact Number" pattern="[0-9]{10}"
+							                    					oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"  
+							                    					minlength="10" maxlength = "10" id="mobile1" required>
+                                                        		</div>
+                                                        		<div class="col-sm-4 col-lg-4">
+                                                        			 <input class="form-control input-anime"  th:field="*{contactNumberOther}" placeholder="Other"  pattern="[0-9]{10}"
+							                    					oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" type = "text" 
+							                    					minlength="10" maxlength = "10" id="mobile2">
+                                                        		</div>
+                                                        		<label id="message2"></label>
+                                                        	</div>
+                                                        </div>
+                                                    </div>
+                                                    
+                                                </div>
+                                            </div>
+
+                                            <div class="tab">
+                                                <div class="card-body">
+                                                    <h4 class="mt-4 font-weight-bold">Permanent Address </h4>
+
+                                                    <div class="row mt-4">
+                                                        <div class="col-sm-4 col-lg-4">
+                                                            <label class="d-label">Address :</label>
+                                                        </div>
+                                                        <div class="col-sm-6 col-md-4 col-lg-5">
+                                                            <input type="text" th:field="*{addressLine1}" id="line1" placeholder="Address Line 1" class="form-control input-anime">
+                                                            <input type="text" th:field="*{addressLine2}" id="line2" placeholder="Address Line 2" class="form-control input-anime mt-4">
+                                                        </div>
+                                                    </div>
+                                                    
+                                                    <div class="row mt-4">
+                                                        <div class="col-sm-4 col-lg-4">
+                                                            <label class="d-label">Country :</label>
+                                                        </div>
+                                                        <div class="col-sm-6 col-md-4 col-lg-3">
+                                                            <select class="form-control input-anime" th:field="*{country}" onchange="print_state('country', this.selectedIndex);" id="cty" name ="cty">
+			                                            		<option value="">Select Country</option>
+			        										</select>
+                                                        </div>
+                                                    </div>
+                                                    
+                                                    <div class="row mt-4">
+                                                        <div class="col-sm-4 col-lg-4">
+                                                            <label class="d-label">State :</label>
+                                                        </div>
+                                                        <div class="col-sm-6 col-md-4 col-lg-3">
+                                                        	<select th:field="*{state}" id="country" onchange="print_city('state', this.selectedIndex);" name ="country" class="form-control input-anime">
+                                                           		<option value="">Select State</option>
+                                                           	</select>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row mt-4">
+                                                        <div class="col-sm-4 col-lg-4">
+                                                            <label class="d-label">City :</label>
+                                                        </div>
+                                                        <div class="col-sm-6 col-md-4 col-lg-3">
+                                                            <select th:field="*{city}" name="state" id ="state" class="form-control input-anime">
+                                                            	<option value="">Select City</option>
+		                                            		</select>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row mt-4">
+                                                        <div class="col-sm-4 col-lg-4">
+                                                            <label class="d-label">Pin Code</label>
+                                                        </div>
+                                                        <div class="col-sm-6 col-md-4 col-lg-2">
+                                                            <input type="text" th:field="*{pinCode}" id="pin code" placeholder="Pin Code" class="form-control input-anime">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+
+                                            <div class="tab">
+                                                <div class="card-body">
+                                                    <h4 class="mt-4 font-weight-bold">Education Details</h4>
+
+                                                    <div class="row mt-4">
+                                                        <div class="col-sm-4 col-lg-4">
+                                                            <label class="d-label">University/Institute :</label>
+                                                        </div>
+                                                        <div class="col-sm-6 col-md-4 col-lg-4">
+                                                            <input type="text" class="form-control input-anime" th:field="*{university}">
+                                                        </div>
+                                                    </div>
+                                                    
+                                                    <div class="row mt-4">
+                                                        <div class="col-sm-4 col-lg-4">
+                                                            <label class="d-label">Education :</label>
+                                                        </div>
+                                                        <div class="col-sm-6 col-md-4 col-lg-4">
+                                                            <select class="form-control input-anime" th:field="*{education}" id="education">
+										                    	<option value="">Select a type</option>
+										                    	<option th:each="userProfile:${Educationlist}" 
+										                    			th:value="${userProfile.qualification}"
+										                                th:text="${userProfile.qualification}" th:if="${userProfile.company_id}==${CompanyID}">
+										                      	</option>
+										                     </select>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row mt-4">
+                                                        <div class="col-sm-4 col-lg-4">
+                                                            <label class="d-label">Course :</label>
+                                                        </div>
+                                                        <div class="col-sm-6 col-md-4 col-lg-4">
+                                                            <select class="form-control input-anime" th:field="*{course}" id="course">
+                                                            </select>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row mt-4">
+                                                        <div class="col-sm-4 col-lg-4">
+                                                            <label class="d-label">Specialization :</label>
+                                                        </div>
+                                                        <div class="col-sm-6 col-md-4 col-lg-4">
+                                                            <input type="text" class="form-control input-anime" th:field="*{specialization}" placeholder="Specialization">
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row mt-4">
+                                                        <div class="col-sm-4 col-lg-4">
+                                                            <label class="d-label">Course Type :</label>
+                                                        </div>
+                                                        <div class="col-sm-6 col-md-4 col-lg-4">
+                                                            <select class="form-control input-anime" th:field="*{courseType}">
+										                     	<option value="">Select Course Type</option>
+										                     	<option value="Full Time">Full Time</option>
+										                     	<option value="Part Time">Part Time</option>
+										                     	<option value="'Correspondence/Distance learning'">Correspondence/Distance learning</option>
+										                     </select>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row mt-4">
+                                                        <div class="col-sm-4 col-lg-4">
+                                                            <label class="d-label">Course duration :</label>
+                                                        </div>
+                                                        <div class="col-sm-6 col-md-4 col-lg-4">
+                                                            <input type="text" class="form-control input-anime" th:field="*{courseDuration}" placeholder="Course duration">
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row mt-4">
+                                                        <div class="col-sm-4 col-lg-4">
+                                                            <label class="d-label">Grading System :</label>
+                                                        </div>
+                                                        <div class="col-sm-6 col-md-4 col-lg-4">
+                                                            <select class="form-control input-anime" th:field="*{gradingSystem}">
+										                     	<option value="">Select</option>
+										                     	<option value="Scale 10 Grading System">Scale 10 Grading System</option>
+										                     	<option value="Scale 4 Grading System">Scale 4 Grading System</option>
+										                     	<option value="% Marks of 100 Maximum">% Marks of 100 Maximum</option>
+										                     	<option value="Course Requires a Pass">Course Requires a Pass</option>
+										                     </select>
+                                                        </div>
+                                                    </div>
+                                                    
+                                                    <div class="row mt-4">
+		                                           		<div class="col-sm-4 col-lg-4">
+		                                             		<label class="d-label">Grade :</label>
+		                                                </div>
+		                                               	<div class="col-sm-6 col-md-4 col-lg-2">
+		                                                	<input class="form-control input-anime" type="text" th:field="*{grade}">
+		                                             	</div>
+		                                           	</div>
+                                                    
+                                                </div>
+                                            </div>
+
+                                            <div class="tab">
+                                                <div class="card-body">
+                                                <h4 class="mt-4 font-weight-bold">Company Details </h4>
+                                                    <div class="row mt-4">
+                                                        <div class="col-sm-4 col-lg-4">
+                                                            <label class="d-label">Current Industry:</label>
+                                                        </div>
+                                                        <div class="col-sm-6 col-md-4 col-lg-5">
+                                                            <select class="form-control input-anime" th:field="*{currentIndustry}">
+										                     	<option value="">Select industry of your current company</option>
+										                     	<option th:each="userProfile:${Industrylist}" 
+										                    			th:value="${userProfile.industryname}"
+										                                th:text="${userProfile.industryname}" th:if="${userProfile.company_id}==${CompanyID}">
+										                      	</option>
+										                     </select>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row mt-4">
+                                                        <div class="col-sm-4 col-lg-4">
+                                                            <label class="d-label">Department :</label>
+                                                        </div>
+                                                        <div class="col-sm-6 col-md-4 col-lg-5">
+                                                            <select class="form-control input-anime" th:field="*{department}">
+										                     	<option value="">Select your department/area of expertise</option>
+										                     	<option th:each="userProfile:${FunctionalArealist}" 
+										                    			th:value="${userProfile.FArea}"
+										                                th:text="${userProfile.FArea}" th:if="${userProfile.company_id}==${CompanyID}">
+										                      	</option>
+										                     </select>
+                                                        </div>
+                                                    </div>
+                                                    
+                                                    <div class="row mt-4">
+                                                        <div class="col-sm-4 col-lg-4">
+                                                            <label class="d-label">Desired Job Type:</label>
+                                                        </div>
+                                                        <div class="col-sm-6 col-md-4 col-lg-3">
+                                                            <select class="form-control input-anime" th:field="*{desiredJobType}">
+										                     	<option value="">Desired Job Type</option>
+										                     	<option value="Permanent">Permanent</option>
+										                     	<option value="Contractual">Contractual</option>
+										                     </select>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row mt-4">
+                                                        <div class="col-sm-4 col-lg-4">
+                                                            <label class="d-label">Desired Employment Type :</label>
+                                                        </div>
+                                                        <div class="col-sm-6 col-md-4 col-lg-3">
+                                                            <select class="form-control input-anime" th:field="*{desiredEmploymentType}">
+										                     	<option value="">Desired Employment Type</option>
+										                     	<option value="Full Time">Full Time</option>
+										                     	<option value="Part Time">Part Time</option>
+										                     </select>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row mt-4">
+                                                        <div class="col-sm-4 col-lg-4">
+                                                            <label class="d-label">Preferred Shift :</label>
+                                                        </div>
+                                                        <div class="col-sm-6 col-md-4 col-lg-3">
+                                                            <select class="form-control input-anime" th:field="*{preferredShift}">
+										                     	<option value="">Preferred Shift</option>
+										                     	<option value="Day">Day</option>
+										                     	<option value="Night">Night</option>
+										                     	<option value="Flexible">Flexible</option>
+										                     </select>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row mt-4">
+                                                        <div class="col-sm-4 col-lg-4">
+                                                            <label class="d-label">Preferred Work Location :</label>
+                                                        </div>
+                                                        <div class="col-sm-6 col-md-4 col-lg-3">
+                                                            <select class="form-control input-anime" th:field="*{preferredWorkLocation}" id="multiple-location" multiple="multiple">
+										                     	<option th:each="userProfile:${JobLocationlist}" 
+										                    			th:value="${userProfile.location}"
+										                                th:text="${userProfile.location}" th:if="${userProfile.company_id}==${CompanyID}">
+										                      	</option>
+										                    </select>
+                                                        </div>
+                                                    </div>
+
+													<div class="row mt-4">
+                                                        <div class="col-sm-4 col-lg-4">
+                                                            <label class="d-label">Skills :</label>
+                                                        </div>
+                                                        <div class="col-sm-6 col-md-4 col-lg-5">
+                                                            <textarea class="form-control input-anime" th:field="*{skill}" placeholder="Add Skill here"></textarea>
+                                                        </div>
+                                                    </div>
+                                                    
+                                                    <div class="row mt-4">
+                                                        <div class="col-sm-4 col-lg-4">
+                                                            <label class="d-label">Expected Salary :</label>
+                                                        </div>
+                                                        <div class="col-sm-6 col-md-4 col-lg-3">
+                                                            <input type="text" class="form-control input-anime" th:field="*{expectedSalary}" placeholder="Expected Salary">
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row mt-4">
+                                                        <div class="col-sm-4 col-lg-4">
+                                                            <label class="d-label">Certification Name :</label>
+                                                        </div>
+                                                        <div class="col-sm-6 col-md-4 col-lg-4">
+                                                            <input type="text" class="form-control input-anime" th:field="*{certificationName}" placeholder="Certification Name">
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row mt-4">
+                                                        <div class="col-sm-4 col-lg-4">
+                                                            <label class="d-label">Certification Completion ID :</label>
+                                                        </div>
+                                                        <div class="col-sm-6 col-md-4 col-lg-4">
+                                                            <input type="text" class="form-control input-anime" th:field="*{certificationCompletionID}" placeholder="Certification Completion ID"> 
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row mt-4">
+                                                        <div class="col-sm-4 col-lg-4">
+                                                            <label class="d-label">Certification URL :</label>
+                                                        </div>
+                                                        <div class="col-sm-6 col-md-4 col-lg-5">
+                                                            <input type="text" class="form-control input-anime" th:field="*{certificationUrl}" placeholder="Certification URL">
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row mt-4">
+                                                        <div class="col-sm-4 col-lg-4">
+                                                            <label class="d-label">Certification Validity :</label>
+                                                        </div>
+                                                        <div class="col-sm-6 col-md-4 col-lg-2">
+                                                            <input type="text" class="form-control input-anime" th:field="*{certificationValidity}" placeholder="MM-YYYY">
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row mt-4">
+                                                        <div class="col-sm-4 col-lg-4 required-field">
+                                                            <label class="d-label">Upload Resume (Max Size 100KB) :</label>
+                                                        </div>
+                                                        <div class="col-sm-6 col-md-4 col-lg-6">
+                                                            <input type="file" class="form-control input-anime tab1" name="file1" id="file1" accept=".doc, .docx, .pdf"  placeholder="Upload Resume" required>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+											<div class="tab">
+                                                <div class="card-body">
+                                                	<h4 class="mt-4 font-weight-bold">Other Details </h4>
+                                                        <div class="row mt-4">
+                                                            <div class="col-sm-4 col-lg-4">
+                                                                <label class="d-label">Are you Differently Abled?</label>
+                                                            </div>
+                                                            <div class="col-sm-6 col-md-4 col-lg-6">
+                                                               <div class="row">
+                                                                    <div class="col-sm-4 col-md-3 ">
+                                                                        <input type="radio" th:field="*{disability}" class="mr-1" th:value="Yes" th:text="Yes" id="Yes">
+                                                                    </div>
+                
+                                                                    <div class="col-sm-4 col-md-3">
+                                                                        <input type="radio" th:field="*{disability}" class="mr-1" th:value="No" th:text="No" id="No">
+                                                                    </div>
+                                                               </div>
+                                                            </div>
+                                                        </div>
+    
+                                                        <div class="row mt-4">
+                                                            <div class="col-sm-4 col-lg-4">
+                                                                <label class="d-label">Type :</label>
+                                                            </div>
+                                                            <div class="col-sm-6 col-md-4 col-lg-4">
+                                                                <input type="text" th:field="*{disabilityType}" class="form-control input-anime">
+                                                            </div>
+                                                        </div>
+    
+                                                        <div class="row mt-4">
+                                                            <div class="col-sm-4 col-lg-4">
+                                                                <label class="d-label">Have you taken a Career Break? :</label>
+                                                            </div>
+                                                            <div class="col-sm-6 col-md-4 col-lg-6">
+                                                               <div class="row">
+	                                                                <div class="col-sm-4 col-md-3 ">
+	                                                                	<input type="radio" th:field="*{careerBreak}" class="mr-1" th:value="Yes" th:text="Yes" id="Yes">
+	                                                                </div>
+	                                                               	<div class="col-sm-4 col-md-3">
+	                                                                	<input type="radio"th:field="*{careerBreak}" class="mr-1" th:value="No" th:text="No" id="No">
+	                                                                </div>
+	                                                            </div>
+                                                           	</div>
+                                                        </div>
+    
+                                                        <div class="row mt-4">
+                                                            <div class="col-sm-4 col-lg-4">
+                                                                <label class="d-label">Reason of Break</label>
+                                                            </div>
+                                                            <div class="col-sm-6 col-md-4 col-lg-4">
+                                                                <input type="text" th:field="*{reasonOfBreak}" class="form-control input-anime">
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="row mt-4">
+                                                            <div class="col-sm-4 col-lg-4">
+                                                                <label class="d-label">Break started from</label>
+                                                            </div>
+                                                            <div class="col-sm-6 col-md-4 col-lg-1">
+                                                                <input type="text" th:field="*{breakStartFrom}" placeholder="YYYY" class="form-control input-anime">
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="row mt-4">
+                                                            <div class="col-sm-4 col-lg-4">
+                                                                <label class="d-label">Break ended in</label>
+                                                            </div>
+                                                            <div class="col-sm-6 col-md-4 col-lg-1">
+                                                                <input type="text" th:field="*{breakEnd}" placeholder="YYYY" class="form-control input-anime">
+                                                            </div>
+                                                        </div>
+
+                                                </div>
+                                            </div>
+                                            <div class="card-body">
+	                                        	<button class="btn btn-primary float-right" type="button" id="nextBtn" onclick="nextPrev(1)">Next</button>
+												<button class="btn btn-primary float-right" type="button" id="prevBtn" onclick="nextPrev(-1)" >Previous</button>
+                                           </div>
+                                           <div style="text-align:center;">
+	                                           	<span class="left-arrow">&laquo;</span>
+											    <a href=""><span class="step">1</span></a>
+											    <a href=""><span class="step">2</span></a>
+											    <a href=""><span class="step">3</span></a>
+											    <a href=""><span class="step">4</span></a>
+											    <a href=""><span class="step">5</span></a>
+											    <span class="right-arrow">&raquo;</span>
+										  </div>
+										</form>
+									</div>
+                            	</div>
+                        	</div>
+                    	</div>
+                	</div>
+            </section>
+        </div>
+        <script language="javascript">print_state("sts");</script>
+        <script language="javascript">print_country("cty");</script>
+        <script type="text/javascript">
+        	var currentTab = 0; // Current tab is set to be the first tab (0)
+			showTab(currentTab); // Display the current tab
+			
+			function showTab(n) {
+			  // This function will display the specified tab of the form...
+			  var x = document.getElementsByClassName("tab");
+			  x[n].style.display = "block";
+			  //... and fix the Previous/Next buttons:
+			  if (n == 0) {
+			    document.getElementById("prevBtn").style.display = "none";
+			  } else {
+			    document.getElementById("prevBtn").style.display = "inline";
+			  }
+			  if (n == (x.length - 1)) {
+			    document.getElementById("nextBtn").innerHTML = "Submit";
+			  } else {
+			    document.getElementById("nextBtn").innerHTML = "Next";
+			  }
+			  //... and run a function that will display the correct step indicator:
+			  fixStepIndicator(n)
+			}
+			
+			function nextPrev(n) {
+			  // This function will figure out which tab to display
+			  var x = document.getElementsByClassName("tab");
+			  // Exit the function if any field in the current tab is invalid:
+			  if (n == 1 && !validateForm()) return false;
+			  // Hide the current tab:
+			  x[currentTab].style.display = "none";
+			  // Increase or decrease the current tab by 1:
+			  currentTab = currentTab + n;
+			  // if you have reached the end of the form...
+			  if (currentTab >= x.length) {
+			    // ... the form gets submitted:
+			    document.getElementById("regForm").submit();
+			    return false;
+			  }
+			  // Otherwise, display the correct tab:
+			  showTab(currentTab);
+			}
+			
+			function validateForm() {
+			  // This function deals with validation of the form fields
+			  var x, y, i, valid = true;
+			  x = document.getElementsByClassName("tab");
+			  y = x[currentTab].getElementsByClassName("tab1");
+			  // A loop that checks every input field in the current tab:
+			  for (i = 0; i < y.length; i++) {
+			    // If a field is empty...
+			    if (y[i].value == "") {
+			      // add an "invalid" class to the field:
+			      y[i].className += " invalid";
+			      // and set the current valid status to false
+			      valid = false;
+			    }
+			  }
+			  // If the valid status is true, mark the step as finished and valid:
+			  if (valid) {
+			    document.getElementsByClassName("step")[currentTab].className += " finish";
+			  }
+			  return valid; // return the valid status
+			}
+			
+			function fixStepIndicator(n) {
+			  // This function removes the "active" class of all steps...
+			  var i, x = document.getElementsByClassName("step");
+			  for (i = 0; i < x.length; i++) {
+			    x[i].className = x[i].className.replace(" active", "");
+			  }
+			  //... and adds the "active" class on the current step:
+			  x[n].className += " active";
+			}
+        	
+        	
+		    var uploadFile = document.getElementById("file1");
+				uploadFile.onchange = function() {
+		    		if(this.files[0].size >= 102400){
+		       		alert("File is too big!");
+		       		this.value = "";
+		    		};
+				};
+		</script>
+		<script type="text/javascript">
+				$(function(){
+				$("#education").change(function(){
+					$('#course').find('option').remove().end();
+					
+					var coursename = $(this).val();
+					$.ajax({
+						url:"[[@{/getCoursedropdown}]]",
+						data:{
+							name: coursename
+						},
+						success:function(data){
+						$('#course').append($('<option>',{
+									value:"",
+									text:"Select"
+								}));
+							$.each(data,function(i,item){
+								$('#course').append($('<option>',{
+									value:item,
+									text:item
+								}));
+							});
+						}
+					});
+				});	
+			});
+			
+			$('#username').on('keyup', function () {
+        		var valid = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}/igm.test(this.value),
+			    	val = this.value;
+			// get the currently selected 
+		      var user1 = $('#username').val();
+		      $.ajax({
+		      	// make the ajax call to our server and pass the country ID as a GET variable
+		          url: "[[@{/checkusername}]]",
+		          data: { name: user1},
+		          success: function(data){
+		          	if (data == 'true') {
+		          		if(user1==''){
+		          			$('#message1').html('').css('color', 'red');
+		          		}
+			          	else{
+			          		if(valid){
+						        $('#message1').html('Congrats! The username is available').css('color', 'green');
+								 }
+						     else{
+						     	if(val==''){
+						     		$('#message1').html('').css('color', 'red');
+						     	}
+						     	else{
+									$('#message1').html('Not a valid email address').css('color', 'red');
+							 	}
+							}
+			          	 }
+		          	  } 
+		          	  else {
+		          	  		if(user1==''){
+				     			$('#message1').html('').css('color', 'red');
+				     		}
+				     		else{
+								$('#message1').html('A user with that username already exists').css('color', 'red');
+					 		}
+					 	}
+		           }
+		        });
+			});
+			
+			$("#mobile1").on("keyup", function(){
+			    var valid = /^[7-9]\d{9}$/.test(this.value),
+			        val = this.value;
+			      if(valid){
+			        $('#message2').html('').css('color', 'green');
+					 }
+			     else{
+			     	if(val==''){
+			     		$('#message2').html('').css('color', 'red');
+			     	}
+			     	else{
+						$('#message2').html('The mobile number should be start with 7,8,9 and it should be 10 digit.').css('color', 'red');
+				 	}
+				}
+			});
+			
+			$("#mobile2").on("keyup", function(){
+			    var valid = /^[7-9]\d{9}$/.test(this.value),
+			        val = this.value;
+			      if(valid){
+			        $('#message2').html('').css('color', 'green');
+					 }
+			     else{
+			     	if(val==''){
+			     		$('#message2').html('').css('color', 'red');
+			     	}
+			     	else{
+						$('#message2').html('The mobile number should be start with 7,8,9 and it should be 10 digit.').css('color', 'red');
+				 	}
+				}
+			});
+			$("input").on("keypress", function(e) {
+			if (e.which === 32 && !this.value.length)
+				e.preventDefault();
+			});
+			$("textarea").on("keypress", function(e) {
+			if (e.which === 32 && !this.value.length)
+				e.preventDefault();
+			});
+		</script>
+	</body>
+</html>
